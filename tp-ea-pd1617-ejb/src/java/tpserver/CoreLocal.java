@@ -10,23 +10,24 @@ import logic.User;
 @Local
 public interface CoreLocal {
 
-     ArrayList<User> getUsers();
+    ArrayList<User> getUsers();
 
-     void setUsers(ArrayList<User> users);
+    void setUsers(ArrayList<User> users);
 
-     ArrayList<Report> getReports();
+    ArrayList<Report> getReports();
 
-     void setReports(ArrayList<Report> reports);
+    void setReports(ArrayList<Report> reports);
 
-     ArrayList<Item> getItems() ;
+    ArrayList<Item> getItems();
 
-     void setItems(ArrayList<Item> items);
+    void setItems(ArrayList<Item> items);
 
-     ArrayList<Category> getCategories();
+    ArrayList<Category> getCategories();
 
-     void setCategories(ArrayList<Category> categories);
-    
-    //
+    void setCategories(ArrayList<Category> categories);
+
+    //----------------------DEBUG purposes only (begin)-------------------------
     String teste();
+    //-----------------------DEBUG purposes only (end)--------------------------
 
 }
