@@ -21,7 +21,9 @@ public class Core implements CoreLocal {
 
     //Waiting on newletter
     //Newsletter newsletter;
+    
     //--- Methods ---
+    
     @PostConstruct
     public void load() {
 
@@ -34,46 +36,38 @@ public class Core implements CoreLocal {
         //save on database
     }
 
-    @Override
     public ArrayList<User> getUsers() {
         return users;
     }
 
-    @Override
     public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
 
-    @Override
     public ArrayList<Report> getReports() {
         return reports;
     }
 
-    @Override
     public void setReports(ArrayList<Report> reports) {
         this.reports = reports;
     }
 
-    @Override
     public ArrayList<Item> getItems() {
         return items;
     }
 
-    @Override
     public void setItems(ArrayList<Item> items) {
         this.items = items;
     }
 
-    @Override
     public ArrayList<Category> getCategories() {
         return categories;
     }
 
-    @Override
     public void setCategories(ArrayList<Category> categories) {
         this.categories = categories;
     }
-
+    
     //----------------------DEBUG purposes only (begin)-------------------------
     @Override
     public String teste() {
