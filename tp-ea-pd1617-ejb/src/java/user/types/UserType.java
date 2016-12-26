@@ -7,20 +7,19 @@ public interface UserType {
     //--- all ---
     public String seeNews();
 
-    //--- visitor ---
     public String seeLastThree();
 
+    //--- visitor ---
     //change to confirm password only in client?
-    public void askAccess(String username, String password, String confirmpassword);
+    public void askAccess(String username, String password, String confirmPassword);
 
     public void askReactivation(String username, String password);
-    
+
     //--- admin & user ---
-
     //change to confirm password only in client?
-    public void changePassword(String username, String password, String confirmpassword);
+    public void changePassword(String username, String password, String confirmPassword);
 
-    public void messageUser(String senderId, String recipientId, String title, String body, Date time) ;
+    public void messageUser(String senderId, String recipientId, String title, String body, Date time);
 
     //--- user ---
     public void doSale(String name, String description, String sellerId, int startPrice);
