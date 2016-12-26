@@ -17,7 +17,7 @@ public class Item {
 
     //aboutTransactions
     ArrayList<Bid> bids;
-    boolean isPayed;
+    boolean payed;
 
     //--- Methods ---
     //Constructor without Category and Buyout 
@@ -29,7 +29,7 @@ public class Item {
         this.description = description;
         this.seller = seller;
         this.startPrice = startPrice;
-        isPayed = false;
+        payed = false;
     }
 
     public int getId() {
@@ -96,12 +96,12 @@ public class Item {
         this.bids = bids;
     }
 
-//    public boolean isIsPayed() {
-//        return isPayed;
-//    }
-    
-    public void setIsPayed(boolean isPayed) {
-        this.isPayed = isPayed;
+    public boolean isPayed() {
+        return payed;
+    }
+
+    public void setIsPayed(boolean payed) {
+        this.payed = payed;
     }
 
 }
