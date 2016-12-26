@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class Item {
 
     //aboutItem
-    int id; //unique
+    int itemId; //unique
     String name;
     String description;
     Category category;
 
     //aboutSale
-    User seller;
+    String sellerId;
     int startPrice;
     int buyout;
 
@@ -21,23 +21,23 @@ public class Item {
 
     //--- Methods ---
     //Constructor without Category and Buyout 
-    public Item(int id, String name, String description, User seller, int startPrice) {
+    public Item(int itemId, String name, String description, String sellerId, int startPrice) {
 
         //ToDo: verify uniqueness of id on core to validate construction
-        this.id = id;
+        this.itemId = itemId;
         this.name = name;
         this.description = description;
-        this.seller = seller;
+        this.sellerId= sellerId;
         this.startPrice = startPrice;
         payed = false;
     }
 
-    public int getId() {
-        return id;
+    public int getItemId() {
+        return itemId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
     public String getName() {
@@ -64,12 +64,12 @@ public class Item {
         this.category = category;
     }
 
-    public User getSeller() {
-        return seller;
+    public String getSellerId() {
+        return sellerId;
     }
 
-    public void setSeller(User seller) {
-        this.seller = seller;
+    public void setSellerId(String sellerId) {
+        this.sellerId = sellerId;
     }
 
     public double getStartPrice() {
@@ -96,11 +96,12 @@ public class Item {
         this.bids = bids;
     }
 
+
     public boolean isPayed() {
         return payed;
     }
-
-    public void setIsPayed(boolean payed) {
+    
+    public void setPayed(boolean payed) {
         this.payed = payed;
     }
 

@@ -1,8 +1,7 @@
 package logic;
-
 public class Category {
 
-    String name;
+    String name; //unique
     String description;
 
     //--- Methods ---
