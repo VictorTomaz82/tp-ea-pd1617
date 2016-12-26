@@ -2,11 +2,11 @@ package logic;
 
 public class ReportItem extends Report {
 
-    Item item;
+    String itemId;
 
     //--- Methods ---
-    public ReportItem(Item item, String motive) {
-        this.item = item;
+    public ReportItem(String itemId, String motive) {
+        this.itemId = itemId;
         super.motive = motive;
     }
 

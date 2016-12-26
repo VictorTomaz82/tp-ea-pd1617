@@ -9,6 +9,7 @@ public class Patron implements PatronRemote {
     @EJB
     Core core;
 
+    @Override
     public String teste() {
         return core.teste();
     }
