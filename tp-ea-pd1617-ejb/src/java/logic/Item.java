@@ -27,7 +27,7 @@ public class Item {
         this.itemId = itemId;
         this.name = name;
         this.description = description;
-        this.sellerId= sellerId;
+        this.sellerId = sellerId;
         this.startPrice = startPrice;
         payed = false;
     }
@@ -96,13 +96,34 @@ public class Item {
         this.bids = bids;
     }
 
-
     public boolean isPayed() {
         return payed;
     }
-    
+
     public void setPayed(boolean payed) {
         this.payed = payed;
     }
 
+    @Override
+    public String toString() {
+        String msg;
+        msg = "ItemId: " + itemId
+                + "\nName: " + name
+                + "\nDescription: " + description
+                + "\nCategory: " + category.getName()
+                + "\nSellerId: " + sellerId
+                + "\nStartPrice: " + startPrice
+                + "\nBuyout: " + buyout
+                + "\nBids: ";
+        if(bids.isEmpty())
+            msg = msg + "none";
+        else
+            for(int i = 0; i < bids.size(); i++)
+                msg = msg + "\n\t" + bids.get(i).toString();
+        if(payed)
+            msg = msg + "\nPayed: True";
+        else
+            msg = msg + "\nPayed: False";
+        return msg;
+    }
 }

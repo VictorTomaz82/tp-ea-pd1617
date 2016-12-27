@@ -28,22 +28,22 @@ public class Newsletter {
     }
 
     public void newAccount(String username) {
-        news.add(dateFormat.format(date) + " - New user registered : " + username);
+        news.add(0, dateFormat.format(date) + " - New user registered : " + username + ".");
     }
 
     public void userSuspendAccount(String username, String motive) {
-        news.add(dateFormat.format(date) + " - " + username + " has suspended his account for \"" + motive + "\"");
+        news.add(0, dateFormat.format(date) + " - " + username + " has suspended his account for \"" + motive + "\".");
     }
 
     public void adminSuspendAccount(String username, String motive) {
-        news.add(dateFormat.format(date) + " - " + username + " has been suspended for \"" + motive + "\"");
+        news.add(0, dateFormat.format(date) + " - " + username + " has been suspended for \"" + motive + "\".");
     }
 
     public void accountReactivation(String username) {
-        news.add(dateFormat.format(date) + " - " + username + " asked for account reactivation");
+        news.add(0, dateFormat.format(date) + " - " + username + " asked for account reactivation.");
     }
 
     public void itemSold(String name, int value) {
-        news.add(dateFormat.format(date) + " - The item " + name + " was sold for " + value + "€.");
+        news.add(0, dateFormat.format(date) + " - The item " + name + " was sold for " + value + "€.");
     }
 }

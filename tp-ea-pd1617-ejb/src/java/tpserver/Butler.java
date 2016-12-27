@@ -1,5 +1,6 @@
 package tpserver;
 
+import java.util.ArrayList;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -13,128 +14,146 @@ public class Butler implements ButlerRemote {
     Core core;
 
     UserType usertype;
+    ArrayList<String> responseToClient;
 
     @PostConstruct
     public void load() {
 
         //by default any user is a visitor
         usertype = new Visitor();
+        responseToClient = new ArrayList<>();
     }
 
     //only "true" function of buttler
     @Override
-    public void login(String username, String password) {
-
-        //ToDo validation of user login on core
-        //change usertype from visitor to user or admin
+    public ArrayList<String> login(String username, String password) {
+        responseToClient.clear();
+        for (int i = 0; i < core.getUsers().size(); i++) {
+            if (core.getUsers().get(i).getUserId().equalsIgnoreCase(username)
+                    && core.getUsers().get(i).getPassword().equals(password)
+                    && core.getUsers().get(i).isActive()) {
+                
+                if (core.getUsers().get(i).isAdministrator()) {
+                    usertype = new Admin();
+                    responseToClient.add("Login Successful!\nWelcome " + core.getUsers().get(i).getUserId() + ".");
+                    return responseToClient;
+                } else {
+                    usertype = new NormalUser();
+                    responseToClient.add("Login Successful!\nWelcome " + core.getUsers().get(i).getUserId() + ".");
+                    return responseToClient;
+                }
+            }
+        }
+        responseToClient.add("Username or password is incorrect.");
+        return responseToClient;
     }
 
     // for every request from remote the butler will ask the interface usertype
     // to ensure user previleges are being followed
     @Override
-    public String seeNews() {
+    public ArrayList<String> seeNews() {
         return usertype.seeNews();
     }
 
     @Override
-    public String seeLastThree() {
+    public ArrayList<String> seeLastThree() {
         return usertype.seeLastThree();
     }
 
     @Override
-    public void askAccess(String username, String password, String confirmPassword) {
-        usertype.askAccess(username, password, confirmPassword);
+    public ArrayList<String> askAccess(String username, String password, String confirmPassword) {
+        return usertype.askAccess(username, password, confirmPassword);
     }
 
     @Override
-    public void askReactivation(String username, String password) {
-        usertype.askReactivation(username, password);
+    public ArrayList<String> askReactivation(String username, String password) {
+        return usertype.askReactivation(username, password);
     }
 
     @Override
-    public void changePassword(String username, String password, String confirmPassword) {
-        usertype.changePassword(username, password, confirmPassword);
+    public ArrayList<String> changePassword(String username, String password, String confirmPassword) {
+        return usertype.changePassword(username, password, confirmPassword);
     }
 
     @Override
-    public void messageUser(String senderId, String recipientId, String title, String body, Date time) {
-        usertype.messageUser(senderId, recipientId, title, body, time);
-
-    }
-
-    @Override
-    public void doSale(String name, String description, String sellerId, int startPrice) {
-        usertype.doSale(name, description, sellerId, startPrice);
+    public ArrayList<String> messageUser(String senderId, String recipientId, String title, String body, Date time) {
+        return usertype.messageUser(senderId, recipientId, title, body, time);
 
     }
 
     @Override
-    public void follow(String itemId) {
-        usertype.follow(itemId);
+    public ArrayList<String> doSale(String name, String description, String sellerId, int startPrice) {
+        return usertype.doSale(name, description, sellerId, startPrice);
 
     }
 
     @Override
-    public void doBid(String itemId) {
-        usertype.doBid(itemId);
+    public ArrayList<String> follow(String itemId) {
+        return usertype.follow(itemId);
 
     }
 
     @Override
-    public void denunce(String userId, String itemId, String motive) {
-
-        usertype.denunce(userId, itemId, motive);
+    public ArrayList<String> doBid(String itemId) {
+        return usertype.doBid(itemId);
 
     }
 
     @Override
-    public void addBalance(int money) {
-        usertype.addBalance(money);
+    public ArrayList<String> denunce(String userId, String itemId, String motive) {
+
+        return usertype.denunce(userId, itemId, motive);
+
     }
 
     @Override
-    public void payItem(String itemId) {
-        usertype.payItem(itemId);
+    public ArrayList<String> addBalance(int money) {
+        return usertype.addBalance(null, money);
     }
 
     @Override
-    public void askSuspension(String userId, String motive) {
-        usertype.askSuspension(userId, motive);
+    public ArrayList<String> payItem(String itemId) {
+        return usertype.payItem(null, itemId);
     }
 
     @Override
-    public void unactivate(String userId) {
-        usertype.unactivate(userId);
+    public ArrayList<String> askSuspension(String userId, String motive) {
+        return usertype.askSuspension(userId, motive);
     }
 
     @Override
-    public void suspendUser(String userId, String motive) {
-        usertype.suspendUser(userId, motive);
+    public ArrayList<String> unactivate(String userId) {
+        return usertype.unactivate(userId);
     }
 
     @Override
-    public void reactivateUser(String userId) {
-        usertype.reactivateUser(userId);
+    public ArrayList<String> suspendUser(String userId, String motive) {
+        return usertype.suspendUser(userId, motive);
     }
 
     @Override
-    public void seeUser(String userId) {
-        usertype.seeUser(userId);
+    public ArrayList<String> reactivateUser(String userId) {
+        return usertype.reactivateUser(userId);
     }
 
     @Override
-    public void seeItem(String itemId) {
-        usertype.seeItem(itemId);
+    public ArrayList<String> seeUser(String userId) {
+        return usertype.seeUser(userId);
     }
 
     @Override
-    public void addCategory(String name, String description) {
-        usertype.addCategory(name, description);
+    public ArrayList<String> seeItem(String itemId) {
+        return usertype.seeItem(itemId);
     }
 
     @Override
-    public void changeCategory(String name, String newName, String description) {
-        usertype.changeCategory(name, newName, description);
+    public ArrayList<String> addCategory(String name, String description) {
+        return usertype.addCategory(name, description);
+    }
+
+    @Override
+    public ArrayList<String> changeCategory(String name, String newName, String description) {
+        return usertype.changeCategory(name, newName, description);
     }
 
 // --- debug only (begin) ---

@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import javax.ejb.Local;
 import logic.Category;
 import logic.Item;
+import logic.Newsletter;
 import logic.Report;
 import logic.User;
 
 @Local
 public interface CoreLocal {
 
+    Newsletter getNewsletter();
+
+    void setNewsletter(Newsletter newsletter);
+    
     ArrayList<User> getUsers();
 
     void setUsers(ArrayList<User> users);

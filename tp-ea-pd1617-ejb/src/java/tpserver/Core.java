@@ -7,6 +7,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import logic.Category;
 import logic.Item;
+import logic.Newsletter;
 import logic.Report;
 import logic.User;
 
@@ -14,18 +15,21 @@ import logic.User;
 @LocalBean
 public class Core implements CoreLocal {
 
+    Newsletter newsletter;
     ArrayList<User> users;
     ArrayList<Report> reports;
     ArrayList<Item> items;
     ArrayList<Category> categories;
 
-    //Waiting on newletter
-    //Newsletter newsletter;
     //--- Methods ---
     @PostConstruct
     public void load() {
-
-        //fetch from database
+        //To be deleted after all data being permanently saved?
+        if(users.isEmpty()){
+            users.add(new User("admin","admin"));
+            users.get(0).setActive(true);
+            users.get(0).setAdministrator(true);
+        }
     }
 
     @PreDestroy
@@ -34,6 +38,16 @@ public class Core implements CoreLocal {
         //save on database
     }
 
+    @Override
+    public Newsletter getNewsletter() {
+        return newsletter;
+    }
+
+    @Override
+    public void setNewsletter(Newsletter newsletter) {
+        this.newsletter = newsletter;
+    }
+    
     @Override
     public ArrayList<User> getUsers() {
         return users;

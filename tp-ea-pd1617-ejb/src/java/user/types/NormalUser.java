@@ -2,52 +2,108 @@ package user.types;
 
 //ToDo: implement functions
 
+import java.util.ArrayList;
 import java.util.Date;
+import logic.Item;
+import logic.Newsletter;
+import logic.User;
 
 public class NormalUser extends UserTypeAdaptor{
 
     @Override
-    public void askSuspension(String userId, String motive) {
-        
+    public ArrayList<String> askSuspension(String userId, String motive) {
+        responseToClient.clear();
+        ArrayList<User> users = core.getUsers();
+        Newsletter newsletter;
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUserId().equalsIgnoreCase(userId)) {
+                newsletter = core.getNewsletter();
+                newsletter.userSuspendAccount(userId, motive);
+                core.setNewsletter(newsletter);
+                responseToClient.add("The suspension request was successfully sent.");
+                return responseToClient;
+            }
+        }
+        responseToClient.add("The user \"" + userId + "\" doesn't exist.");
+        return responseToClient;
     }
 
     @Override
-    public void addBalance(int money) {
-        
+    public ArrayList<String> addBalance(String userId, int money) {
+        responseToClient.clear();
+        ArrayList<User> users = core.getUsers();
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUserId().equalsIgnoreCase(userId)) {
+                users.get(i).setBalance(users.get(i).getBalance() + money);
+                core.setUsers(users);
+                responseToClient.add("Successfully added " + money + "€ to your account.\nYou now have "+ users.get(i).getBalance() + "€ in your account.");
+                return responseToClient;
+            }
+        }
+        responseToClient.add("The user \"" + userId + "\" doesn't exist.");
+        return responseToClient;
     }
 
     @Override
-    public void payItem(String itemId) {
-        
+    public ArrayList<String> payItem(String userId, String itemId) {
+//        responseToClient.clear();
+//        ArrayList<User> users = core.getUsers();
+//        ArrayList<Item> items = core.getItems();
+//        Item item;
+//        
+//        for(int i = 0; i < users.size(); i++){
+//            for(int j = 0; j < users.get(i).)
+//        
+//        }
+//        
+//        
+//        
+//        
+//        for (int i = 0; i < users.size(); i++) {
+//            if (users.get(i).getUserId().equalsIgnoreCase(userId)) {
+//                users.get(i).setBalance(users.get(i).getBalance() + money);
+//                core.setUsers(users);
+//                responseToClient.add("Successfully added " + money + "€ to your account.\nYou now have "+ users.get(i).getBalance() + "€ in your account.");
+//                return responseToClient;
+//            }
+//        }
+        responseToClient.add("The user \"" + userId + "\" doesn't exist.");
+        return responseToClient;
     }
 
     @Override
-    public void follow(String itemId) {
-        
+    public ArrayList<String> follow(String itemId) {
+        responseToClient.clear();
+        return responseToClient;
     }
 
     @Override
-    public void denunce(String userId, String itemId, String motive) {
-        
+    public ArrayList<String> denunce(String userId, String itemId, String motive) {
+        responseToClient.clear();
+        return responseToClient;
     }
 
     @Override
-    public void doBid(String itemId) {
-        
+    public ArrayList<String> doBid(String itemId) {
+        responseToClient.clear();
+        return responseToClient;
     }
 
     @Override
-    public void doSale(String name, String description, String sellerId, int startPrice) {
-        
+    public ArrayList<String> doSale(String name, String description, String sellerId, int startPrice) {
+        responseToClient.clear();
+        return responseToClient;
     }
 
     @Override
-    public void messageUser(String senderId, String recipientId, String title, String body, Date time) {
-        
+    public ArrayList<String> messageUser(String senderId, String recipientId, String title, String body, Date time) {
+        responseToClient.clear();
+        return responseToClient;
     }
 
     @Override
-    public void changePassword(String username, String password, String confirmpassword) {
-        
+    public ArrayList<String> changePassword(String username, String password, String confirmpassword) {
+        responseToClient.clear();
+        return responseToClient;
     }
 }

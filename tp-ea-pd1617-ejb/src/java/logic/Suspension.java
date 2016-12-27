@@ -2,13 +2,13 @@ package logic;
 
 import java.util.Date;
 
-public class Supension {
+public class Suspension {
 
     String motive;
     Date time;
 
     //--- Methods ---
-    public Supension(String motive, Date time) {
+    public Suspension(String motive, Date time) {
         this.motive = motive;
         this.time = time;
     }

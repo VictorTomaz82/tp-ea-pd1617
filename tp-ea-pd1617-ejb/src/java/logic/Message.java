@@ -1,5 +1,7 @@
 package logic;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Message {
@@ -9,15 +11,18 @@ public class Message {
     String title;
     String body;
     Date time;
+    DateFormat dateFormat;
 
     //--- Methods ---
     
     //Constructor without Body
-    public Message(User sender, User recipient, String title, Date time) {
+    public Message(User sender, User recipient, String title, String body, Date time) {
         this.sender = sender;
         this.recipient = recipient;
         this.title = title;
+        this.body = body;
         this.time = time;
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     }
 
     public User getSender() {

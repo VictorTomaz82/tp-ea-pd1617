@@ -1,121 +1,166 @@
 package user.types;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import javax.ejb.EJB;
+import logic.Item;
 import tpserver.Core;
 
 // adaptor needed to remove the need to override all methods in usertypes
 public class UserTypeAdaptor implements UserType {
-    
+
     @EJB
     Core core;
 
+    ArrayList<String> responseToClient;
+
+    public UserTypeAdaptor() {
+        responseToClient = new ArrayList<>();
+    }
+
     //--- all ---
     @Override
-    public String seeNews() {
-
-        //ToDo: implement function here
-        return null;
+    public ArrayList<String> seeNews() {
+        return core.getNewsletter().getNews();
     }
 
     @Override
-    public String seeLastThree() {
+    public ArrayList<String> seeLastThree() {
+        ArrayList<Item> itemsSold = new ArrayList<>();
+        responseToClient.clear();
+        for (int i = 0; i < core.getItems().size(); i++) {
+            if (core.getItems().get(i).isPayed()) {
+                itemsSold.add(core.getItems().get(i));
+            }
+        }
 
-        //ToDo: implement function here
-        return null;
+        Collections.sort(itemsSold, (Item o1, Item o2) -> {
+            if (o1.getBids().get(o1.getBids().size() - 1) == null || o2.getBids().get(o1.getBids().size() - 1) == null) {
+                return 0;
+            }
+            return o1.getBids().get(o1.getBids().size() - 1).getTime().compareTo(o2.getBids().get(o1.getBids().size() - 1).getTime());
+        });
+
+        for (int i = 0; i < itemsSold.size(); i++) {
+            responseToClient.add(itemsSold.get(i).toString());
+            if (responseToClient.size() == 3) {
+                break;
+            }
+        }
+
+        return responseToClient;
     }
 
     //--- visitor ---
     @Override
-    public void askAccess(String username, String password, String confirmpassword) {
+    public ArrayList<String> askAccess(String username, String password, String confirmpassword) {
 
+        return null;
     }
 
     @Override
-    public void askReactivation(String username, String password) {
+    public ArrayList<String> askReactivation(String username, String password) {
 
+        return null;
     }
 
     //--- admin & user ---
     @Override
-    public void changePassword(String username, String password, String confirmpassword) {
+    public ArrayList<String> changePassword(String username, String password, String confirmpassword) {
 
+        return null;
     }
 
     @Override
-    public void messageUser(String senderId, String recipientId, String title, String body, Date time) {
+    public ArrayList<String> messageUser(String senderId, String recipientId, String title, String body, Date time) {
 
+        return null;
     }
 
     //--- user ---
     @Override
-    public void doSale(String name, String description, String sellerId, int startPrice) {
+    public ArrayList<String> doSale(String name, String description, String sellerId, int startPrice) {
 
+        return null;
     }
 
     @Override
-    public void doBid(String itemId) {
+    public ArrayList<String> doBid(String itemId) {
 
+        return null;
     }
 
     @Override
-    public void denunce(String userId, String itemId, String motive) {
+    public ArrayList<String> denunce(String userId, String itemId, String motive) {
 
+        return null;
     }
 
     @Override
-    public void follow(String itemId) {
+    public ArrayList<String> follow(String itemId) {
 
+        return null;
     }
 
     @Override
-    public void payItem(String itemId) {
+    public ArrayList<String> payItem(String userId, String itemId) {
 
+        return null;
     }
 
     @Override
-    public void addBalance(int money) {
+    public ArrayList<String> addBalance(String userId, int money) {
 
+        return null;
     }
 
     @Override
-    public void askSuspension(String userId, String motive) {
+    public ArrayList<String> askSuspension(String userId, String motive) {
 
+        return null;
     }
 
     @Override
-    public void unactivate(String userId) {
+    public ArrayList<String> unactivate(String userId) {
 
+        return null;
     }
 
     @Override
-    public void suspendUser(String userId, String motive) {
+    public ArrayList<String> suspendUser(String userId, String motive) {
 
+        return null;
     }
 
     @Override
-    public void reactivateUser(String userId) {
+    public ArrayList<String> reactivateUser(String userId) {
 
+        return null;
     }
 
     @Override
-    public void seeUser(String userId) {
+    public ArrayList<String> seeUser(String userId) {
 
+        return null;
     }
 
     @Override
-    public void seeItem(String itemId) {
+    public ArrayList<String> seeItem(String itemId) {
 
+        return null;
     }
 
     @Override
-    public void addCategory(String name, String description) {
+    public ArrayList<String> addCategory(String name, String description) {
 
+        return null;
     }
 
     @Override
-    public void changeCategory(String name, String newName, String description) {
+    public ArrayList<String> changeCategory(String name, String newName, String description) {
 
+        return null;
     }
 
 }
