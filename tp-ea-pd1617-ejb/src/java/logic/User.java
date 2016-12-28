@@ -5,8 +5,11 @@ import java.util.ArrayList;
 public class User {
 
     String userId;
-    String name;
+
+    String username;
     String password;
+    
+    String name;
     String address;
     int balance;
     boolean active;
@@ -18,8 +21,8 @@ public class User {
     ArrayList<Item> followed;
     ArrayList<Message> inbox;
 
-    public User(String userId, String password) {
-        this.userId = userId;
+    public User(String username, String password) {
+        this.username = username;
         this.password = password;
         name = new String();
         address = new String();
@@ -32,8 +35,6 @@ public class User {
         followed = new ArrayList<>();
         inbox = new ArrayList<>();
     }
-    
-    
 
     public String getUserId() {
         return userId;
@@ -43,12 +44,12 @@ public class User {
         this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -57,6 +58,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {
@@ -138,6 +147,5 @@ public class User {
     public void setInbox(ArrayList<Message> inbox) {
         this.inbox = inbox;
     }
-    
-    
+
 }

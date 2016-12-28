@@ -67,7 +67,7 @@ public class UserTypeAdaptor implements UserType {
 
     //--- admin & user ---
     @Override
-    public ArrayList<String> changePassword(String username, String password, String confirmpassword) {
+    public ArrayList<String> changePassword(String username, String password, String newPassword, String confirmPassword) {
 
         return null;
     }
@@ -80,19 +80,25 @@ public class UserTypeAdaptor implements UserType {
 
     //--- user ---
     @Override
-    public ArrayList<String> doSale(String name, String description, String sellerId, int startPrice) {
+    public ArrayList<String> doSale(String sellerUsername, String itemName, String description, int startPrice, int buyout) {
 
         return null;
     }
 
     @Override
-    public ArrayList<String> doBid(String itemId) {
+    public ArrayList<String> doBid(String itemId, int bid) {
 
         return null;
     }
 
     @Override
-    public ArrayList<String> denunce(String userId, String itemId, String motive) {
+    public ArrayList<String> denunceItem(String itemId, String motive) {
+
+        return null;
+    }
+    
+        @Override
+    public ArrayList<String> denunceUser(String username,  String motive) {
 
         return null;
     }
@@ -102,45 +108,47 @@ public class UserTypeAdaptor implements UserType {
 
         return null;
     }
-
-    @Override
-    public ArrayList<String> payItem(String userId, String itemId) {
-
-        return null;
-    }
-
-    @Override
-    public ArrayList<String> addBalance(String userId, int money) {
+    
+        @Override
+    public ArrayList<String> addBalance(String username, int money) {
 
         return null;
     }
 
     @Override
-    public ArrayList<String> askSuspension(String userId, String motive) {
+    public ArrayList<String> payItem(String username, String itemId) {
+
+        return null;
+    }
+
+
+
+    @Override
+    public ArrayList<String> askSuspension(String username, String motive) {
+
+        return null;
+    }
+
+//    @Override
+//    public ArrayList<String> unactivate(String userId) {
+//
+//        return null;
+//    }
+
+    @Override
+    public ArrayList<String> suspendUser(String username, String motive) {
 
         return null;
     }
 
     @Override
-    public ArrayList<String> unactivate(String userId) {
+    public ArrayList<String> reactivateUser(String username) {
 
         return null;
     }
 
     @Override
-    public ArrayList<String> suspendUser(String userId, String motive) {
-
-        return null;
-    }
-
-    @Override
-    public ArrayList<String> reactivateUser(String userId) {
-
-        return null;
-    }
-
-    @Override
-    public ArrayList<String> seeUser(String userId) {
+    public ArrayList<String> seeUser(String username) {
 
         return null;
     }

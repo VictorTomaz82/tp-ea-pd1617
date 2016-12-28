@@ -6,12 +6,12 @@ public class Item {
 
     //aboutItem
     int itemId; //unique
-    String name;
+    String itemName;
     String description;
     Category category;
 
     //aboutSale
-    String sellerId;
+    String sellerUsername;
     int startPrice;
     int buyout;
 
@@ -21,13 +21,13 @@ public class Item {
 
     //--- Methods ---
     //Constructor without Category and Buyout 
-    public Item(int itemId, String name, String description, String sellerId, int startPrice) {
+    public Item(int itemId, String itemName, String description, String sellerUsername, int startPrice) {
 
         //ToDo: verify uniqueness of id on core to validate construction
         this.itemId = itemId;
-        this.name = name;
+        this.itemName = itemName;
         this.description = description;
-        this.sellerId = sellerId;
+        this.sellerUsername= sellerUsername;
         this.startPrice = startPrice;
         payed = false;
     }
@@ -40,12 +40,12 @@ public class Item {
         this.itemId = itemId;
     }
 
-    public String getName() {
-        return name;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public String getDescription() {
@@ -64,12 +64,12 @@ public class Item {
         this.category = category;
     }
 
-    public String getSellerId() {
-        return sellerId;
+    public String getSellerUsername() {
+        return sellerUsername;
     }
 
-    public void setSellerId(String sellerId) {
-        this.sellerId = sellerId;
+    public void setSellerUsername(String sellerUsername) {
+        this.sellerUsername = sellerUsername;
     }
 
     public double getStartPrice() {
@@ -108,10 +108,10 @@ public class Item {
     public String toString() {
         String msg;
         msg = "ItemId: " + itemId
-                + "\nName: " + name
+                + "\nItemName: " + itemName
                 + "\nDescription: " + description
                 + "\nCategory: " + category.getName()
-                + "\nSellerId: " + sellerId
+                + "\nSellerUsername: " + sellerUsername
                 + "\nStartPrice: " + startPrice
                 + "\nBuyout: " + buyout
                 + "\nBids: ";

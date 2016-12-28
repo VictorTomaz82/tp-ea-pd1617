@@ -72,8 +72,8 @@ public class Butler implements ButlerRemote {
     }
 
     @Override
-    public ArrayList<String> changePassword(String username, String password, String confirmPassword) {
-        return usertype.changePassword(username, password, confirmPassword);
+    public ArrayList<String> changePassword(String username, String password, String newPassword, String confirmPassword) {
+        return usertype.changePassword(username, password, newPassword, confirmPassword);
     }
 
     @Override
@@ -83,8 +83,8 @@ public class Butler implements ButlerRemote {
     }
 
     @Override
-    public ArrayList<String> doSale(String name, String description, String sellerId, int startPrice) {
-        return usertype.doSale(name, description, sellerId, startPrice);
+    public ArrayList<String> doSale(String sellerUsername, String itemName, String description,  int startPrice, int buyout) {
+        return usertype.doSale(sellerUsername, itemName, description, startPrice, buyout);
 
     }
 
@@ -95,21 +95,28 @@ public class Butler implements ButlerRemote {
     }
 
     @Override
-    public ArrayList<String> doBid(String itemId) {
-        return usertype.doBid(itemId);
+    public ArrayList<String> doBid(String itemId, int bid) {
+        return usertype.doBid(itemId, bid);
 
     }
 
     @Override
-    public ArrayList<String> denunce(String userId, String itemId, String motive) {
+    public ArrayList<String> denunceItem(String itemId, String motive) {
 
-        return usertype.denunce(userId, itemId, motive);
+        return usertype.denunceItem(itemId, motive);
+
+    }
+    
+        @Override
+    public ArrayList<String> denunceUser(String username, String motive) {
+
+        return usertype.denunceUser(username, motive);
 
     }
 
     @Override
-    public ArrayList<String> addBalance(int money) {
-        return usertype.addBalance(null, money);
+    public ArrayList<String> addBalance(String username, int money) {
+        return usertype.addBalance(username, money);
     }
 
     @Override
@@ -118,28 +125,28 @@ public class Butler implements ButlerRemote {
     }
 
     @Override
-    public ArrayList<String> askSuspension(String userId, String motive) {
-        return usertype.askSuspension(userId, motive);
+    public ArrayList<String> askSuspension(String username, String motive) {
+        return usertype.askSuspension(username, motive);
+    }
+
+//    @Override
+//    public ArrayList<String> unactivate(String userId) {
+//        return usertype.unactivate(userId);
+//    }
+
+    @Override
+    public ArrayList<String> suspendUser(String username, String motive) {
+        return usertype.suspendUser(username, motive);
     }
 
     @Override
-    public ArrayList<String> unactivate(String userId) {
-        return usertype.unactivate(userId);
+    public ArrayList<String> reactivateUser(String username) {
+        return usertype.reactivateUser(username);
     }
 
     @Override
-    public ArrayList<String> suspendUser(String userId, String motive) {
-        return usertype.suspendUser(userId, motive);
-    }
-
-    @Override
-    public ArrayList<String> reactivateUser(String userId) {
-        return usertype.reactivateUser(userId);
-    }
-
-    @Override
-    public ArrayList<String> seeUser(String userId) {
-        return usertype.seeUser(userId);
+    public ArrayList<String> seeUser(String username) {
+        return usertype.seeUser(username);
     }
 
     @Override

@@ -66,30 +66,30 @@ public class Admin extends UserTypeAdaptor {
     }
 
     @Override
-    public ArrayList<String> seeUser(String userId) {
+    public ArrayList<String> seeUser(String username) {
         responseToClient.clear();
         ArrayList<User> users = core.getUsers();
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUserId().equalsIgnoreCase(userId)) {
+            if (users.get(i).getUsername().equalsIgnoreCase(username)) {
                 responseToClient.add(users.get(i).toString());
                 return responseToClient;
             }
         }
-        responseToClient.add(Response.USER.toString()+ userId + Response.NEXIST.toString());
+        responseToClient.add(Response.USER.toString()+ username + Response.NEXIST.toString());
         return responseToClient;
     }
 
     @Override
-    public ArrayList<String> reactivateUser(String userId) {
+    public ArrayList<String> reactivateUser(String username) {
         responseToClient.clear();
         ArrayList<User> users = core.getUsers();
         Newsletter newsletter;
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUserId().equalsIgnoreCase(userId)) {
+            if (users.get(i).getUsername().equalsIgnoreCase(username)) {
                 if (!users.get(i).isActive()) {
                     users.get(i).setActive(true);
                     newsletter = core.getNewsletter();
-                    newsletter.accountReactivation(userId);
+                    newsletter.accountReactivation(username);
                     core.setNewsletter(newsletter);
                     responseToClient.add(Response.USER_REACTIVATED.toString());
                     return responseToClient;
@@ -99,18 +99,18 @@ public class Admin extends UserTypeAdaptor {
                 }
             }
         }
-        responseToClient.add(Response.USER.toString()+ userId + Response.NEXIST.toString());
+        responseToClient.add(Response.USER.toString()+ username + Response.NEXIST.toString());
         return responseToClient;
     }
 
     @Override
-    public ArrayList<String> suspendUser(String userId, String motive) {
+    public ArrayList<String> suspendUser(String username, String motive) {
         responseToClient.clear();
         ArrayList<User> users = core.getUsers();
         ArrayList<Suspension> suspensions;
         Newsletter newsletter;
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUserId().equalsIgnoreCase(userId)) {
+            if (users.get(i).getUsername().equalsIgnoreCase(username)) {
                 if (!users.get(i).isActive()) {
                     if (users.get(i).getSuspensions().isEmpty()) {
                         responseToClient.add(Response.USER_NEVER_ACTIVATED.toString());
@@ -126,56 +126,56 @@ public class Admin extends UserTypeAdaptor {
                     users.get(i).setSuspensions(suspensions);
                     core.setUsers(users);
                     newsletter = core.getNewsletter();
-                    newsletter.adminSuspendAccount(userId, motive);
+                    newsletter.adminSuspendAccount(username, motive);
                     core.setNewsletter(newsletter);
                     responseToClient.add(Response.USER_SUSPENDED.toString());
                     return responseToClient;
                 }
             }
         }
-        responseToClient.add(Response.USER.toString() + userId + Response.NEXIST.toString());
+        responseToClient.add(Response.USER.toString() + username + Response.NEXIST.toString());
         return responseToClient;
     }
 
-    @Override
-    public ArrayList<String> unactivate(String userId) {
-        responseToClient.clear();
-        ArrayList<User> users = core.getUsers();
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUserId().equalsIgnoreCase(userId)) {
-                if (users.get(i).isActive()) {
-                    users.get(i).setActive(false);
-                    responseToClient.add(Response.USER_SUSPENDED.toString());
-                    return responseToClient;
-                } else {
-                    responseToClient.add(Response.USER_NACTIVE.toString());
-                    return responseToClient;
-                }
-            }
-        }
-        responseToClient.add(Response.USER.toString() + userId + Response.NEXIST.toString());
-        return responseToClient;
-    }
+//    @Override
+//    public ArrayList<String> unactivate(String username) {
+//        responseToClient.clear();
+//        ArrayList<User> users = core.getUsers();
+//        for (int i = 0; i < users.size(); i++) {
+//            if (users.get(i).getUsername().equalsIgnoreCase(username)) {
+//                if (users.get(i).isActive()) {
+//                    users.get(i).setActive(false);
+//                    responseToClient.add(Response.USER_SUSPENDED.toString());
+//                    return responseToClient;
+//                } else {
+//                    responseToClient.add(Response.USER_NACTIVE.toString());
+//                    return responseToClient;
+//                }
+//            }
+//        }
+//        responseToClient.add(Response.USER.toString() + username + Response.NEXIST.toString());
+//        return responseToClient;
+//    }
 
     @Override
-    public ArrayList<String> messageUser(String senderId, String recipientId, String title, String body, Date time) {
+    public ArrayList<String> messageUser(String senderUsername, String recipientUsername, String title, String body, Date time) {
         responseToClient.clear();
         ArrayList<User> users = core.getUsers();
         ArrayList<Message> messages;
         User sender = null;
 
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUserId().equalsIgnoreCase(senderId)) {
+            if (users.get(i).getUsername().equalsIgnoreCase(senderUsername)) {
                 sender = users.get(i);
             }
         }
         if (sender == null) {
-            responseToClient.add(Response.USER.toString() + senderId + Response.NEXIST.toString());
+            responseToClient.add(Response.USER.toString() + senderUsername + Response.NEXIST.toString());
             return responseToClient;
         }
 
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUserId().equalsIgnoreCase(recipientId)) {
+            if (users.get(i).getUsername().equalsIgnoreCase(recipientUsername)) {
                 if (!users.get(i).isActive()) {
                     responseToClient.add(Response.USER_NACTIVE.toString());
                     return responseToClient;
@@ -189,16 +189,16 @@ public class Admin extends UserTypeAdaptor {
                 }
             }
         }
-        responseToClient.add(Response.USER.toString() + recipientId + Response.NEXIST.toString());
+        responseToClient.add(Response.USER.toString() + recipientUsername + Response.NEXIST.toString());
         return responseToClient;
     }
 
     @Override
-    public ArrayList<String> changePassword(String username, String password, String confirmPassword) {
+    public ArrayList<String> changePassword(String username, String password, String newPassword, String confirmPassword) {
         responseToClient.clear();
         ArrayList<User> users = core.getUsers();
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUserId().equalsIgnoreCase(username) && users.get(i).isAdministrator()) {
+            if (users.get(i).getUsername().equalsIgnoreCase(username) && users.get(i).isAdministrator()) {
                 users.get(i).setPassword(password);
                 core.setUsers(users);
                 responseToClient.add(Response.PASSWORD_CHANGED.toString());
