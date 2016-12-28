@@ -7,6 +7,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import logic.Category;
 import logic.Item;
+import logic.Message;
 import logic.Newsletter;
 import logic.Report;
 import logic.User;
@@ -20,6 +21,7 @@ public class Core implements CoreLocal {
     ArrayList<Report> reports;
     ArrayList<Item> items;
     ArrayList<Category> categories;
+    ArrayList<Message> messages;
 
     //--- Methods ---
     @PostConstruct

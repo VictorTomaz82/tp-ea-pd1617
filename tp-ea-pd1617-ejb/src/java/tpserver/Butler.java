@@ -14,6 +14,7 @@ public class Butler implements ButlerRemote {
     @EJB
     Core core;
 
+    String currentUsername;
     UserType usertype;
     ArrayList<String> responseToClient;
 
@@ -21,7 +22,9 @@ public class Butler implements ButlerRemote {
     public void load() {
 
         //by default any user is a visitor
+        currentUsername=Response.VISITOR.toString();
         usertype = new Visitor();
+        
         responseToClient = new ArrayList();
     }
 
@@ -30,17 +33,19 @@ public class Butler implements ButlerRemote {
     public ArrayList<String> login(String username, String password) {
         responseToClient.clear();
         for (int i = 0; i < core.getUsers().size(); i++) {
-            if (core.getUsers().get(i).getUserId().equalsIgnoreCase(username)
+            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username)
                     && core.getUsers().get(i).getPassword().equals(password)
                     && core.getUsers().get(i).isActive()) {
                 
                 if (core.getUsers().get(i).isAdministrator()) {
+                    currentUsername=Response.ADMIN.toString();
                     usertype = new Admin();
-                    responseToClient.add(Response.LOGIN_SUCCESS + core.getUsers().get(i).getUserId() + ".");
+                    responseToClient.add(Response.LOGIN_SUCCESS + core.getUsers().get(i).getUsername() + ".");
                     return responseToClient;
                 } else {
+                    currentUsername=username;
                     usertype = new NormalUser();
-                    responseToClient.add(Response.LOGIN_SUCCESS + core.getUsers().get(i).getUserId() + ".");
+                    responseToClient.add(Response.LOGIN_SUCCESS + core.getUsers().get(i).getUsername() + ".");
                     return responseToClient;
                 }
             }
@@ -164,10 +169,19 @@ public class Butler implements ButlerRemote {
         return usertype.changeCategory(name, newName, description);
     }
 
-// --- debug only (begin) ---
     @Override
-    public String teste() {
-        return core.teste();
+    public String getCurrentUsername() {
+        return currentUsername;
     }
+
+//    public void setCurrentUsername(String currentUsername) {
+//        this.currentUsername = currentUsername;
+//    }
+    
+// --- debug only (begin) ---
+//    @Override
+//    public String teste() {
+//        return core.teste();
+//    }
 // --- debug only (end) ---
 }

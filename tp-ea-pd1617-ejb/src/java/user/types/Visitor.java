@@ -14,7 +14,7 @@ public class Visitor extends UserTypeAdaptor {
         ArrayList<User> users = core.getUsers();
         Newsletter newsletter;
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUserId().equalsIgnoreCase(username) && users.get(i).getPassword().equals(password) && !users.get(i).isActive()) {
+            if (users.get(i).getUsername().equalsIgnoreCase(username) && users.get(i).getPassword().equals(password) && !users.get(i).isActive()) {
                 newsletter = core.getNewsletter();
                 newsletter.accountReactivation(username);
                 core.setNewsletter(newsletter);
@@ -32,7 +32,7 @@ public class Visitor extends UserTypeAdaptor {
         ArrayList<User> users = core.getUsers();
         Newsletter newsletter;
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUserId().equalsIgnoreCase(username)) {
+            if (users.get(i).getUsername().equalsIgnoreCase(username)) {
                 responseToClient.add(Response.USER_ALREDY_EXISTS.toString());
                 return responseToClient;
             }

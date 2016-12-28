@@ -160,36 +160,36 @@ public class Admin extends UserTypeAdaptor {
     @Override
     public ArrayList<String> messageUser(String senderUsername, String recipientUsername, String title, String body, Date time) {
         responseToClient.clear();
-        ArrayList<User> users = core.getUsers();
-        ArrayList<Message> messages;
-        User sender = null;
-
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUsername().equalsIgnoreCase(senderUsername)) {
-                sender = users.get(i);
-            }
-        }
-        if (sender == null) {
-            responseToClient.add(Response.USER.toString() + senderUsername + Response.NEXIST.toString());
-            return responseToClient;
-        }
-
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUsername().equalsIgnoreCase(recipientUsername)) {
-                if (!users.get(i).isActive()) {
-                    responseToClient.add(Response.USER_NACTIVE.toString());
-                    return responseToClient;
-                } else {
-                    messages = users.get(i).getInbox();
-                    messages.add(new Message(sender, users.get(i), title, body, new Date()));
-                    users.get(i).setInbox(messages);
-                    core.setUsers(users);
-                    responseToClient.add(Response.MESSAGE_SENT.toString());
-                    return responseToClient;
-                }
-            }
-        }
-        responseToClient.add(Response.USER.toString() + recipientUsername + Response.NEXIST.toString());
+//        ArrayList<User> users = core.getUsers();
+//        ArrayList<Message> messages;
+//        User sender = null;
+//
+//        for (int i = 0; i < users.size(); i++) {
+//            if (users.get(i).getUsername().equalsIgnoreCase(senderUsername)) {
+//                sender = users.get(i);
+//            }
+//        }
+//        if (sender == null) {
+//            responseToClient.add(Response.USER.toString() + senderUsername + Response.NEXIST.toString());
+//            return responseToClient;
+//        }
+//
+//        for (int i = 0; i < users.size(); i++) {
+//            if (users.get(i).getUsername().equalsIgnoreCase(recipientUsername)) {
+//                if (!users.get(i).isActive()) {
+//                    responseToClient.add(Response.USER_NACTIVE.toString());
+//                    return responseToClient;
+//                } else {
+//                    messages = users.get(i).getInbox();
+//                    messages.add(new Message(sender, users.get(i), title, body, new Date()));
+//                    users.get(i).setInbox(messages);
+//                    core.setUsers(users);
+//                    responseToClient.add(Response.MESSAGE_SENT.toString());
+//                    return responseToClient;
+//                }
+//            }
+//        }
+//        responseToClient.add(Response.USER.toString() + recipientUsername + Response.NEXIST.toString());
         return responseToClient;
     }
 

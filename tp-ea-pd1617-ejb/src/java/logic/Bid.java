@@ -7,15 +7,15 @@ import java.util.Date;
 public class Bid {
     
     String itemId;
-    User user;
+    User username;
     int value;
     Date time;
     DateFormat dateFormat;
 
     // --- Methods ---
-    public Bid(String itemId, User user, int value, Date time) {
+    public Bid(String itemId, User username, int value, Date time) {
         this.itemId = itemId;
-        this.user = user;
+        this.username = username;
         this.value = value;
         this.time = time;
         dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -29,12 +29,12 @@ public class Bid {
         this.itemId = itemId;
     }
     
-    public User getUser() {
-        return user;
+    public User getUsername() {
+        return username;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsername(User username) {
+        this.username = username;
     }
 
     public double getValue() {
@@ -55,6 +55,6 @@ public class Bid {
     
     @Override
     public String toString() {
-        return dateFormat.format(time) + " " + itemId +": "+ user.getUserId() + " " + value + "€";
+        return dateFormat.format(time) + " " + itemId +": "+ username + " " + value + "€";
     }
 }

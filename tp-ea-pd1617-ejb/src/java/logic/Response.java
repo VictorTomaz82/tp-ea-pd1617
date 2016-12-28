@@ -4,41 +4,47 @@ package logic;
 public enum Response{
 
     // --- Values ---
-    LOGIN_SUCCESS("Login Successful!\nWelcome "),
-    LOGIN_FAIL("Username and/or password is incorrect."),
-    PASSWORD_CHANGED("The password was successfully changed."),
     
-    ASK_ACCOUNT_SENT("Account request successfull.\nThe account still needs to be activated by the admin please wait for the activation."),
-    ASK_SUSPENSION_SENT("The suspension request was successfully sent."),
-    ASK_REACTIVATION_SENT("The reactivation request was successfully sent."),
+    VISITOR("Visitante"),
+    ADMIN("Admin"),
     
-    BALANCE1("\nYou have "),
-    BALANCE2("€ in your account."),
+    LOGIN_SUCCESS("Login realizado com sucesso!\nBemvindo "),
+    LOGIN_FAIL("Username e/ou password estao incorrectos."),
+    PASSWORD_CHANGED("Mudanca de password realizada com sucesso."),
     
-    BALANCE_ADDED1("Successfully added "),
-    BALANCE_ADDED2("€ to your account."),
+    ASK_ACCOUNT_SENT("Pedido de conta realizado com sucesso.\nA conta ainda necessita de ser validada pelo administrador."),
+    ASK_SUSPENSION_SENT("O pedido de suspensao foi realizado com sucesso."),
+    ASK_REACTIVATION_SENT("O pedido de reactivacao da conta foi realizado com sucesso."),
     
-    CATEGORY("The category \""),
+    BALANCE1("\nTem "),
+    BALANCE2("€ na sua conta."),
+    
+    BALANCE_ADDED1("Adicionados "),
+    BALANCE_ADDED2("€ a sua conta."),
+    
+    CATEGORY("A categoria \""),
         
-    CATEGORY_ADDED("The category was successfully added."),
-    CATEGORY_CHANGED("The category was successfully changed."),
+    CATEGORY_ADDED("A categoria foi adicionada com sucesso."),
+    CATEGORY_CHANGED("A categoria foi alterada com sucesso."),
     
-    MESSAGE_SENT("The message was successfully sent"),
+    MESSAGE_SENT("Mensagem enviada!"),
 
-    USER("The user \""),
-    USER_ALREDY_EXISTS("This username already exists."),
-    USER_SUSPENDED("The user was successfully suspended."),
-    USER_ALREADY_SUSPENDED("The user is already suspended."),
+    USER("O utilizador \""),
+    USER_ALREDY_EXISTS("O username ja existe."),
+    USER_SUSPENDED("O utilizador foi suspendido com sucesso."),
+    USER_ALREADY_SUSPENDED("O utilizador ja se encontra suspendido."),
     
-    USER_REACTIVATED("The user was successfully reactivated."),
-    USER_ALREADY_ACTIVE("The user is already active."),
-    USER_NACTIVE("The user isn't active."),
-    USER_NEVER_ACTIVATED("The user was never activated."),
+    USER_REACTIVATED("O utilizador foi reactivado com sucesso."),
+    USER_ALREADY_ACTIVE("O utilizador ja se encontra activo."),
+    USER_NACTIVE("O utilizador nao esta activo."),
+    
+    //check this
+    USER_NEVER_ACTIVATED("O utilizador nunca foi activado."),
        
-    ITEM("The item \""),
+    ITEM("O item \""),
       
-    NEXIST("\" doesn't exist."),
-    EXISTS("\" already exists."),
+    NEXIST("\" nao existe."),
+    EXISTS("\" ja existe."),
     
     //Placeholder variable
     LAST("");

@@ -4,22 +4,29 @@ import java.util.ArrayList;
 
 public class User {
 
-    String userId;
+//    String userId;
 
     String username;
     String password;
-    
+
     String name;
     String address;
     int balance;
     boolean active;
+    boolean logged;
     boolean administrator;
+
     ArrayList<Suspension> suspensions;
-    ArrayList<Item> sales;
-    ArrayList<Item> buys;
-    ArrayList<Item> bids; //nao confundir com class bid... ou entao trocar isto
-    ArrayList<Item> followed;
-    ArrayList<Message> inbox;
+    //arrays of itemId
+    ArrayList<String> sales;
+    ArrayList<String> buys;
+    ArrayList<String> followed;
+    
+    //arrays of messageId
+    ArrayList<String> mailbox;
+
+    //when adding to the bids of a item add to this array as well
+    ArrayList<Bid> lastBids;
 
     public User(String username, String password) {
         this.username = username;
@@ -28,21 +35,22 @@ public class User {
         address = new String();
         balance = 0;
         active = false;
+        logged = false;
         suspensions = new ArrayList<>();
         sales = new ArrayList<>();
         buys = new ArrayList<>();
-        bids = new ArrayList<>(); //nao confundir com class bid... ou entao trocar isto
+        lastBids = new ArrayList<>();
         followed = new ArrayList<>();
-        inbox = new ArrayList<>();
+        mailbox = new ArrayList<>();
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+//    public String getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(String userId) {
+//        this.userId = userId;
+//    }
 
     public String getUsername() {
         return username;
@@ -92,6 +100,14 @@ public class User {
         this.active = active;
     }
 
+    public boolean isLogged() {
+        return logged;
+    }
+
+    public void setLogged(boolean logged) {
+        this.logged = logged;
+    }
+
     public boolean isAdministrator() {
         return administrator;
     }
@@ -108,44 +124,44 @@ public class User {
         this.suspensions = suspensions;
     }
 
-    public ArrayList<Item> getSales() {
+    public ArrayList<String> getSales() {
         return sales;
     }
 
-    public void setSales(ArrayList<Item> sales) {
+    public void setSales(ArrayList<String> sales) {
         this.sales = sales;
     }
 
-    public ArrayList<Item> getBuys() {
+    public ArrayList<String> getBuys() {
         return buys;
     }
 
-    public void setBuys(ArrayList<Item> buys) {
+    public void setBuys(ArrayList<String> buys) {
         this.buys = buys;
     }
 
-    public ArrayList<Item> getBids() {
-        return bids;
-    }
-
-    public void setBids(ArrayList<Item> bids) {
-        this.bids = bids;
-    }
-
-    public ArrayList<Item> getFollowed() {
+    public ArrayList<String> getFollowed() {
         return followed;
     }
 
-    public void setFollowed(ArrayList<Item> followed) {
+    public void setFollowed(ArrayList<String> followed) {
         this.followed = followed;
     }
 
-    public ArrayList<Message> getInbox() {
-        return inbox;
+    public ArrayList<String> getMailbox() {
+        return mailbox;
     }
 
-    public void setInbox(ArrayList<Message> inbox) {
-        this.inbox = inbox;
+    public void setMailbox(ArrayList<String> mailbox) {
+        this.mailbox = mailbox;
+    }
+
+    public ArrayList<Bid> getLastBids() {
+        return lastBids;
+    }
+
+    public void setLastBids(ArrayList<Bid> lastBids) {
+        this.lastBids = lastBids;
     }
 
 }
