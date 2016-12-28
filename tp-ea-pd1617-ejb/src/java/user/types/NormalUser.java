@@ -4,8 +4,8 @@ package user.types;
 
 import java.util.ArrayList;
 import java.util.Date;
-import logic.Item;
 import logic.Newsletter;
+import logic.Response;
 import logic.User;
 
 public class NormalUser extends UserTypeAdaptor{
@@ -20,11 +20,11 @@ public class NormalUser extends UserTypeAdaptor{
                 newsletter = core.getNewsletter();
                 newsletter.userSuspendAccount(userId, motive);
                 core.setNewsletter(newsletter);
-                responseToClient.add("The suspension request was successfully sent.");
+                responseToClient.add(Response.ASK_SUSPENSION_SENT.toString());
                 return responseToClient;
             }
         }
-        responseToClient.add("The user \"" + userId + "\" doesn't exist.");
+        responseToClient.add(Response.USER.toString() + userId + Response.NEXIST.toString());
         return responseToClient;
     }
 
@@ -36,11 +36,11 @@ public class NormalUser extends UserTypeAdaptor{
             if (users.get(i).getUserId().equalsIgnoreCase(userId)) {
                 users.get(i).setBalance(users.get(i).getBalance() + money);
                 core.setUsers(users);
-                responseToClient.add("Successfully added " + money + "€ to your account.\nYou now have "+ users.get(i).getBalance() + "€ in your account.");
+                responseToClient.add(Response.BALANCE_ADDED1.toString() + money + Response.BALANCE_ADDED2.toString()+Response.BALANCE1.toString()+ users.get(i).getBalance() + Response.BALANCE2.toString());
                 return responseToClient;
             }
         }
-        responseToClient.add("The user \"" + userId + "\" doesn't exist.");
+        responseToClient.add(Response.USER.toString() + userId + Response.NEXIST.toString());
         return responseToClient;
     }
 
@@ -67,7 +67,7 @@ public class NormalUser extends UserTypeAdaptor{
 //                return responseToClient;
 //            }
 //        }
-        responseToClient.add("The user \"" + userId + "\" doesn't exist.");
+        responseToClient.add(Response.USER.toString() + userId + Response.NEXIST.toString());
         return responseToClient;
     }
 

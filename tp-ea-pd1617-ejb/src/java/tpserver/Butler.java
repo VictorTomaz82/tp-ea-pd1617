@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import logic.Response;
 import user.types.*;
 
 @Stateful
@@ -21,10 +22,10 @@ public class Butler implements ButlerRemote {
 
         //by default any user is a visitor
         usertype = new Visitor();
-        responseToClient = new ArrayList<>();
+        responseToClient = new ArrayList();
     }
 
-    //only "true" function of buttler
+    //only "true" function of butler
     @Override
     public ArrayList<String> login(String username, String password) {
         responseToClient.clear();
@@ -35,16 +36,16 @@ public class Butler implements ButlerRemote {
                 
                 if (core.getUsers().get(i).isAdministrator()) {
                     usertype = new Admin();
-                    responseToClient.add("Login Successful!\nWelcome " + core.getUsers().get(i).getUserId() + ".");
+                    responseToClient.add(Response.LOGIN_SUCCESS + core.getUsers().get(i).getUserId() + ".");
                     return responseToClient;
                 } else {
                     usertype = new NormalUser();
-                    responseToClient.add("Login Successful!\nWelcome " + core.getUsers().get(i).getUserId() + ".");
+                    responseToClient.add(Response.LOGIN_SUCCESS + core.getUsers().get(i).getUserId() + ".");
                     return responseToClient;
                 }
             }
         }
-        responseToClient.add("Username or password is incorrect.");
+        responseToClient.add(Response.LOGIN_FAIL.toString());
         return responseToClient;
     }
 
@@ -61,8 +62,8 @@ public class Butler implements ButlerRemote {
     }
 
     @Override
-    public ArrayList<String> askAccess(String username, String password, String confirmPassword) {
-        return usertype.askAccess(username, password, confirmPassword);
+    public ArrayList<String> askAccess(String username, String password) {
+        return usertype.askAccess(username, password);
     }
 
     @Override

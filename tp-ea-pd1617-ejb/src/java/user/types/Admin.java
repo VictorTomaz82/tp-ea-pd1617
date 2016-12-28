@@ -7,6 +7,7 @@ import logic.Category;
 import logic.Item;
 import logic.Message;
 import logic.Newsletter;
+import logic.Response;
 import logic.Suspension;
 import logic.User;
 
@@ -21,13 +22,13 @@ public class Admin extends UserTypeAdaptor {
             if (categories.get(i).getName().equalsIgnoreCase(name)) {
                 categories.get(i).setName(newName);
                 categories.get(i).setDescription(description);
-                responseToClient.add("The category was successfully changed.");
+                responseToClient.add(Response.CATEGORY_CHANGED.toString());
                 break;
             }
         }
 
         if (responseToClient.isEmpty()) {
-            responseToClient.add("The category \"" + name + "\" doesn't exist.");
+            responseToClient.add(Response.CATEGORY.toString() + name + Response.NEXIST.toString());
         }
 
         return responseToClient;
@@ -39,13 +40,13 @@ public class Admin extends UserTypeAdaptor {
         ArrayList<Category> categories = core.getCategories();
         for (int i = 0; i < categories.size(); i++) {
             if (categories.get(i).getName().equalsIgnoreCase(name)) {
-                responseToClient.add("The category \"" + name + "\" already exists.");
+                responseToClient.add(Response.CATEGORY.toString() + name + Response.EXISTS.toString());
                 return responseToClient;
             }
         }
         categories.add(new Category(name, description));
         core.setCategories(categories);
-        responseToClient.add("The category was successfully added.");
+        responseToClient.add(Response.CATEGORY_CHANGED.toString());
         return responseToClient;
     }
 
@@ -60,7 +61,7 @@ public class Admin extends UserTypeAdaptor {
                 return responseToClient;
             }
         }
-        responseToClient.add("The item \"" + itemId + "\" doesn't exist.");
+        responseToClient.add(Response.ITEM.toString() + itemId + Response.NEXIST.toString());
         return responseToClient;
     }
 
@@ -74,7 +75,7 @@ public class Admin extends UserTypeAdaptor {
                 return responseToClient;
             }
         }
-        responseToClient.add("The user \"" + userId + "\" doesn't exist.");
+        responseToClient.add(Response.USER.toString()+ userId + Response.NEXIST.toString());
         return responseToClient;
     }
 
@@ -90,15 +91,15 @@ public class Admin extends UserTypeAdaptor {
                     newsletter = core.getNewsletter();
                     newsletter.accountReactivation(userId);
                     core.setNewsletter(newsletter);
-                    responseToClient.add("The user was successfully reactivated.");
+                    responseToClient.add(Response.USER_REACTIVATED.toString());
                     return responseToClient;
                 } else {
-                    responseToClient.add("The user is already active.");
+                    responseToClient.add(Response.USER_ALREADY_ACTIVE.toString());
                     return responseToClient;
                 }
             }
         }
-        responseToClient.add("The user \"" + userId + "\" doesn't exist.");
+        responseToClient.add(Response.USER.toString()+ userId + Response.NEXIST.toString());
         return responseToClient;
     }
 
@@ -112,10 +113,10 @@ public class Admin extends UserTypeAdaptor {
             if (users.get(i).getUserId().equalsIgnoreCase(userId)) {
                 if (!users.get(i).isActive()) {
                     if (users.get(i).getSuspensions().isEmpty()) {
-                        responseToClient.add("The user was never activated.");
+                        responseToClient.add(Response.USER_NEVER_ACTIVATED.toString());
                         return responseToClient;
                     } else {
-                        responseToClient.add("The user is already suspended.");
+                        responseToClient.add(Response.USER_ALREADY_SUSPENDED.toString());
                         return responseToClient;
                     }
                 } else {
@@ -127,12 +128,12 @@ public class Admin extends UserTypeAdaptor {
                     newsletter = core.getNewsletter();
                     newsletter.adminSuspendAccount(userId, motive);
                     core.setNewsletter(newsletter);
-                    responseToClient.add("The user was successfully suspended.");
+                    responseToClient.add(Response.USER_SUSPENDED.toString());
                     return responseToClient;
                 }
             }
         }
-        responseToClient.add("The user \"" + userId + "\" doesn't exist.");
+        responseToClient.add(Response.USER.toString() + userId + Response.NEXIST.toString());
         return responseToClient;
     }
 
@@ -144,15 +145,15 @@ public class Admin extends UserTypeAdaptor {
             if (users.get(i).getUserId().equalsIgnoreCase(userId)) {
                 if (users.get(i).isActive()) {
                     users.get(i).setActive(false);
-                    responseToClient.add("The user was successfully suspended.");
+                    responseToClient.add(Response.USER_SUSPENDED.toString());
                     return responseToClient;
                 } else {
-                    responseToClient.add("The user isn't active.");
+                    responseToClient.add(Response.USER_NACTIVE.toString());
                     return responseToClient;
                 }
             }
         }
-        responseToClient.add("The user \"" + userId + "\" doesn't exist.");
+        responseToClient.add(Response.USER.toString() + userId + Response.NEXIST.toString());
         return responseToClient;
     }
 
@@ -169,26 +170,26 @@ public class Admin extends UserTypeAdaptor {
             }
         }
         if (sender == null) {
-            responseToClient.add("The sender user \"" + senderId + "\" doesn't exist.");
+            responseToClient.add(Response.USER.toString() + senderId + Response.NEXIST.toString());
             return responseToClient;
         }
 
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).getUserId().equalsIgnoreCase(recipientId)) {
                 if (!users.get(i).isActive()) {
-                    responseToClient.add("The user isn't active.");
+                    responseToClient.add(Response.USER_NACTIVE.toString());
                     return responseToClient;
                 } else {
                     messages = users.get(i).getInbox();
                     messages.add(new Message(sender, users.get(i), title, body, new Date()));
                     users.get(i).setInbox(messages);
                     core.setUsers(users);
-                    responseToClient.add("The message was successfully sent");
+                    responseToClient.add(Response.MESSAGE_SENT.toString());
                     return responseToClient;
                 }
             }
         }
-        responseToClient.add("The user \"" + recipientId + "\" doesn't exist.");
+        responseToClient.add(Response.USER.toString() + recipientId + Response.NEXIST.toString());
         return responseToClient;
     }
 
@@ -200,11 +201,12 @@ public class Admin extends UserTypeAdaptor {
             if (users.get(i).getUserId().equalsIgnoreCase(username) && users.get(i).isAdministrator()) {
                 users.get(i).setPassword(password);
                 core.setUsers(users);
-                responseToClient.add("The password was successfully changed.");
+                responseToClient.add(Response.PASSWORD_CHANGED.toString());
                 return responseToClient;
             }
         }
-        responseToClient.add("Username or password is incorrect.");
+        // check this!
+        responseToClient.add(Response.LOGIN_FAIL.toString());
         return responseToClient;
     }
 

@@ -24,6 +24,14 @@ public class Core implements CoreLocal {
     //--- Methods ---
     @PostConstruct
     public void load() {
+
+        //Initializate the sctructures
+        newsletter=new Newsletter();
+        users= new ArrayList();
+        reports=new ArrayList();
+        items=new ArrayList();
+        categories= new ArrayList();
+        
         //To be deleted after all data being permanently saved?
         if(users.isEmpty()){
             users.add(new User("admin","admin"));

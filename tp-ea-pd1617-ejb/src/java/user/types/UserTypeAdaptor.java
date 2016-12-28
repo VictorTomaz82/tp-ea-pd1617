@@ -54,7 +54,7 @@ public class UserTypeAdaptor implements UserType {
 
     //--- visitor ---
     @Override
-    public ArrayList<String> askAccess(String username, String password, String confirmpassword) {
+    public ArrayList<String> askAccess(String username, String password) {
 
         return null;
     }
