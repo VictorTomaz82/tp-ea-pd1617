@@ -21,14 +21,14 @@ public class Item {
 
     //--- Methods ---
     //Constructor without Category and Buyout 
-    public Item(int itemId, String itemName, String description, String sellerUsername, int startPrice) {
+    public Item(String itemName, String description, String sellerUsername, int startPrice, int buyout) {
 
         //ToDo: verify uniqueness of id on core to validate construction
-        this.itemId = itemId;
         this.itemName = itemName;
         this.description = description;
         this.sellerUsername= sellerUsername;
         this.startPrice = startPrice;
+        this.buyout = buyout;
         payed = false;
     }
 

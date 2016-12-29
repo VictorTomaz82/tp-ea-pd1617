@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Message {
 
-    String messageId;
+    int messageId;
     User sender;
     User recipient;
     String title;
@@ -24,6 +24,14 @@ public class Message {
         this.body = body;
         this.time = time;
         dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    }
+    
+    public int getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(int messageId) {
+        this.messageId = messageId;
     }
 
     public User getSender() {

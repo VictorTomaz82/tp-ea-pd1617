@@ -1,25 +1,24 @@
 package user.types;
 
 //ToDo: implement functions
-
 import java.util.ArrayList;
 import java.util.Date;
-import logic.Newsletter;
+import logic.Bid;
+import logic.Item;
+import logic.Message;
+import logic.ReportItem;
+import logic.ReportUser;
 import logic.Response;
 import logic.User;
 
-public class NormalUser extends UserTypeAdaptor{
+public class NormalUser extends UserTypeAdaptor {
 
     @Override
     public ArrayList<String> askSuspension(String username, String motive) {
         responseToClient.clear();
-        ArrayList<User> users = core.getUsers();
-        Newsletter newsletter;
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUsername().equalsIgnoreCase(username)) {
-                newsletter = core.getNewsletter();
-                newsletter.userSuspendAccount(username, motive);
-                core.setNewsletter(newsletter);
+        for (int i = 0; i < core.getUsers().size(); i++) {
+            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username)) {
+                core.getNewsletter().userSuspendAccount(username, motive);
                 responseToClient.add(Response.ASK_SUSPENSION_SENT.toString());
                 return responseToClient;
             }
@@ -31,12 +30,10 @@ public class NormalUser extends UserTypeAdaptor{
     @Override
     public ArrayList<String> addBalance(String username, int money) {
         responseToClient.clear();
-        ArrayList<User> users = core.getUsers();
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUsername().equalsIgnoreCase(username)) {
-                users.get(i).setBalance(users.get(i).getBalance() + money);
-                core.setUsers(users);
-                responseToClient.add(Response.BALANCE_ADDED1.toString() + money + Response.BALANCE_ADDED2.toString()+Response.BALANCE1.toString()+ users.get(i).getBalance() + Response.BALANCE2.toString());
+        for (int i = 0; i < core.getUsers().size(); i++) {
+            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username)) {
+                core.getUsers().get(i).setBalance(core.getUsers().get(i).getBalance() + money);
+                responseToClient.add(Response.BALANCE_ADDED1.toString() + money + Response.BALANCE_ADDED2.toString() + Response.BALANCE1.toString() + core.getUsers().get(i).getBalance() + Response.BALANCE2.toString());
                 return responseToClient;
             }
         }
@@ -46,73 +43,219 @@ public class NormalUser extends UserTypeAdaptor{
 
     @Override
     public ArrayList<String> payItem(String username, String itemId) {
-        
+        responseToClient.clear();
         //validate: only pay for items won buy user
-        
-//        responseToClient.clear();
-//        ArrayList<User> users = core.getUsers();
-//        ArrayList<Item> items = core.getItems();
-//        Item item;
-//        
-//        for(int i = 0; i < users.size(); i++){
-//            for(int j = 0; j < users.get(i).)
-//        
-//        }
-//        
-//        
-//        
-//        
-//        for (int i = 0; i < users.size(); i++) {
-//            if (users.get(i).getUsername().equalsIgnoreCase(username)) {
-//                users.get(i).setBalance(users.get(i).getBalance() + money);
-//                core.setUsers(users);
-//                responseToClient.add("Successfully added " + money + "€ to your account.\nYou now have "+ users.get(i).getBalance() + "€ in your account.");
-//                return responseToClient;
-//            }
-//        }
+        Item item = null;
+        for (int i = 0; i < core.getItems().size(); i++) {
+            if (core.getItems().get(i).getItemId() == Integer.parseInt(itemId)) {
+                item = core.getItems().get(i);
+                break;
+            }
+        }
+        if (item == null) {
+            responseToClient.add(Response.ITEM.toString() + itemId + Response.NEXIST.toString());
+            return responseToClient;
+        }
+        if (item.isPayed()) {
+            //already payed for item
+            responseToClient.add(Response.ITEM.toString() + itemId + Response.NEXIST.toString());
+            return responseToClient;
+        }
+        for (int i = 0; i < core.getUsers().size(); i++) {
+            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username)) {
+                if (core.getUsers().get(i).getBalance() - item.getBids().get(item.getBids().size() - 1).getValue() < 0) {
+                    //não existe saldo
+                    responseToClient.add(Response.BALANCE_ADDED2.toString() + Response.BALANCE1.toString() + core.getUsers().get(i).getBalance() + Response.BALANCE2.toString());
+                    return responseToClient;
+                } else {
+                    core.getUsers().get(i).setBalance(core.getUsers().get(i).getBalance() - item.getBids().get(item.getBids().size() - 1).getValue());
+
+                    for (int j = 0; j < core.getUsers().get(i).getWon().size(); j++) {
+                        if (core.getUsers().get(i).getWon().get(j) == Integer.parseInt(itemId)) {
+                            core.getUsers().get(i).getWon().remove(j);
+                            break;
+                        }
+                    }
+
+                    for (int j = 0; j < core.getItems().size(); i++) {
+                        if (core.getItems().get(j).getItemId() == Integer.parseInt(itemId)) {
+                            core.getItems().get(j).setPayed(true);
+                            break;
+                        }
+                    }
+                    //item pagado com sucesso
+                    responseToClient.add(Response.BALANCE_ADDED2.toString() + Response.BALANCE1.toString() + core.getUsers().get(i).getBalance() + Response.BALANCE2.toString());
+                    return responseToClient;
+                }
+            }
+        }
         responseToClient.add(Response.USER.toString() + username + Response.NEXIST.toString());
         return responseToClient;
     }
 
     @Override
-    public ArrayList<String> follow(String itemId) {
+    public ArrayList<String> follow(String username, String itemId) {
         responseToClient.clear();
+        Item item = null;
+        for (int i = 0; i < core.getItems().size(); i++) {
+            if (core.getItems().get(i).getItemId() == Integer.parseInt(itemId)) {
+                item = core.getItems().get(i);
+                break;
+            }
+        }
+        if (item == null) {
+            responseToClient.add(Response.ITEM.toString() + itemId + Response.NEXIST.toString());
+            return responseToClient;
+        }
+        for (int i = 0; i < core.getUsers().size(); i++) {
+            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username)) {
+                for (int j = 0; j < core.getUsers().get(i).getFollowed().size(); j++) {
+                    if (core.getUsers().get(i).getFollowed().get(j) == Integer.parseInt(itemId)) {
+                        //ja está a seguir o item
+                        responseToClient.add(Response.BALANCE_ADDED2.toString() + Response.BALANCE1.toString() + core.getUsers().get(i).getBalance() + Response.BALANCE2.toString());
+                        return responseToClient;
+                    }
+                }
+                core.getUsers().get(i).getFollowed().add(Integer.parseInt(itemId));
+                //adicionado com sucesso
+                responseToClient.add(Response.BALANCE_ADDED2.toString() + Response.BALANCE1.toString() + core.getUsers().get(i).getBalance() + Response.BALANCE2.toString());
+                return responseToClient;
+            }
+        }
+        responseToClient.add(Response.USER.toString() + username + Response.NEXIST.toString());
         return responseToClient;
     }
 
     @Override
     public ArrayList<String> denunceItem(String itemId, String motive) {
         responseToClient.clear();
+        for (int i = 0; i < core.getItems().size(); i++) {
+            if (core.getItems().get(i).getItemId() == Integer.parseInt(itemId)) {
+                core.getReports().add(new ReportItem(Integer.parseInt(itemId), motive));
+                //sucesso
+                responseToClient.add(Response.NEXIST.toString());
+                return responseToClient;
+            }
+        }
+        //erro item nao encontrado
+        responseToClient.add(Response.NEXIST.toString());
         return responseToClient;
     }
-    
-        @Override
+
+    @Override
     public ArrayList<String> denunceUser(String username, String motive) {
         responseToClient.clear();
+        for (int i = 0; i < core.getUsers().size(); i++) {
+            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username)) {
+                core.getReports().add(new ReportUser(core.getUsers().get(i).getUserId(), motive));
+                //sucesso
+                responseToClient.add(Response.NEXIST.toString());
+                return responseToClient;
+            }
+        }
+        //erro user nao encontrado
+        responseToClient.add(Response.NEXIST.toString());
         return responseToClient;
     }
 
     @Override
-    public ArrayList<String> doBid(String itemId, int bid) {
+    public ArrayList<String> doBid(String username, String itemId, int bid) {
         responseToClient.clear();
+        Item item = null;
+        for (int i = 0; i < core.getItems().size(); i++) {
+            if (core.getItems().get(i).getItemId() == Integer.parseInt(itemId)) {
+                item = core.getItems().get(i);
+                break;
+            }
+        }
+        if (item == null) {
+            responseToClient.add(Response.ITEM.toString() + itemId + Response.NEXIST.toString());
+            return responseToClient;
+        }
+        if (item.getBids().get(0).getValue() >= bid) {
+            //já existe um bid do mesmo valor ou superior
+            responseToClient.add(Response.ITEM.toString() + itemId + Response.NEXIST.toString());
+            return responseToClient;
+        }
+        for (int i = 0; i < core.getUsers().size(); i++) {
+            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username)) {
+                for (int j = 0; j < core.getItems().size(); j++) {
+                    if (core.getItems().get(j).getItemId() == Integer.parseInt(itemId)) {
+                        core.getUsers().get(i).getLastBids().add(0, new Bid(Integer.parseInt(itemId), core.getUsers().get(i), bid, new Date()));
+                        core.getItems().get(j).getBids().add(0, new Bid(Integer.parseInt(itemId), core.getUsers().get(i), bid, new Date()));
+                        //sucesso
+                        responseToClient.add(Response.NEXIST.toString());
+                        return responseToClient;
+                    }
+                }
+            }
+        }
+        //erro user nao encontrado
+        responseToClient.add(Response.NEXIST.toString());
         return responseToClient;
     }
 
     @Override
-    public ArrayList<String> doSale(String sellerUsername, String itemName, String description,  int startPrice, int buyout) {
+    public ArrayList<String> doSale(String sellerUsername, String itemName, String description, int startPrice, int buyout) {
         responseToClient.clear();
+        for (int i = 0; i < core.getUsers().size(); i++) {
+            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(sellerUsername)) {
+                core.getItems().add(new Item(itemName, description, sellerUsername, startPrice, buyout));
+                core.getUsers().get(i).getSales().add(core.getItems().get(core.getItems().size() - 1).getItemId());
+                //sucesso
+                responseToClient.add(Response.NEXIST.toString());
+                return responseToClient;
+            }
+        }
+        //erro user nao encontrado
+        responseToClient.add(Response.NEXIST.toString());
         return responseToClient;
     }
 
     @Override
     public ArrayList<String> messageUser(String senderId, String recipientId, String title, String body, Date time) {
         responseToClient.clear();
+        ArrayList<Message> messages;
+        User sender = null;
+
+        for (int i = 0; i < core.getUsers().size(); i++) {
+            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(senderId)) {
+                sender = core.getUsers().get(i);
+            }
+        }
+        if (sender == null) {
+            responseToClient.add(Response.USER.toString() + senderId + Response.NEXIST.toString());
+            return responseToClient;
+        }
+
+        for (int i = 0; i < core.getUsers().size(); i++) {
+            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(recipientId)) {
+                if (!core.getUsers().get(i).isActive()) {
+                    responseToClient.add(Response.USER_NACTIVE.toString());
+                    return responseToClient;
+                } else {
+                    core.getMessages().add(new Message(sender, core.getUsers().get(i), title, body, new Date()));
+                    core.getUsers().get(i).getMailbox().add(core.getMessages().get(core.getMessages().size() - 1).getMessageId());
+                    responseToClient.add(Response.MESSAGE_SENT.toString());
+                    return responseToClient;
+                }
+            }
+        }
+        responseToClient.add(Response.USER.toString() + recipientId + Response.NEXIST.toString());
         return responseToClient;
     }
 
     @Override
     public ArrayList<String> changePassword(String username, String password, String newPassword, String confirmPassword) {
         responseToClient.clear();
+        for (int i = 0; i < core.getUsers().size(); i++) {
+            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username) && core.getUsers().get(i).getPassword().equals(password) && newPassword.equals(confirmPassword)) {
+                core.getUsers().get(i).setPassword(password);
+                responseToClient.add(Response.PASSWORD_CHANGED.toString());
+                return responseToClient;
+            }
+        }
+        responseToClient.add(Response.LOGIN_FAIL.toString());
         return responseToClient;
     }
 }

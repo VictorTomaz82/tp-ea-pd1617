@@ -23,6 +23,7 @@ public class Core implements CoreLocal {
     ArrayList<Category> categories;
     ArrayList<Message> messages;
 
+
     //--- Methods ---
     @PostConstruct
     public void load() {
@@ -96,6 +97,14 @@ public class Core implements CoreLocal {
     @Override
     public void setCategories(ArrayList<Category> categories) {
         this.categories = categories;
+    }
+    
+    public ArrayList<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(ArrayList<Message> messages) {
+        this.messages = messages;
     }
 
     //----------------------DEBUG purposes only (begin)-------------------------

@@ -95,13 +95,13 @@ public class Butler implements ButlerRemote {
 
     @Override
     public ArrayList<String> follow(String itemId) {
-        return usertype.follow(itemId);
+        return usertype.follow(null, itemId);
 
     }
 
     @Override
     public ArrayList<String> doBid(String itemId, int bid) {
-        return usertype.doBid(itemId, bid);
+        return usertype.doBid(null, itemId, bid);
 
     }
 

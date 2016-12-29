@@ -86,7 +86,7 @@ public class UserTypeAdaptor implements UserType {
     }
 
     @Override
-    public ArrayList<String> doBid(String itemId, int bid) {
+    public ArrayList<String> doBid(String username, String itemId, int bid) {
 
         return null;
     }
@@ -104,7 +104,7 @@ public class UserTypeAdaptor implements UserType {
     }
 
     @Override
-    public ArrayList<String> follow(String itemId) {
+    public ArrayList<String> follow(String username, String itemId) {
 
         return null;
     }

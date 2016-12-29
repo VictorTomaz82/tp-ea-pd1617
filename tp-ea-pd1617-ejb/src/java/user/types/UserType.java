@@ -24,13 +24,13 @@ public interface UserType {
     //--- user ---
     public ArrayList<String> doSale(String sellerUsername, String itemName, String description, int startPrice, int buyout);
 
-    public ArrayList<String> doBid(String itemId, int bid);
+    public ArrayList<String> doBid(String username, String itemId, int bid);
 
     public ArrayList<String> denunceItem(String itemId, String motive);
     
     public ArrayList<String> denunceUser(String username, String motive);
 
-    public ArrayList<String> follow(String itemId);
+    public ArrayList<String> follow(String username, String itemId);
     
     public ArrayList<String> addBalance(String username, int money);
 

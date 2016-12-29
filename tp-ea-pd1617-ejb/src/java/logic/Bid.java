@@ -6,14 +6,14 @@ import java.util.Date;
 
 public class Bid {
     
-    String itemId;
+    int itemId;
     User username;
     int value;
     Date time;
     DateFormat dateFormat;
 
     // --- Methods ---
-    public Bid(String itemId, User username, int value, Date time) {
+    public Bid(int itemId, User username, int value, Date time) {
         this.itemId = itemId;
         this.username = username;
         this.value = value;
@@ -21,11 +21,11 @@ public class Bid {
         dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     }
 
-    public String getItemId() {
+    public int getItemId() {
         return itemId;
     }
 
-    public void setItemId(String itemId) {
+    public void setItemId(int itemId) {
         this.itemId = itemId;
     }
     
@@ -37,7 +37,7 @@ public class Bid {
         this.username = username;
     }
 
-    public double getValue() {
+    public int getValue() {
         return value;
     }
 
