@@ -57,15 +57,13 @@ public class NormalUser extends UserTypeAdaptor {
             return responseToClient;
         }
         if (item.isPayed()) {
-            //already payed for item
-            responseToClient.add(Response.ITEM.toString() + itemId + Response.NEXIST.toString());
+            responseToClient.add(Response.INSUFICIENT_BALANCE.toString() + itemId + Response.ITEM_ALREADY_PAYED.toString());
             return responseToClient;
         }
         for (int i = 0; i < core.getUsers().size(); i++) {
             if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username)) {
                 if (core.getUsers().get(i).getBalance() - item.getBids().get(item.getBids().size() - 1).getValue() < 0) {
-                    //não existe saldo
-                    responseToClient.add(Response.BALANCE_ADDED2.toString() + Response.BALANCE1.toString() + core.getUsers().get(i).getBalance() + Response.BALANCE2.toString());
+                    responseToClient.add(Response.INSUFICIENT_BALANCE.toString());
                     return responseToClient;
                 } else {
                     core.getUsers().get(i).setBalance(core.getUsers().get(i).getBalance() - item.getBids().get(item.getBids().size() - 1).getValue());
@@ -83,8 +81,7 @@ public class NormalUser extends UserTypeAdaptor {
                             break;
                         }
                     }
-                    //item pagado com sucesso
-                    responseToClient.add(Response.BALANCE_ADDED2.toString() + Response.BALANCE1.toString() + core.getUsers().get(i).getBalance() + Response.BALANCE2.toString());
+                    responseToClient.add(Response.ITEM.toString() + itemId + Response.ITEM_PAY.toString());
                     return responseToClient;
                 }
             }
@@ -111,14 +108,12 @@ public class NormalUser extends UserTypeAdaptor {
             if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username)) {
                 for (int j = 0; j < core.getUsers().get(i).getFollowed().size(); j++) {
                     if (core.getUsers().get(i).getFollowed().get(j) == Integer.parseInt(itemId)) {
-                        //ja está a seguir o item
-                        responseToClient.add(Response.BALANCE_ADDED2.toString() + Response.BALANCE1.toString() + core.getUsers().get(i).getBalance() + Response.BALANCE2.toString());
+                        responseToClient.add(Response.ITEM.toString() + itemId + Response.ITEM_ALREADY_FOLLOWING.toString());
                         return responseToClient;
                     }
                 }
                 core.getUsers().get(i).getFollowed().add(Integer.parseInt(itemId));
-                //adicionado com sucesso
-                responseToClient.add(Response.BALANCE_ADDED2.toString() + Response.BALANCE1.toString() + core.getUsers().get(i).getBalance() + Response.BALANCE2.toString());
+                responseToClient.add(Response.ITEM.toString() + itemId + Response.ITEM_FOLLOW_ADD.toString());
                 return responseToClient;
             }
         }
@@ -132,13 +127,11 @@ public class NormalUser extends UserTypeAdaptor {
         for (int i = 0; i < core.getItems().size(); i++) {
             if (core.getItems().get(i).getItemId() == Integer.parseInt(itemId)) {
                 core.getReports().add(new ReportItem(Integer.parseInt(itemId), motive));
-                //sucesso
-                responseToClient.add(Response.NEXIST.toString());
+                responseToClient.add(Response.DENUNCE_SUCCESS.toString());
                 return responseToClient;
             }
         }
-        //erro item nao encontrado
-        responseToClient.add(Response.NEXIST.toString());
+        responseToClient.add(Response.ITEM.toString() + itemId + Response.NEXIST.toString());
         return responseToClient;
     }
 
@@ -148,13 +141,11 @@ public class NormalUser extends UserTypeAdaptor {
         for (int i = 0; i < core.getUsers().size(); i++) {
             if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username)) {
                 core.getReports().add(new ReportUser(core.getUsers().get(i).getUserId(), motive));
-                //sucesso
-                responseToClient.add(Response.NEXIST.toString());
+                responseToClient.add(Response.DENUNCE_SUCCESS.toString());
                 return responseToClient;
             }
         }
-        //erro user nao encontrado
-        responseToClient.add(Response.NEXIST.toString());
+        responseToClient.add(Response.USER.toString() + username + Response.NEXIST.toString());
         return responseToClient;
     }
 
@@ -172,9 +163,12 @@ public class NormalUser extends UserTypeAdaptor {
             responseToClient.add(Response.ITEM.toString() + itemId + Response.NEXIST.toString());
             return responseToClient;
         }
+        if (item.isClosed()) {
+            responseToClient.add(Response.ITEM_CLOSED.toString());
+            return responseToClient;
+        }
         if (item.getBids().get(0).getValue() >= bid) {
-            //já existe um bid do mesmo valor ou superior
-            responseToClient.add(Response.ITEM.toString() + itemId + Response.NEXIST.toString());
+            responseToClient.add(Response.ITEM_LOW_BID1.toString() + item.getBids().get(0).getValue() + Response.ITEM_LOW_BID2.toString());
             return responseToClient;
         }
         for (int i = 0; i < core.getUsers().size(); i++) {
@@ -183,15 +177,17 @@ public class NormalUser extends UserTypeAdaptor {
                     if (core.getItems().get(j).getItemId() == Integer.parseInt(itemId)) {
                         core.getUsers().get(i).getLastBids().add(0, new Bid(Integer.parseInt(itemId), core.getUsers().get(i), bid, new Date()));
                         core.getItems().get(j).getBids().add(0, new Bid(Integer.parseInt(itemId), core.getUsers().get(i), bid, new Date()));
-                        //sucesso
-                        responseToClient.add(Response.NEXIST.toString());
+                        responseToClient.add(Response.ITEM_BID_SUCCESS.toString());
+                        if(core.getItems().get(j).getBuyout() <= bid){
+                            core.getItems().get(j).setClosed(true);
+                            responseToClient.add(Response.ITEM_WON.toString());
+                        }
                         return responseToClient;
                     }
                 }
             }
         }
-        //erro user nao encontrado
-        responseToClient.add(Response.NEXIST.toString());
+        responseToClient.add(Response.USER.toString() + username + Response.NEXIST.toString());
         return responseToClient;
     }
 
@@ -202,20 +198,17 @@ public class NormalUser extends UserTypeAdaptor {
             if (core.getUsers().get(i).getUsername().equalsIgnoreCase(sellerUsername)) {
                 core.getItems().add(new Item(itemName, description, sellerUsername, startPrice, buyout));
                 core.getUsers().get(i).getSales().add(core.getItems().get(core.getItems().size() - 1).getItemId());
-                //sucesso
-                responseToClient.add(Response.NEXIST.toString());
+                responseToClient.add(Response.ITEM.toString() + core.getItems().get(core.getItems().size() - 1).getItemId() + Response.ITEM_SUCCESS.toString());
                 return responseToClient;
             }
         }
-        //erro user nao encontrado
-        responseToClient.add(Response.NEXIST.toString());
+        responseToClient.add(Response.USER.toString() + sellerUsername + Response.NEXIST.toString());
         return responseToClient;
     }
 
     @Override
     public ArrayList<String> messageUser(String senderId, String recipientId, String title, String body, Date time) {
         responseToClient.clear();
-        ArrayList<Message> messages;
         User sender = null;
 
         for (int i = 0; i < core.getUsers().size(); i++) {

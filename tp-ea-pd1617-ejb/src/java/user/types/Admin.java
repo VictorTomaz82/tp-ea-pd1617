@@ -141,7 +141,6 @@ public class Admin extends UserTypeAdaptor {
     @Override
     public ArrayList<String> messageUser(String senderUsername, String recipientUsername, String title, String body, Date time) {
         responseToClient.clear();
-        ArrayList<Message> messages;
         User sender = null;
 
         for (int i = 0; i < core.getUsers().size(); i++) {

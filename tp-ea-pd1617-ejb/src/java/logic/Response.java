@@ -42,9 +42,26 @@ public enum Response{
     USER_NEVER_ACTIVATED("O utilizador nunca foi activado."),
        
     ITEM("O item \""),
+    ITEM_SUCCESS("\" foi adicionado com sucesso."),
+    ITEM_CLOSED("O periodo de licitacoes ja acabou."),
+    ITEM_ALREADY_FOLLOWING("\" ja se encontra nos seus items a seguir"),
+    ITEM_ALREADY_PAYED("\" ja foi pago."),
+    ITEM_WON("\nParabens o item e seu."),
+    ITEM_PAY("\" foi pago com sucesso."),
+    ITEM_FOLLOW_ADD("\" foi adicionado com sucesso nos seus items a seguir."),
+    ITEM_BID_CLOSED("O item \"."),
+    ITEM_BID_SUCCESS("A licitacao foi realizada com sucesso."),
+    ITEM_LOW_BID1("Ja existe uma licitacao do mesmo valor ou superior.\nA licitacao actual e de "),
+    ITEM_LOW_BID2("€."),
+    
+    DENUNCE_SUCCESS("Denuncia realizada com sucesso."),
       
     NEXIST("\" nao existe."),
     EXISTS("\" ja existe."),
+    
+    
+    
+    INSUFICIENT_BALANCE("Nao possui saldo suficiente."),
     
     //Placeholder variable
     LAST("");

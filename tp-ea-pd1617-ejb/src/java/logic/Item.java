@@ -18,6 +18,7 @@ public class Item {
     //aboutTransactions
     ArrayList<Bid> bids;
     boolean payed;
+    boolean closed;
 
     //--- Methods ---
     //Constructor without Category and Buyout 
@@ -30,6 +31,7 @@ public class Item {
         this.startPrice = startPrice;
         this.buyout = buyout;
         payed = false;
+        closed = false;
     }
 
     public int getItemId() {
@@ -72,7 +74,7 @@ public class Item {
         this.sellerUsername = sellerUsername;
     }
 
-    public double getStartPrice() {
+    public int getStartPrice() {
         return startPrice;
     }
 
@@ -80,7 +82,7 @@ public class Item {
         this.startPrice = startPrice;
     }
 
-    public double getBuyout() {
+    public int getBuyout() {
         return buyout;
     }
 
@@ -102,6 +104,14 @@ public class Item {
 
     public void setPayed(boolean payed) {
         this.payed = payed;
+    }
+    
+    public boolean isClosed() {
+        return closed;
+    }
+
+    public void setClosed(boolean closed) {
+        this.closed = closed;
     }
 
     @Override
