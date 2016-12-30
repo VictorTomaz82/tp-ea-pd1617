@@ -1,6 +1,5 @@
 package user.types;
 
-//ToDo: implement functions
 import java.util.ArrayList;
 import java.util.Date;
 import logic.Bid;
@@ -10,8 +9,15 @@ import logic.ReportItem;
 import logic.ReportUser;
 import logic.Response;
 import logic.User;
+import tpserver.Core;
 
 public class NormalUser extends UserTypeAdaptor {
+
+    public NormalUser(Core core) {
+        super(core);
+    }
+    
+    // --- Methods ---
 
     @Override
     public ArrayList<String> askSuspension(String username, String motive) {

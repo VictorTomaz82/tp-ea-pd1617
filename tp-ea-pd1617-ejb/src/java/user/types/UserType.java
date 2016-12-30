@@ -5,13 +5,17 @@ import java.util.Date;
 
 public interface UserType {
 
+    //---debug only (begin)---
+//    public String teste();
+    //---debug only (end)---
+
     //--- all ---
     public ArrayList<String> seeNews();
 
     public ArrayList<String> seeLastThree();
 
     //--- visitor ---
-    public ArrayList<String> askAccess(String username, String password);
+    public ArrayList<String> askAccess(String username, String password, String name, String address);
 
     public ArrayList<String> askReactivation(String username, String password);
 
@@ -27,11 +31,11 @@ public interface UserType {
     public ArrayList<String> doBid(String username, String itemId, int bid);
 
     public ArrayList<String> denunceItem(String itemId, String motive);
-    
+
     public ArrayList<String> denunceUser(String username, String motive);
 
     public ArrayList<String> follow(String username, String itemId);
-    
+
     public ArrayList<String> addBalance(String username, int money);
 
     public ArrayList<String> payItem(String username, String itemId);
@@ -39,7 +43,6 @@ public interface UserType {
     public ArrayList<String> askSuspension(String username, String motive);
 
 //    public ArrayList<String> unactivate(String userId);
-
     //--- admin ---
     public ArrayList<String> suspendUser(String username, String motive);
 

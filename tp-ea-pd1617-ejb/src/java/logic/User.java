@@ -21,18 +21,18 @@ public class User {
     ArrayList<Integer> sales;
     ArrayList<Integer> won;
     ArrayList<Integer> followed;
-    
+
     //arrays of messageId
     ArrayList<Integer> mailbox;
 
     //when adding to the bids of a item add to this array as well
     ArrayList<Bid> lastBids;
 
-    public User(String username, String password) {
+    public User(String username, String password, String name, String address) {
         this.username = username;
         this.password = password;
-        name = new String();
-        address = new String();
+        this.name = name;
+        this.address = address;
         balance = 0;
         active = false;
         logged = false;
@@ -164,4 +164,24 @@ public class User {
         this.lastBids = lastBids;
     }
 
+    @Override
+    public String toString() {
+        String msg;
+        msg = "UserId: " + userId
+                + "\nUsername: " + username
+                + "\nNome: " + name
+                + "\nMorada: " + address
+                + "\nSaldo: " + balance;
+        if (active) {
+            msg = msg + " Status: Activo";
+        } else {
+            msg = msg + " Status: Nao Activo";
+        }
+        if (logged) {
+            msg = msg + " | online.";
+        } else {
+            msg = msg + " | offline.";
+        }
+        return msg;
+    }
 }

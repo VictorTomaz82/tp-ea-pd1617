@@ -27,7 +27,7 @@ public class Item {
         //ToDo: verify uniqueness of id on core to validate construction
         this.itemName = itemName;
         this.description = description;
-        this.sellerUsername= sellerUsername;
+        this.sellerUsername = sellerUsername;
         this.startPrice = startPrice;
         this.buyout = buyout;
         payed = false;
@@ -105,7 +105,7 @@ public class Item {
     public void setPayed(boolean payed) {
         this.payed = payed;
     }
-    
+
     public boolean isClosed() {
         return closed;
     }
@@ -125,15 +125,18 @@ public class Item {
                 + "\nStartPrice: " + startPrice
                 + "\nBuyout: " + buyout
                 + "\nBids: ";
-        if(bids.isEmpty())
+        if (bids.isEmpty()) {
             msg = msg + "none";
-        else
-            for(int i = 0; i < bids.size(); i++)
+        } else {
+            for (int i = 0; i < bids.size(); i++) {
                 msg = msg + "\n\t" + bids.get(i).toString();
-        if(payed)
+            }
+        }
+        if (payed) {
             msg = msg + "\nPayed: True";
-        else
+        } else {
             msg = msg + "\nPayed: False";
+        }
         return msg;
     }
 }

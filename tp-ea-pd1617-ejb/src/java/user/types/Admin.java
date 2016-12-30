@@ -1,6 +1,5 @@
 package user.types;
 
-//ToDo: implement functions
 import java.util.ArrayList;
 import java.util.Date;
 import logic.Category;
@@ -8,9 +7,16 @@ import logic.Response;
 import logic.Suspension;
 import logic.User;
 import logic.Message;
+import tpserver.Core;
 
 public class Admin extends UserTypeAdaptor {
 
+    public Admin(Core core) {
+        super(core);
+    }
+    
+     // --- Methods ---
+    
     @Override
     public ArrayList<String> changeCategory(String name, String newName, String description) {
         responseToClient.clear();

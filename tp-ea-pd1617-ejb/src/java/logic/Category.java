@@ -1,4 +1,5 @@
 package logic;
+
 public class Category {
 
     String name; //unique
@@ -24,6 +25,11 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+        @Override
+    public String toString() {
+        return name+": "+description;
     }
 
 }

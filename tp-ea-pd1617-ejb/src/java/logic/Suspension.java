@@ -1,16 +1,20 @@
 package logic;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Suspension {
 
     String motive;
     Date time;
+    DateFormat dateFormat;
 
     //--- Methods ---
     public Suspension(String motive, Date time) {
         this.motive = motive;
         this.time = time;
+        dateFormat = new SimpleDateFormat(Response.DATE_FORMAT.toString());
     }
 
     public String getMotive() {
@@ -28,5 +32,12 @@ public class Suspension {
     public void setTime(Date time) {
         this.time = time;
     }
+
+    @Override
+    public String toString() {
+        return "Data: "+dateFormat.format(time)+" Motivo:"+motive;
+    }
+    
+    
 
 }

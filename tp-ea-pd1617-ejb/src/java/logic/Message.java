@@ -15,17 +15,15 @@ public class Message {
     DateFormat dateFormat;
 
     //--- Methods ---
-    
-    //Constructor without Body
     public Message(User sender, User recipient, String title, String body, Date time) {
         this.sender = sender;
         this.recipient = recipient;
         this.title = title;
         this.body = body;
         this.time = time;
-        dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        dateFormat = new SimpleDateFormat(Response.DATE_FORMAT.toString());
     }
-    
+
     public int getMessageId() {
         return messageId;
     }
@@ -68,6 +66,11 @@ public class Message {
 
     public Date getTime() {
         return time;
+    }
+    
+        @Override
+    public String toString() {
+        return messageId+"> Data: "+dateFormat.format(time)+" De:"+sender+" Para:"+recipient+" | Titulo: "+title+" \n \t"+body;
     }
 
 //    public void setTime(Date time) {

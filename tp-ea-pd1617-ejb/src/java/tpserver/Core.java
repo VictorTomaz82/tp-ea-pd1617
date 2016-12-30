@@ -37,7 +37,7 @@ public class Core implements CoreLocal {
         
         //To be deleted after all data being permanently saved?
         if(users.isEmpty()){
-            users.add(new User("admin","admin"));
+            users.add(new User("admin","admin","admin","Rua do Ze"));
             users.get(0).setActive(true);
             users.get(0).setAdministrator(true);
         }
@@ -108,10 +108,10 @@ public class Core implements CoreLocal {
     }
 
     //----------------------DEBUG purposes only (begin)-------------------------
-    @Override
-    public String teste() {
-        return "comunica";
-    }
+//    @Override
+//    public String teste() {
+//        return "comunica";
+//    }
     //-----------------------DEBUG purposes only (end)--------------------------
 
 }

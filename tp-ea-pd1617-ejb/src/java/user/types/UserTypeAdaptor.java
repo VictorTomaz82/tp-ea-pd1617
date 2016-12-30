@@ -3,21 +3,29 @@ package user.types;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import javax.ejb.EJB;
+
 import logic.Item;
 import tpserver.Core;
 
 // adaptor needed to remove the need to override all methods in usertypes
-public class UserTypeAdaptor implements UserType {
+public abstract class UserTypeAdaptor implements UserType {
 
-    @EJB
+//    @EJB
     Core core;
 
     ArrayList<String> responseToClient;
 
-    public UserTypeAdaptor() {
+    public UserTypeAdaptor(Core core) {
+        this.core = core;
         responseToClient = new ArrayList<>();
     }
+
+    // --- debug only (begin) ---
+//    @Override
+//    public String teste() {
+//        return core.teste();
+//    }
+// --- debug only (end) ---
 
     //--- all ---
     @Override
@@ -54,7 +62,7 @@ public class UserTypeAdaptor implements UserType {
 
     //--- visitor ---
     @Override
-    public ArrayList<String> askAccess(String username, String password) {
+    public ArrayList<String> askAccess(String username, String password,String name, String address) {
 
         return null;
     }
@@ -96,9 +104,9 @@ public class UserTypeAdaptor implements UserType {
 
         return null;
     }
-    
-        @Override
-    public ArrayList<String> denunceUser(String username,  String motive) {
+
+    @Override
+    public ArrayList<String> denunceUser(String username, String motive) {
 
         return null;
     }
@@ -108,8 +116,8 @@ public class UserTypeAdaptor implements UserType {
 
         return null;
     }
-    
-        @Override
+
+    @Override
     public ArrayList<String> addBalance(String username, int money) {
 
         return null;
@@ -120,8 +128,6 @@ public class UserTypeAdaptor implements UserType {
 
         return null;
     }
-
-
 
     @Override
     public ArrayList<String> askSuspension(String username, String motive) {
@@ -134,7 +140,6 @@ public class UserTypeAdaptor implements UserType {
 //
 //        return null;
 //    }
-
     @Override
     public ArrayList<String> suspendUser(String username, String motive) {
 

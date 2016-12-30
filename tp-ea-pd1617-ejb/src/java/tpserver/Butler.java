@@ -14,17 +14,18 @@ public class Butler implements ButlerRemote {
     @EJB
     Core core;
 
-    String currentUsername;
     UserType usertype;
+
+    String currentUsername;
     ArrayList<String> responseToClient;
 
     @PostConstruct
     public void load() {
 
         //by default any user is a visitor
-        currentUsername=Response.VISITOR.toString();
-        usertype = new Visitor();
-        
+        currentUsername = Response.VISITOR.toString();
+        usertype = new Visitor(core);
+
         responseToClient = new ArrayList();
     }
 
@@ -36,15 +37,15 @@ public class Butler implements ButlerRemote {
             if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username)
                     && core.getUsers().get(i).getPassword().equals(password)
                     && core.getUsers().get(i).isActive()) {
-                
+
                 if (core.getUsers().get(i).isAdministrator()) {
-                    currentUsername=Response.ADMIN.toString();
-                    usertype = new Admin();
+                    currentUsername = Response.ADMIN.toString();
+                    usertype = new Admin(core);
                     responseToClient.add(Response.LOGIN_SUCCESS + core.getUsers().get(i).getUsername() + ".");
                     return responseToClient;
                 } else {
-                    currentUsername=username;
-                    usertype = new NormalUser();
+                    currentUsername = username;
+                    usertype = new NormalUser(core);
                     responseToClient.add(Response.LOGIN_SUCCESS + core.getUsers().get(i).getUsername() + ".");
                     return responseToClient;
                 }
@@ -52,6 +53,11 @@ public class Butler implements ButlerRemote {
         }
         responseToClient.add(Response.LOGIN_FAIL.toString());
         return responseToClient;
+    }
+    
+    @Override
+    public void logout(){
+        this.load();
     }
 
     // for every request from remote the butler will ask the interface usertype
@@ -67,8 +73,8 @@ public class Butler implements ButlerRemote {
     }
 
     @Override
-    public ArrayList<String> askAccess(String username, String password) {
-        return usertype.askAccess(username, password);
+    public ArrayList<String> askAccess(String username, String password, String name, String address) {
+        return usertype.askAccess(username, password, name, address);
     }
 
     @Override
@@ -88,7 +94,7 @@ public class Butler implements ButlerRemote {
     }
 
     @Override
-    public ArrayList<String> doSale(String sellerUsername, String itemName, String description,  int startPrice, int buyout) {
+    public ArrayList<String> doSale(String sellerUsername, String itemName, String description, int startPrice, int buyout) {
         return usertype.doSale(sellerUsername, itemName, description, startPrice, buyout);
 
     }
@@ -111,8 +117,8 @@ public class Butler implements ButlerRemote {
         return usertype.denunceItem(itemId, motive);
 
     }
-    
-        @Override
+
+    @Override
     public ArrayList<String> denunceUser(String username, String motive) {
 
         return usertype.denunceUser(username, motive);
@@ -138,7 +144,6 @@ public class Butler implements ButlerRemote {
 //    public ArrayList<String> unactivate(String userId) {
 //        return usertype.unactivate(userId);
 //    }
-
     @Override
     public ArrayList<String> suspendUser(String username, String motive) {
         return usertype.suspendUser(username, motive);
@@ -177,11 +182,11 @@ public class Butler implements ButlerRemote {
 //    public void setCurrentUsername(String currentUsername) {
 //        this.currentUsername = currentUsername;
 //    }
-    
 // --- debug only (begin) ---
 //    @Override
 //    public String teste() {
-//        return core.teste();
+////        return core.teste();
+//        return usertype.teste();
 //    }
 // --- debug only (end) ---
 }

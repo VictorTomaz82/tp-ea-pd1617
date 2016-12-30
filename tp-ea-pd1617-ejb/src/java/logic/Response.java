@@ -59,9 +59,16 @@ public enum Response{
     NEXIST("\" nao existe."),
     EXISTS("\" ja existe."),
     
+    NEWS_NEW_USER(" - Novo utilizador registado: "),
+    NEWS_SUSPENDED_USER(" foi suspendido por \""),
+    NEWS_ASK_REACTIVATION(" pediu reactivacao da conta."),
+    NEWS_ITEM_SOLD1(" - O item "),
+    NEWS_ITEM_SOLD2(" foi vendido por "),
     
-    
+    CURRENCY("Borts"),
     INSUFICIENT_BALANCE("Nao possui saldo suficiente."),
+    
+    DATE_FORMAT("dd/MM/yyyy HH:mm:ss"),
     
     //Placeholder variable
     LAST("");

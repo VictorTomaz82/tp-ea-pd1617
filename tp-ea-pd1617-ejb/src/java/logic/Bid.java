@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Bid {
-    
+
     int itemId;
     User username;
     int value;
@@ -18,7 +18,7 @@ public class Bid {
         this.username = username;
         this.value = value;
         this.time = time;
-        dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        dateFormat = new SimpleDateFormat(Response.DATE_FORMAT.toString());
     }
 
     public int getItemId() {
@@ -28,7 +28,7 @@ public class Bid {
     public void setItemId(int itemId) {
         this.itemId = itemId;
     }
-    
+
     public User getUsername() {
         return username;
     }
@@ -52,9 +52,9 @@ public class Bid {
     public void setTime(Date time) {
         this.time = time;
     }
-    
+
     @Override
     public String toString() {
-        return dateFormat.format(time) + " " + itemId +": "+ username + " " + value + "€";
+        return dateFormat.format(time) + " " + itemId + ": " + username + " " + value + " " + Response.CURRENCY.toString();
     }
 }
