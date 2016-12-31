@@ -22,12 +22,25 @@ public class Item {
 
     //--- Methods ---
     //Constructor without Category and Buyout 
-    public Item(String itemName, String description, Category category, String sellerUsername, int startPrice, int buyout) {
+//    public Item(String itemName, String description, Category category, String sellerUsername, int startPrice, int buyout) {
+//
+//        //ToDo: verify uniqueness of id on core to validate construction
+//        this.itemName = itemName;
+//        this.description = description;
+//        this.category = category;
+//        this.sellerUsername = sellerUsername;
+//        this.startPrice = startPrice;
+//        this.buyout = buyout;
+//        bids = new ArrayList<>();
+//        payed = false;
+//        closed = false;
+//    }
+    
+        public Item(String itemName, String description, String sellerUsername, int startPrice, int buyout) {
 
         //ToDo: verify uniqueness of id on core to validate construction
         this.itemName = itemName;
         this.description = description;
-        this.category = category;
         this.sellerUsername = sellerUsername;
         this.startPrice = startPrice;
         this.buyout = buyout;
@@ -121,25 +134,25 @@ public class Item {
         if (closed && !payed && bids.isEmpty()) {
             return "ItemId: " + itemId
                     + "\nItemName: " + itemName
-                    + "\nCategory: " + category.getName()
+                    //+ "\nCategory: " + category.getName()
                     + "\nEstado: Nao houve licitacoes.\n";
         }
         if (closed && !payed && !bids.isEmpty()) {
             return "ItemId: " + itemId
                     + "\nItemName: " + itemName
-                    + "\nCategory: " + category.getName()
+                    //+ "\nCategory: " + category.getName()
                     + "\nEstado: A espera de pagamento.\n";
         }
         if (bids.isEmpty()) {
             return "ItemId: " + itemId
                     + "\nItemName: " + itemName
-                    + "\nCategory: " + category.getName()
+                    //+ "\nCategory: " + category.getName()
                     + "\nValor inicial: " + startPrice + "\n";
         }
 
         return "ItemId: " + itemId
                 + "\nItemName: " + itemName
-                + "\nCategory: " + category.getName()
+                //+ "\nCategory: " + category.getName()
                 + "\nUltima licitacao: " + bids.get(0).getValue() + "\n";
     }
 
@@ -149,7 +162,7 @@ public class Item {
         msg = "ItemId: " + itemId
                 + "\nItemName: " + itemName
                 + "\nDescription: " + description
-                + "\nCategory: " + category.getName()
+                //+ "\nCategory: " + category.getName()
                 + "\nSellerUsername: " + sellerUsername
                 + "\nStartPrice: " + startPrice
                 + "\nBuyout: " + buyout

@@ -342,24 +342,40 @@ public class NormalUser extends UserTypeAdaptor {
         return responseToClient;
     }
 
+//    @Override
+//    public ArrayList<String> doSale(String sellerUsername, String itemName, String categoryName, String description, int startPrice, int buyout) {
+//        responseToClient.clear();
+//        Category tmpCategory = null;
+//        
+//        for(int i = 0; i < core.getCategories().size(); i++){
+//            if(core.getCategories().get(i).getName().equalsIgnoreCase(categoryName))
+//                tmpCategory = core.getCategories().get(i);
+//        }
+//        
+//        if(tmpCategory == null){
+//            responseToClient.add(Response.CATEGORY.toString() + categoryName + Response.NEXIST.toString());
+//            return responseToClient;
+//        }
+//            
+//        for (int i = 0; i < core.getUsers().size(); i++) {
+//            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(sellerUsername)) {
+//                core.getItems().add(new Item(itemName, description, tmpCategory, sellerUsername, startPrice, buyout));
+//                core.getUsers().get(i).getSales().add(core.getItems().get(core.getItems().size() - 1).getItemId());
+//                responseToClient.add(Response.ITEM.toString() + core.getItems().get(core.getItems().size() - 1).getItemId() + Response.ITEM_SUCCESS.toString());
+//                return responseToClient;
+//            }
+//        }
+//        responseToClient.add(Response.USER.toString() + sellerUsername + Response.NEXIST.toString());
+//        return responseToClient;
+//    }
+
     @Override
-    public ArrayList<String> doSale(String sellerUsername, String itemName, String category, String description, int startPrice, int buyout) {
+    public ArrayList<String> doSale(String sellerUsername, String itemName, String description, int startPrice, int buyout) {
         responseToClient.clear();
-        Category tmpCategory = null;
-        
-        for(int i = 0; i < core.getCategories().size(); i++){
-            if(core.getCategories().get(i).getName().equalsIgnoreCase(category))
-                tmpCategory = core.getCategories().get(i);
-        }
-        
-        if(tmpCategory == null){
-            responseToClient.add(Response.CATEGORY.toString() + category + Response.NEXIST.toString());
-            return responseToClient;
-        }
             
         for (int i = 0; i < core.getUsers().size(); i++) {
             if (core.getUsers().get(i).getUsername().equalsIgnoreCase(sellerUsername)) {
-                core.getItems().add(new Item(itemName, description, tmpCategory, sellerUsername, startPrice, buyout));
+                core.getItems().add(new Item(itemName, description, sellerUsername, startPrice, buyout));
                 core.getUsers().get(i).getSales().add(core.getItems().get(core.getItems().size() - 1).getItemId());
                 responseToClient.add(Response.ITEM.toString() + core.getItems().get(core.getItems().size() - 1).getItemId() + Response.ITEM_SUCCESS.toString());
                 return responseToClient;
@@ -368,7 +384,7 @@ public class NormalUser extends UserTypeAdaptor {
         responseToClient.add(Response.USER.toString() + sellerUsername + Response.NEXIST.toString());
         return responseToClient;
     }
-
+    
     @Override
     public ArrayList<String> messageUser(String senderId, String recipientId, String title, String body, Date time) {
         responseToClient.clear();
