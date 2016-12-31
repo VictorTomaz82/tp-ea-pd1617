@@ -9,4 +9,9 @@ public class ReportUser extends Report {
         this.userId = userId;
         super.motive = motive;
     }
+    
+    @Override
+    public String toString() {
+        return userId+": "+motive;
+    }
 }

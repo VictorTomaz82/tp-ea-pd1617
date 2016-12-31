@@ -163,6 +163,24 @@ public class User {
     public void setLastBids(ArrayList<Bid> lastBids) {
         this.lastBids = lastBids;
     }
+    
+    public String getGenericInformation(){
+    
+        if(active && suspensions.isEmpty()){
+            return "UserId: " + userId
+                + "\nUsername: " + username
+                + "\nEstado: A aguardar ativacao.";
+        }
+        if(active && !suspensions.isEmpty()){
+            return "UserId: " + userId
+                + "\nUsername: " + username
+                + "\nEstado: Suspenso.";
+        }
+        
+        return "UserId: " + userId
+                + "\nUsername: " + username
+                + "\nEstado: Ativo.";
+    }
 
     @Override
     public String toString() {
@@ -173,9 +191,9 @@ public class User {
                 + "\nMorada: " + address
                 + "\nSaldo: " + balance;
         if (active) {
-            msg = msg + " Status: Activo";
+            msg = msg + "\nStatus: Activo";
         } else {
-            msg = msg + " Status: Nao Activo";
+            msg = msg + "\nStatus: Nao Activo";
         }
         if (logged) {
             msg = msg + " | online.";

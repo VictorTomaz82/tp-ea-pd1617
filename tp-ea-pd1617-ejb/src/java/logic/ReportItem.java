@@ -10,4 +10,8 @@ public class ReportItem extends Report {
         super.motive = motive;
     }
 
+    @Override
+    public String toString() {
+        return itemId+": "+motive;
+    }
 }

@@ -37,7 +37,7 @@ public class Butler implements ButlerRemote {
             if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username)
                     && core.getUsers().get(i).getPassword().equals(password)
                     && core.getUsers().get(i).isActive()) {
-
+                core.getUsers().get(i).setLogged(true);
                 if (core.getUsers().get(i).isAdministrator()) {
                     currentUsername = Response.ADMIN.toString();
                     usertype = new Admin(core);
@@ -54,10 +54,19 @@ public class Butler implements ButlerRemote {
         responseToClient.add(Response.LOGIN_FAIL.toString());
         return responseToClient;
     }
-    
+
     @Override
-    public void logout(){
+    public ArrayList<String> logout() {
         this.load();
+        for (int i = 0; i < core.getUsers().size(); i++) {
+            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(currentUsername)) {
+                core.getUsers().get(i).setLogged(false);
+                responseToClient.add(Response.LOUGOUT_SUCCESS.toString());
+                return responseToClient;
+            }
+        }
+        responseToClient.add(Response.USER.toString() + currentUsername + Response.NEXIST.toString());
+        return responseToClient;
     }
 
     // for every request from remote the butler will ask the interface usertype
@@ -88,6 +97,21 @@ public class Butler implements ButlerRemote {
     }
 
     @Override
+    public ArrayList<String> changeUserInformation(String name, String address) {
+        return usertype.changeUserInformation(currentUsername, name, address);
+    }
+
+    @Override
+    public ArrayList<String> viewMessageList() {
+        return usertype.viewMessageList(currentUsername);
+    }
+
+    @Override
+    public ArrayList<String> viewMessage(String messageId) {
+        return usertype.viewMessage(currentUsername, messageId);
+    }
+
+    @Override
     public ArrayList<String> messageUser(String senderId, String recipientId, String title, String body, Date time) {
         return usertype.messageUser(senderId, recipientId, title, body, time);
 
@@ -97,6 +121,31 @@ public class Butler implements ButlerRemote {
     public ArrayList<String> doSale(String sellerUsername, String itemName, String description, int startPrice, int buyout) {
         return usertype.doSale(sellerUsername, itemName, description, startPrice, buyout);
 
+    }
+
+    @Override
+    public ArrayList<String> viewUserItemsList() {
+        return usertype.viewUserItemsList(currentUsername);
+    }
+
+    @Override
+    public ArrayList<String> viewSellingItemList() {
+        return usertype.viewSellingItemList();
+    }
+
+    @Override
+    public ArrayList<String> viewBiddedItemList() {
+        return usertype.viewBiddedItemList(currentUsername);
+    }
+
+    @Override
+    public ArrayList<String> viewWonItemList() {
+        return usertype.viewWonItemList(currentUsername);
+    }
+    
+    @Override
+    public ArrayList<String> viewFollowedItemList() {
+        return usertype.viewFollowedItemList(currentUsername);
     }
 
     @Override
@@ -126,6 +175,11 @@ public class Butler implements ButlerRemote {
     }
 
     @Override
+    public ArrayList<String> viewUserBalance() {
+        return usertype.viewUserBalance(currentUsername);
+    }
+
+    @Override
     public ArrayList<String> addBalance(String username, int money) {
         return usertype.addBalance(username, money);
     }
@@ -140,13 +194,23 @@ public class Butler implements ButlerRemote {
         return usertype.askSuspension(username, motive);
     }
 
+    @Override
+    public ArrayList<String> viewDenunceList() {
+        return usertype.viewDenunceList();
+    }
 //    @Override
 //    public ArrayList<String> unactivate(String userId) {
 //        return usertype.unactivate(userId);
 //    }
+
     @Override
     public ArrayList<String> suspendUser(String username, String motive) {
         return usertype.suspendUser(username, motive);
+    }
+
+    @Override
+    public ArrayList<String> itemRemove(String itemId) {
+        return usertype.itemRemove(itemId);
     }
 
     @Override
@@ -155,13 +219,28 @@ public class Butler implements ButlerRemote {
     }
 
     @Override
+    public ArrayList<String> viewUserList() {
+        return usertype.viewUserList();
+    }
+
+    @Override
     public ArrayList<String> seeUser(String username) {
         return usertype.seeUser(username);
     }
 
     @Override
+    public ArrayList<String> viewItemList() {
+        return usertype.viewItemList();
+    }
+
+    @Override
     public ArrayList<String> seeItem(String itemId) {
         return usertype.seeItem(itemId);
+    }
+
+    @Override
+    public ArrayList<String> viewCategoryList() {
+        return usertype.viewCategoryList();
     }
 
     @Override

@@ -7,6 +7,8 @@ import logic.Response;
 import logic.Suspension;
 import logic.User;
 import logic.Message;
+import logic.ReportItem;
+import logic.ReportUser;
 import tpserver.Core;
 
 public class Admin extends UserTypeAdaptor {
@@ -14,9 +16,8 @@ public class Admin extends UserTypeAdaptor {
     public Admin(Core core) {
         super(core);
     }
-    
-     // --- Methods ---
-    
+
+    // --- Methods ---
     @Override
     public ArrayList<String> changeCategory(String name, String newName, String description) {
         responseToClient.clear();
@@ -52,6 +53,21 @@ public class Admin extends UserTypeAdaptor {
     }
 
     @Override
+    public ArrayList<String> viewCategoryList() {
+        responseToClient.clear();
+
+        for (int i = 0; i < core.getCategories().size(); i++) {
+            responseToClient.add(core.getCategories().get(i).toString());
+        }
+
+        if (responseToClient.isEmpty()) {
+            responseToClient.add(Response.NOTHING.toString());
+        }
+
+        return responseToClient;
+    }
+
+    @Override
     public ArrayList<String> seeItem(String itemId) {
         responseToClient.clear();
 
@@ -66,6 +82,19 @@ public class Admin extends UserTypeAdaptor {
     }
 
     @Override
+    public ArrayList<String> viewItemList() {
+        responseToClient.clear();
+
+        for (int i = 0; i < core.getItems().size(); i++) {
+            responseToClient.add(core.getItems().get(i).getGenericInformation());
+        }
+        if (responseToClient.isEmpty()) {
+            responseToClient.add(Response.NOTHING.toString());
+        }
+        return responseToClient;
+    }
+
+    @Override
     public ArrayList<String> seeUser(String username) {
         responseToClient.clear();
         for (int i = 0; i < core.getUsers().size(); i++) {
@@ -74,7 +103,21 @@ public class Admin extends UserTypeAdaptor {
                 return responseToClient;
             }
         }
-        responseToClient.add(Response.USER.toString()+ username + Response.NEXIST.toString());
+        responseToClient.add(Response.USER.toString() + username + Response.NEXIST.toString());
+        return responseToClient;
+    }
+
+    @Override
+    public ArrayList<String> viewUserList() {
+        responseToClient.clear();
+
+        for (int i = 0; i < core.getUsers().size(); i++) {
+            responseToClient.add(core.getUsers().get(i).getGenericInformation());
+        }
+
+        if (responseToClient.isEmpty()) {
+            responseToClient.add(Response.NOTHING.toString());
+        }
         return responseToClient;
     }
 
@@ -85,16 +128,38 @@ public class Admin extends UserTypeAdaptor {
             if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username)) {
                 if (!core.getUsers().get(i).isActive()) {
                     core.getUsers().get(i).setActive(true);
-                    core.getNewsletter().accountReactivation(username);
-                    responseToClient.add(Response.USER_REACTIVATED.toString());
-                    return responseToClient;
+                    if (core.getUsers().get(i).getSuspensions().isEmpty()) {
+                        core.getNewsletter().newAccountActivated(username);
+                        responseToClient.add(Response.USER_ACTIVATE.toString());
+                        return responseToClient;
+                    } else {
+                        core.getNewsletter().accountReactivation(username);
+                        responseToClient.add(Response.USER_REACTIVATED.toString());
+                        return responseToClient;
+                    }
                 } else {
                     responseToClient.add(Response.USER_ALREADY_ACTIVE.toString());
                     return responseToClient;
                 }
             }
         }
-        responseToClient.add(Response.USER.toString()+ username + Response.NEXIST.toString());
+        responseToClient.add(Response.USER.toString() + username + Response.NEXIST.toString());
+        return responseToClient;
+    }
+
+    @Override
+    public ArrayList<String> itemRemove(String itemId) {
+        responseToClient.clear();
+
+        for (int i = 0; i < core.getItems().size(); i++) {
+            if (core.getItems().get(i).getItemId() == Integer.parseInt(itemId)) {
+                core.getItems().remove(i);
+                responseToClient.add(Response.ITEM.toString() + itemId + Response.ITEM_REMOVED.toString());
+                return responseToClient;
+            }
+        }
+
+        responseToClient.add(Response.ITEM.toString() + itemId + Response.NEXIST.toString());
         return responseToClient;
     }
 
@@ -124,25 +189,28 @@ public class Admin extends UserTypeAdaptor {
         return responseToClient;
     }
 
-//    @Override
-//    public ArrayList<String> unactivate(String username) {
-//        responseToClient.clear();
-//        ArrayList<User> users = core.getUsers();
-//        for (int i = 0; i < users.size(); i++) {
-//            if (users.get(i).getUsername().equalsIgnoreCase(username)) {
-//                if (users.get(i).isActive()) {
-//                    users.get(i).setActive(false);
-//                    responseToClient.add(Response.USER_SUSPENDED.toString());
-//                    return responseToClient;
-//                } else {
-//                    responseToClient.add(Response.USER_NACTIVE.toString());
-//                    return responseToClient;
-//                }
-//            }
-//        }
-//        responseToClient.add(Response.USER.toString() + username + Response.NEXIST.toString());
-//        return responseToClient;
-//    }
+    @Override
+    public ArrayList<String> viewDenunceList() {
+        responseToClient.clear();
+
+        responseToClient.add(Response.DENUNCE_USER.toString());
+        for (int i = 0; i < core.getReports().size(); i++) {
+            if (core.getReports().get(i) instanceof ReportUser) {
+                responseToClient.add(core.getReports().get(i).toString());
+            }
+        }
+        responseToClient.add(Response.DENUNCE_ITEM.toString());
+        for (int i = 0; i < core.getReports().size(); i++) {
+            if (core.getReports().get(i) instanceof ReportItem) {
+                responseToClient.add(core.getReports().get(i).toString());
+            }
+        }
+
+        if (responseToClient.isEmpty()) {
+            responseToClient.add(Response.NOTHING.toString());
+        }
+        return responseToClient;
+    }
 
     @Override
     public ArrayList<String> messageUser(String senderUsername, String recipientUsername, String title, String body, Date time) {
@@ -165,8 +233,8 @@ public class Admin extends UserTypeAdaptor {
                     responseToClient.add(Response.USER_NACTIVE.toString());
                     return responseToClient;
                 } else {
-                    core.getMessages().add(new Message(sender, core.getUsers().get(i), title, body, new Date()));
-                    core.getUsers().get(i).getMailbox().add(core.getMessages().get(core.getMessages().size() - 1).getMessageId());
+                    core.getMessages().add(0, new Message(sender, core.getUsers().get(i), title, body, new Date()));
+                    core.getUsers().get(i).getMailbox().add(0, core.getMessages().get(core.getMessages().size() - 1).getMessageId());
                     responseToClient.add(Response.MESSAGE_SENT.toString());
                     return responseToClient;
                 }
@@ -180,7 +248,7 @@ public class Admin extends UserTypeAdaptor {
     public ArrayList<String> changePassword(String username, String password, String newPassword, String confirmPassword) {
         responseToClient.clear();
         for (int i = 0; i < core.getUsers().size(); i++) {
-            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username) && core.getUsers().get(i).getPassword().equals(password)&& newPassword.equals(confirmPassword)) {
+            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username) && core.getUsers().get(i).getPassword().equals(password) && newPassword.equals(confirmPassword)) {
                 core.getUsers().get(i).setPassword(password);
                 responseToClient.add(Response.PASSWORD_CHANGED.toString());
                 return responseToClient;

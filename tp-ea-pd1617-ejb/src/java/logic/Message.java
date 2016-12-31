@@ -13,6 +13,7 @@ public class Message {
     String body;
     Date time;
     DateFormat dateFormat;
+    boolean checked;
 
     //--- Methods ---
     public Message(User sender, User recipient, String title, String body, Date time) {
@@ -22,6 +23,7 @@ public class Message {
         this.body = body;
         this.time = time;
         dateFormat = new SimpleDateFormat(Response.DATE_FORMAT.toString());
+        checked = false;
     }
 
     public int getMessageId() {
@@ -67,10 +69,28 @@ public class Message {
     public Date getTime() {
         return time;
     }
-    
-        @Override
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public String getGenericInformation() {
+        if (!checked) {
+            return messageId + "> Data: " + dateFormat.format(time) + " De:" + sender + " Titulo: " + title + "Estado: Não Lida";
+        } else {
+            return messageId + "> Data: " + dateFormat.format(time) + " De:" + sender + " Titulo: " + title + "Estado: Lida";
+        }
+
+    }
+
+    @Override
     public String toString() {
-        return messageId+"> Data: "+dateFormat.format(time)+" De:"+sender+" Para:"+recipient+" | Titulo: "+title+" \n \t"+body;
+        checked = true;
+        return messageId + "> Data: " + dateFormat.format(time) + " De:" + sender + " Para:" + recipient + " | Titulo: " + title + " \n \t" + body;
     }
 
 //    public void setTime(Date time) {

@@ -31,6 +31,9 @@ public class Newsletter {
         news.add(0, dateFormat.format(date) + Response.NEWS_NEW_USER.toString() + username + ".\n");
     }
 
+    public void newAccountActivated(String username) {
+        news.add(0, dateFormat.format(date) + Response.NEWS_NEW_USER_ACTIVATED.toString() + username + ".\n");
+    }
     //Redundant!?
     public void userSuspendAccount(String username, String motive) {
         news.add(0, dateFormat.format(date) + " - " + username + Response.NEWS_SUSPENDED_USER.toString() + motive + "\".\n");

@@ -26,7 +26,6 @@ public abstract class UserTypeAdaptor implements UserType {
 //        return core.teste();
 //    }
 // --- debug only (end) ---
-
     //--- all ---
     @Override
     public ArrayList<String> seeNews() {
@@ -62,7 +61,7 @@ public abstract class UserTypeAdaptor implements UserType {
 
     //--- visitor ---
     @Override
-    public ArrayList<String> askAccess(String username, String password,String name, String address) {
+    public ArrayList<String> askAccess(String username, String password, String name, String address) {
 
         return null;
     }
@@ -76,44 +75,89 @@ public abstract class UserTypeAdaptor implements UserType {
     //--- admin & user ---
     @Override
     public ArrayList<String> changePassword(String username, String password, String newPassword, String confirmPassword) {
+        return null;
+    }
 
+    @Override
+    public ArrayList<String> changeUserInformation(String username, String name, String address) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<String> viewMessageList(String username) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<String> viewMessage(String username, String messageId) {
         return null;
     }
 
     @Override
     public ArrayList<String> messageUser(String senderId, String recipientId, String title, String body, Date time) {
+        return null;
 
+    }
+
+    @Override
+    public ArrayList<String> doSale(String sellerUsername, String itemName, String description, int startPrice, int buyout) {
+        return null;
+
+    }
+
+    @Override
+    public ArrayList<String> viewUserItemsList(String username) {
         return null;
     }
 
-    //--- user ---
     @Override
-    public ArrayList<String> doSale(String sellerUsername, String itemName, String description, int startPrice, int buyout) {
-
+    public ArrayList<String> viewSellingItemList() {
         return null;
+    }
+
+    @Override
+    public ArrayList<String> viewBiddedItemList(String username) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<String> viewWonItemList(String username) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<String> viewFollowedItemList(String username) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<String> follow(String username, String itemId) {
+        return null;
+
     }
 
     @Override
     public ArrayList<String> doBid(String username, String itemId, int bid) {
-
         return null;
+
     }
 
     @Override
     public ArrayList<String> denunceItem(String itemId, String motive) {
 
         return null;
+
     }
 
     @Override
     public ArrayList<String> denunceUser(String username, String motive) {
 
         return null;
+
     }
 
     @Override
-    public ArrayList<String> follow(String username, String itemId) {
-
+    public ArrayList<String> viewUserBalance(String username) {
         return null;
     }
 
@@ -141,7 +185,19 @@ public abstract class UserTypeAdaptor implements UserType {
 //        return null;
 //    }
     @Override
+    public ArrayList<String> viewDenunceList() {
+
+        return null;
+    }
+
+    @Override
     public ArrayList<String> suspendUser(String username, String motive) {
+
+        return null;
+    }
+
+    @Override
+    public ArrayList<String> itemRemove(String itemId) {
 
         return null;
     }
@@ -153,13 +209,31 @@ public abstract class UserTypeAdaptor implements UserType {
     }
 
     @Override
+    public ArrayList<String> viewUserList() {
+
+        return null;
+    }
+
+    @Override
     public ArrayList<String> seeUser(String username) {
 
         return null;
     }
 
     @Override
+    public ArrayList<String> viewItemList() {
+
+        return null;
+    }
+
+    @Override
     public ArrayList<String> seeItem(String itemId) {
+
+        return null;
+    }
+
+    @Override
+    public ArrayList<String> viewCategoryList() {
 
         return null;
     }

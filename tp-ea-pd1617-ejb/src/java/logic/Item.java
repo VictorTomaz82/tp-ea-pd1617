@@ -114,6 +114,33 @@ public class Item {
         this.closed = closed;
     }
 
+    public String getGenericInformation() {
+
+        if (closed && !payed && bids.isEmpty()) {
+            return "ItemId: " + itemId
+                    + "\nItemName: " + itemName
+                    + "\nCategory: " + category.getName()
+                    + "\nEstado: Nao houve licitacoes.";
+        }
+        if (closed && !payed && !bids.isEmpty()) {
+            return "ItemId: " + itemId
+                    + "\nItemName: " + itemName
+                    + "\nCategory: " + category.getName()
+                    + "\nEstado: A espera de pagamento.";
+        }
+        if (bids.isEmpty()) {
+            return "ItemId: " + itemId
+                    + "\nItemName: " + itemName
+                    + "\nCategory: " + category.getName()
+                    + "\nValor inicial: " + startPrice;
+        }
+
+        return "ItemId: " + itemId
+                + "\nItemName: " + itemName
+                + "\nCategory: " + category.getName()
+                + "\nUltima licitacao: " + bids.get(0).getValue();
+    }
+
     @Override
     public String toString() {
         String msg;
