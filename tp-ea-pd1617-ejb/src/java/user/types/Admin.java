@@ -133,7 +133,7 @@ public class Admin extends UserTypeAdaptor {
                         responseToClient.add(Response.USER_ACTIVATE.toString());
                         return responseToClient;
                     } else {
-                        core.getNewsletter().accountReactivation(username);
+                        core.getNewsletter().accountReactivated(username);
                         responseToClient.add(Response.USER_REACTIVATED.toString());
                         return responseToClient;
                     }

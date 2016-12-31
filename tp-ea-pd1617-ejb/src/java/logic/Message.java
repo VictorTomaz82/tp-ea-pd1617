@@ -80,9 +80,9 @@ public class Message {
 
     public String getGenericInformation() {
         if (!checked) {
-            return messageId + "> Data: " + dateFormat.format(time) + " De:" + sender + " Titulo: " + title + "Estado: Não Lida";
+            return messageId + "> Data: " + dateFormat.format(time) + " De:" + sender.getUsername() + " Titulo: " + title + "Estado: Não Lida";
         } else {
-            return messageId + "> Data: " + dateFormat.format(time) + " De:" + sender + " Titulo: " + title + "Estado: Lida";
+            return messageId + "> Data: " + dateFormat.format(time) + " De:" + sender.getUsername() + " Titulo: " + title + "Estado: Lida";
         }
 
     }

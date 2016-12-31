@@ -118,8 +118,8 @@ public class Butler implements ButlerRemote {
     }
 
     @Override
-    public ArrayList<String> doSale(String sellerUsername, String itemName, String description, int startPrice, int buyout) {
-        return usertype.doSale(sellerUsername, itemName, description, startPrice, buyout);
+    public ArrayList<String> doSale(String sellerUsername, String itemName, String category, String description, int startPrice, int buyout) {
+        return usertype.doSale(sellerUsername, itemName, category, description, startPrice, buyout);
 
     }
 
@@ -142,7 +142,7 @@ public class Butler implements ButlerRemote {
     public ArrayList<String> viewWonItemList() {
         return usertype.viewWonItemList(currentUsername);
     }
-    
+
     @Override
     public ArrayList<String> viewFollowedItemList() {
         return usertype.viewFollowedItemList(currentUsername);

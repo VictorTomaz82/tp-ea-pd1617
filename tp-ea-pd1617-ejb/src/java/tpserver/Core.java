@@ -23,21 +23,21 @@ public class Core implements CoreLocal {
     ArrayList<Category> categories;
     ArrayList<Message> messages;
 
-
     //--- Methods ---
     @PostConstruct
     public void load() {
 
         //Initializate the sctructures
-        newsletter=new Newsletter();
-        users= new ArrayList();
-        reports=new ArrayList();
-        items=new ArrayList();
-        categories= new ArrayList();
-        
+        newsletter = new Newsletter();
+        users = new ArrayList();
+        reports = new ArrayList();
+        items = new ArrayList();
+        categories = new ArrayList();
+        messages = new ArrayList<>();
+
         //To be deleted after all data being permanently saved?
-        if(users.isEmpty()){
-            users.add(new User("admin","admin","admin","Rua do Ze"));
+        if (users.isEmpty()) {
+            users.add(new User("admin", "admin", "admin", "Rua do Ze"));
             users.get(0).setActive(true);
             users.get(0).setAdministrator(true);
         }
@@ -58,7 +58,7 @@ public class Core implements CoreLocal {
     public void setNewsletter(Newsletter newsletter) {
         this.newsletter = newsletter;
     }
-    
+
     @Override
     public ArrayList<User> getUsers() {
         return users;
@@ -98,7 +98,7 @@ public class Core implements CoreLocal {
     public void setCategories(ArrayList<Category> categories) {
         this.categories = categories;
     }
-    
+
     public ArrayList<Message> getMessages() {
         return messages;
     }
@@ -113,5 +113,4 @@ public class Core implements CoreLocal {
 //        return "comunica";
 //    }
     //-----------------------DEBUG purposes only (end)--------------------------
-
 }

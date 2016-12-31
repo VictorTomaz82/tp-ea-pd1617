@@ -10,9 +10,8 @@ public class Visitor extends UserTypeAdaptor {
     public Visitor(Core core) {
         super(core);
     }
-    
+
     // --- Methods ---
-    
     @Override
     public ArrayList<String> askReactivation(String username, String password) {
         responseToClient.clear();
@@ -36,9 +35,9 @@ public class Visitor extends UserTypeAdaptor {
                 return responseToClient;
             }
         }
-            core.getUsers().add(new User(username, password,name,address));
-            core.getNewsletter().newAccount(username);
-            responseToClient.add(Response.ASK_ACCOUNT_SENT.toString());
-            return responseToClient;
+        core.getUsers().add(new User(username, password, name, address));
+        core.getNewsletter().newAccount(username);
+        responseToClient.add(Response.ASK_ACCOUNT_SENT.toString());
+        return responseToClient;
     }
 }

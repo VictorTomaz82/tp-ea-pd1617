@@ -22,14 +22,16 @@ public class Item {
 
     //--- Methods ---
     //Constructor without Category and Buyout 
-    public Item(String itemName, String description, String sellerUsername, int startPrice, int buyout) {
+    public Item(String itemName, String description, Category category, String sellerUsername, int startPrice, int buyout) {
 
         //ToDo: verify uniqueness of id on core to validate construction
         this.itemName = itemName;
         this.description = description;
+        this.category = category;
         this.sellerUsername = sellerUsername;
         this.startPrice = startPrice;
         this.buyout = buyout;
+        bids = new ArrayList<>();
         payed = false;
         closed = false;
     }
@@ -120,25 +122,25 @@ public class Item {
             return "ItemId: " + itemId
                     + "\nItemName: " + itemName
                     + "\nCategory: " + category.getName()
-                    + "\nEstado: Nao houve licitacoes.";
+                    + "\nEstado: Nao houve licitacoes.\n";
         }
         if (closed && !payed && !bids.isEmpty()) {
             return "ItemId: " + itemId
                     + "\nItemName: " + itemName
                     + "\nCategory: " + category.getName()
-                    + "\nEstado: A espera de pagamento.";
+                    + "\nEstado: A espera de pagamento.\n";
         }
         if (bids.isEmpty()) {
             return "ItemId: " + itemId
                     + "\nItemName: " + itemName
                     + "\nCategory: " + category.getName()
-                    + "\nValor inicial: " + startPrice;
+                    + "\nValor inicial: " + startPrice + "\n";
         }
 
         return "ItemId: " + itemId
                 + "\nItemName: " + itemName
                 + "\nCategory: " + category.getName()
-                + "\nUltima licitacao: " + bids.get(0).getValue();
+                + "\nUltima licitacao: " + bids.get(0).getValue() + "\n";
     }
 
     @Override
@@ -160,9 +162,9 @@ public class Item {
             }
         }
         if (payed) {
-            msg = msg + "\nPayed: True";
+            msg = msg + "\nPayed: True\n";
         } else {
-            msg = msg + "\nPayed: False";
+            msg = msg + "\nPayed: False\n";
         }
         return msg;
     }

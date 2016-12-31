@@ -34,6 +34,7 @@ public class Newsletter {
     public void newAccountActivated(String username) {
         news.add(0, dateFormat.format(date) + Response.NEWS_NEW_USER_ACTIVATED.toString() + username + ".\n");
     }
+
     //Redundant!?
     public void userSuspendAccount(String username, String motive) {
         news.add(0, dateFormat.format(date) + " - " + username + Response.NEWS_SUSPENDED_USER.toString() + motive + "\".\n");
@@ -44,7 +45,11 @@ public class Newsletter {
     }
 
     public void accountReactivation(String username) {
-        news.add(0, dateFormat.format(date) + " - " + username + Response.NEWS_ASK_REACTIVATION.toString()+".\n");
+        news.add(0, dateFormat.format(date) + " - " + username + Response.NEWS_ASK_REACTIVATION.toString() + "\n");
+    }
+
+    public void accountReactivated(String username) {
+        news.add(0, dateFormat.format(date) + " - " + username + Response.NEWS_ASK_REACTIVATED.toString() + "\n");
     }
 
     // Sold to whom?

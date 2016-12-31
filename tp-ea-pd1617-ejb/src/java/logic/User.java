@@ -166,20 +166,20 @@ public class User {
     
     public String getGenericInformation(){
     
-        if(active && suspensions.isEmpty()){
+        if(!active && suspensions.isEmpty()){
             return "UserId: " + userId
                 + "\nUsername: " + username
-                + "\nEstado: A aguardar ativacao.";
+                + "\nEstado: A aguardar ativacao.\n";
         }
-        if(active && !suspensions.isEmpty()){
+        if(!active && !suspensions.isEmpty()){
             return "UserId: " + userId
                 + "\nUsername: " + username
-                + "\nEstado: Suspenso.";
+                + "\nEstado: Suspenso.\n";
         }
         
         return "UserId: " + userId
                 + "\nUsername: " + username
-                + "\nEstado: Ativo.";
+                + "\nEstado: Ativo.\n";
     }
 
     @Override
@@ -196,9 +196,9 @@ public class User {
             msg = msg + "\nStatus: Nao Activo";
         }
         if (logged) {
-            msg = msg + " | online.";
+            msg = msg + " | online.\n";
         } else {
-            msg = msg + " | offline.";
+            msg = msg + " | offline.\n";
         }
         return msg;
     }
