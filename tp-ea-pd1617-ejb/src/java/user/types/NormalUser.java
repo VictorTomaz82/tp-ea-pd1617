@@ -157,6 +157,10 @@ public class NormalUser extends UserTypeAdaptor {
             responseToClient.add(Response.ITEM_CLOSED.toString());
             return responseToClient;
         }
+        if (item.getBids().isEmpty() && item.getStartPrice() >= bid) {
+            responseToClient.add(Response.ITEM_LOW_BID1.toString() + item.getBids().get(0).getValue() + Response.ITEM_LOW_BID2.toString());
+            return responseToClient;
+        }
         if (!item.getBids().isEmpty() && item.getBids().get(0).getValue() >= bid) {
             responseToClient.add(Response.ITEM_LOW_BID1.toString() + item.getBids().get(0).getValue() + Response.ITEM_LOW_BID2.toString());
             return responseToClient;
