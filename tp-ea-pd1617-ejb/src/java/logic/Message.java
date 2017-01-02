@@ -1,12 +1,16 @@
 package logic;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Message {
+public class Message implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
 
     int messageId;
+    
     User sender;
     User recipient;
     String title;

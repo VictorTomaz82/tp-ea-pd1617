@@ -1,6 +1,8 @@
 package logic;
 
-public abstract class Report {
+import java.io.Serializable;
+
+public abstract class Report implements Serializable{
 
     String motive;
 }

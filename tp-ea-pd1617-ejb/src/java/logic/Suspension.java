@@ -1,10 +1,15 @@
 package logic;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Suspension {
+public class Suspension implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
+    
+    int suspensionId;
 
     String motive;
     Date time;

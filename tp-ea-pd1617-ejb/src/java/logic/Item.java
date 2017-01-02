@@ -1,11 +1,17 @@
 package logic;
 
+import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-public class Item {
+public class Item implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
 
     //aboutItem
     int itemId; //unique
+    
     String itemName;
     String description;
     Category category;
@@ -14,6 +20,8 @@ public class Item {
     String sellerUsername;
     int startPrice;
     int buyout;
+    Date endTime;
+    DateFormat dateFormat;
 
     //aboutTransactions
     ArrayList<Bid> bids;
@@ -22,6 +30,8 @@ public class Item {
 
     //--- Methods ---
     //Constructor without Category and Buyout 
+    
+    //ToDo: missing endTime!!
     public Item(String itemName, String description, Category category, String sellerUsername, int startPrice, int buyout) {
 
         //ToDo: verify uniqueness of id on core to validate construction
@@ -31,6 +41,7 @@ public class Item {
         this.sellerUsername = sellerUsername;
         this.startPrice = startPrice;
         this.buyout = buyout;
+        endTime= new Date();
         bids = new ArrayList<>();
         payed = false;
         closed = false;
@@ -115,6 +126,16 @@ public class Item {
     public void setClosed(boolean closed) {
         this.closed = closed;
     }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+    
+    
 
     public String getGenericInformation() {
 

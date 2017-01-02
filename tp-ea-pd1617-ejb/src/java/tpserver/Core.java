@@ -1,20 +1,32 @@
 package tpserver;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.LocalBean;
+import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import logic.Category;
 import logic.Item;
 import logic.Message;
 import logic.Newsletter;
 import logic.Report;
+import logic.Response;
 import logic.User;
 
 @Singleton
 @LocalBean
-public class Core implements CoreLocal {
+public class Core implements CoreLocal, Serializable {
 
     Newsletter newsletter;
     ArrayList<User> users;
@@ -26,15 +38,33 @@ public class Core implements CoreLocal {
     //--- Methods ---
     @PostConstruct
     public void load() {
+        //load from file/database
+        try (ObjectInputStream ois
+                = new ObjectInputStream(
+                        new BufferedInputStream(
+                                new FileInputStream("/temp/tp1617")))) {
+            newsletter = (Newsletter) ois.readObject();
+            users = (ArrayList<User>) ois.readObject();
+            reports = (ArrayList<Report>) ois.readObject();
+            items = (ArrayList<Item>) ois.readObject();
+            categories = (ArrayList<Category>) ois.readObject();
+            messages = (ArrayList<Message>) ois.readObject();
+        } catch (Exception e) {
+            //ToDo
+            newsletter = new Newsletter();
+            users = new ArrayList();
+            reports = new ArrayList();
+            items = new ArrayList();
+            categories = new ArrayList();
+            messages = new ArrayList<>();
+        }
 
-        //Initializate the sctructures
-        newsletter = new Newsletter();
-        users = new ArrayList();
-        reports = new ArrayList();
-        items = new ArrayList();
-        categories = new ArrayList();
-        messages = new ArrayList<>();
-
+//        newsletter = new Newsletter();
+//        users = new ArrayList();
+//        reports = new ArrayList();
+//        items = new ArrayList();
+//        categories = new ArrayList();
+//        messages = new ArrayList<>();
         //To be deleted after all data being permanently saved?
         if (users.isEmpty()) {
             users.add(new User("admin", "admin", "admin", "Rua do Ze"));
@@ -45,8 +75,39 @@ public class Core implements CoreLocal {
 
     @PreDestroy
     public void save() {
+        //save to file/database
+        try (ObjectOutputStream oos
+                = new ObjectOutputStream(
+                        new BufferedOutputStream(
+                                new FileOutputStream("/temp/tp1617")))) {
+            oos.writeObject(newsletter);
+            oos.writeObject(users);
+            oos.writeObject(reports);
+            oos.writeObject(items);
+            oos.writeObject(categories);
+            oos.writeObject(messages);
+        } catch (Exception e) {
+            //ToDO
+        }
+    }
 
-        //save on database
+    //Auctioneer Function
+    @Schedule(second = "5", minute = "*", hour = "*")
+    public void checkAuctions() {
+
+        Date date;
+        DateFormat dateFormat;
+        
+        dateFormat = new SimpleDateFormat(Response.DATE_FORMAT.toString());
+        date = new Date();
+        
+        for (int i = 0; i < getItems().size(); i++) {
+            if (getItems().get(i).getEndTime().after(date)) {
+                getItems().get(i).setClosed(true);
+                break;
+            }
+        }
+
     }
 
     @Override

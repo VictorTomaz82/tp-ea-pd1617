@@ -57,7 +57,7 @@ public enum Response {
     NEWS_ASK_REACTIVATED(" foi reativado."),
     NEWS_ITEM_SOLD1(" - O item "),
     NEWS_ITEM_SOLD2(" foi vendido por "),
-    CURRENCY("Borts"),
+    CURRENCY("€"),
     INSUFICIENT_BALANCE("Nao possui saldo suficiente."),
     NOTHING("A informacao pedida nao existe de momento"),
     DATE_FORMAT("dd/MM/yyyy HH:mm:ss"),

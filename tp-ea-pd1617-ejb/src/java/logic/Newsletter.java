@@ -1,11 +1,12 @@
 package logic;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Newsletter {
+public class Newsletter implements Serializable{
 
     ArrayList<String> news;
     Date date;

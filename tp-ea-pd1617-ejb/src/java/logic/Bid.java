@@ -1,11 +1,41 @@
 package logic;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+//import javax.persistence.Basic;
+//import javax.persistence.Column;
+//import javax.persistence.Entity;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
+//import javax.persistence.Id;
+//import javax.persistence.NamedQueries;
+//import javax.persistence.NamedQuery;
+//import javax.persistence.Table;
 
-public class Bid {
+//@Entity
+//@Table(name="t_bids")
+//
+//@NamedQueries({
+//    @NamedQuery(name="TBids.findAll",
+//            query="SELECT t FROM TBids t"),
+//    @NamedQuery(name = "TBids.findById",
+//            query="SELECT t FROM TBids t WHERE t.bidId = :bidId")
+//        })
 
+public class Bid implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
+    
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Basic(optional = false)
+//    @Column(name = "bidId")
+    int bidId;
+
+//    @Basic(optional = false)
+//    @Column(name = "itemId")
     int itemId;
     User username;
     int value;
@@ -13,6 +43,11 @@ public class Bid {
     DateFormat dateFormat;
 
     // --- Methods ---
+    
+//    public Bid(){
+//        
+//    }
+    
     public Bid(int itemId, User username, int value, Date time) {
         this.itemId = itemId;
         this.username = username;

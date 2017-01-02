@@ -34,6 +34,10 @@ public interface CoreLocal {
     
     /////////////////////
     
+    public void load();
+    public void save();
+    public void checkAuctions();
+    
     public Newsletter getNewsletter();
     public void setNewsletter(Newsletter newsletter);
     public ArrayList<User> getUsers();
