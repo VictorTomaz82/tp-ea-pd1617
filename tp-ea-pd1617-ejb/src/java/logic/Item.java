@@ -28,13 +28,10 @@ public class Item implements Serializable{
     boolean payed;
     boolean closed;
 
-    //--- Methods ---
-    //Constructor without Category and Buyout 
-    
+    //--- Methods ---   
     //ToDo: missing endTime!!
     public Item(String itemName, String description, Category category, String sellerUsername, int startPrice, int buyout) {
 
-        //ToDo: verify uniqueness of id on core to validate construction
         this.itemName = itemName;
         this.description = description;
         this.category = category;

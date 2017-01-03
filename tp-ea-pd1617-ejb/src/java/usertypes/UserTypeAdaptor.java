@@ -10,7 +10,6 @@ import tpserver.Core;
 // adaptor needed to remove the need to override all methods in usertypes
 public abstract class UserTypeAdaptor implements UserType {
 
-//    @EJB
     Core core;
 
     ArrayList<String> responseToClient;
@@ -20,12 +19,6 @@ public abstract class UserTypeAdaptor implements UserType {
         responseToClient = new ArrayList<>();
     }
 
-    // --- debug only (begin) ---
-//    @Override
-//    public String teste() {
-//        return core.teste();
-//    }
-// --- debug only (end) ---
     //--- all ---
     @Override
     public ArrayList<String> seeNews() {
@@ -133,27 +126,21 @@ public abstract class UserTypeAdaptor implements UserType {
     @Override
     public ArrayList<String> follow(String username, String itemId) {
         return null;
-
     }
 
     @Override
     public ArrayList<String> doBid(String username, String itemId, int bid) {
         return null;
-
     }
 
     @Override
     public ArrayList<String> denunceItem(String itemId, String motive) {
-
         return null;
-
     }
 
     @Override
     public ArrayList<String> denunceUser(String username, String motive) {
-
         return null;
-
     }
 
     @Override
@@ -163,90 +150,71 @@ public abstract class UserTypeAdaptor implements UserType {
 
     @Override
     public ArrayList<String> addBalance(String username, int money) {
-
         return null;
     }
 
     @Override
     public ArrayList<String> payItem(String username, String itemId) {
-
         return null;
     }
 
     @Override
     public ArrayList<String> askSuspension(String username, String motive) {
-
         return null;
     }
 
-//    @Override
-//    public ArrayList<String> unactivate(String userId) {
-//
-//        return null;
-//    }
     @Override
     public ArrayList<String> viewDenunceList() {
-
         return null;
     }
 
     @Override
     public ArrayList<String> suspendUser(String username, String motive) {
-
         return null;
     }
 
     @Override
     public ArrayList<String> itemRemove(String itemId) {
-
         return null;
     }
 
     @Override
     public ArrayList<String> reactivateUser(String username) {
-
         return null;
     }
 
     @Override
     public ArrayList<String> viewUserList() {
-
         return null;
     }
 
     @Override
     public ArrayList<String> seeUser(String username) {
-
         return null;
     }
 
     @Override
     public ArrayList<String> viewItemList() {
-
         return null;
     }
 
     @Override
     public ArrayList<String> seeItem(String itemId) {
-
         return null;
     }
 
     @Override
     public ArrayList<String> viewCategoryList() {
-
         return null;
     }
 
     @Override
     public ArrayList<String> addCategory(String name, String description) {
-
         return null;
     }
 
     @Override
     public ArrayList<String> changeCategory(String name, String newName, String description) {
-
         return null;
     }
 

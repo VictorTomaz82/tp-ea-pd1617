@@ -30,7 +30,6 @@ public enum Response {
     USER_REACTIVATED("O utilizador foi reactivado com sucesso."),
     USER_ALREADY_ACTIVE("O utilizador ja se encontra activo."),
     USER_NACTIVE("O utilizador nao esta activo."),
-    //check this
     USER_NEVER_ACTIVATED("O utilizador nunca foi activado."),
     ITEM("O item \""),
     ITEM_SUCCESS("\" foi adicionado com sucesso."),
@@ -71,9 +70,6 @@ public enum Response {
         this.str = str;
     }
 
-//    public String getValue() {
-//        return value;
-//    }
     @Override
     public String toString() {
         return str;

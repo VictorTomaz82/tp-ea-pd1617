@@ -38,8 +38,8 @@ public class Core implements CoreLocal, Serializable {
     //--- Methods ---
     @PostConstruct
     public void load() {
+        
         //load from file/database
-
         try (ObjectInputStream ois
                 = new ObjectInputStream(
                         new BufferedInputStream(
@@ -63,12 +63,6 @@ public class Core implements CoreLocal, Serializable {
             messages = new ArrayList<>();
         }
 
-//        newsletter = new Newsletter();
-//        users = new ArrayList();
-//        reports = new ArrayList();
-//        items = new ArrayList();
-//        categories = new ArrayList();
-//        messages = new ArrayList<>();
         //To be deleted after all data being permanently saved?
         if (users.isEmpty()) {
             users.add(new User("admin", "admin", "admin", "Rua do Ze"));
@@ -79,8 +73,8 @@ public class Core implements CoreLocal, Serializable {
 
     @PreDestroy
     public void save() {
+  
         //save to file/database
-
         try (ObjectOutputStream oos
                 = new ObjectOutputStream(
                         new BufferedOutputStream(
@@ -94,11 +88,7 @@ public class Core implements CoreLocal, Serializable {
             data.add(messages);
 
             oos.writeObject(data);
-//            oos.writeObject(users);
-//            oos.writeObject(reports);
-//            oos.writeObject(items);
-//            oos.writeObject(categories);
-//            oos.writeObject(messages);
+
         } catch (Exception e) {
             //ToDO
         }
@@ -180,11 +170,4 @@ public class Core implements CoreLocal, Serializable {
     public void setMessages(ArrayList<Message> messages) {
         this.messages = messages;
     }
-
-    //----------------------DEBUG purposes only (begin)-------------------------
-//    @Override
-//    public String teste() {
-//        return "comunica";
-//    }
-    //-----------------------DEBUG purposes only (end)--------------------------
 }

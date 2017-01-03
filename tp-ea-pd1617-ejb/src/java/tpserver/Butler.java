@@ -33,7 +33,7 @@ public class Butler implements ButlerRemote {
         responseToClient = new ArrayList();
     }
 
-    //only "true" function of butler
+    //login and logout are the only "true" functions of butler
     @Override
     public ArrayList<String> login(String username, String password) {
         responseToClient.clear();
@@ -202,10 +202,6 @@ public class Butler implements ButlerRemote {
     public ArrayList<String> viewDenunceList() {
         return usertype.viewDenunceList();
     }
-//    @Override
-//    public ArrayList<String> unactivate(String userId) {
-//        return usertype.unactivate(userId);
-//    }
 
     @Override
     public ArrayList<String> suspendUser(String username, String motive) {
@@ -261,15 +257,4 @@ public class Butler implements ButlerRemote {
     public String getCurrentUsername() {
         return currentUsername;
     }
-
-//    public void setCurrentUsername(String currentUsername) {
-//        this.currentUsername = currentUsername;
-//    }
-// --- debug only (begin) ---
-//    @Override
-//    public String teste() {
-////        return core.teste();
-//        return usertype.teste();
-//    }
-// --- debug only (end) ---
 }

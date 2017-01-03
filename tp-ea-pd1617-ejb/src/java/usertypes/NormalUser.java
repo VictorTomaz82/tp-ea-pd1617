@@ -65,7 +65,6 @@ public class NormalUser extends UserTypeAdaptor {
     @Override
     public ArrayList<String> payItem(String username, String itemId) {
         responseToClient.clear();
-        //validate: only pay for items won buy user
         Item item = null;
         for (int i = 0; i < core.getItems().size(); i++) {
             if (core.getItems().get(i).getItemId() == Integer.parseInt(itemId)) {

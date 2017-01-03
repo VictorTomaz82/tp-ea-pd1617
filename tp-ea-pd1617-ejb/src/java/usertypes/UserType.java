@@ -5,10 +5,6 @@ import java.util.Date;
 
 public interface UserType {
 
-    //---debug only (begin)---
-//    public String teste();
-    //---debug only (end)---
-
     //--- all ---
     public ArrayList<String> seeNews();
 
@@ -20,7 +16,6 @@ public interface UserType {
     public ArrayList<String> askReactivation(String username, String password);
 
     //--- admin & user ---
-    //change to confirm password only in client?
     public ArrayList<String> changePassword(String username, String password, String newPassword, String confirmPassword);
 
     public ArrayList<String> changeUserInformation(String username, String name,String address);
@@ -59,7 +54,6 @@ public interface UserType {
 
     public ArrayList<String> askSuspension(String username, String motive);
 
-//    public ArrayList<String> unactivate(String userId);
     //--- admin ---
     public ArrayList<String> viewDenunceList();
     

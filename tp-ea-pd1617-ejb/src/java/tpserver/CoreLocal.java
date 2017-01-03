@@ -11,29 +11,7 @@ import logic.User;
 
 @Local
 public interface CoreLocal {
-
-//    Newsletter getNewsletter();
-//
-//    void setNewsletter(Newsletter newsletter);
-//    
-//    ArrayList<User> getUsers();
-//
-//    void setUsers(ArrayList<User> users);
-//
-//    ArrayList<Report> getReports();
-//
-//    void setReports(ArrayList<Report> reports);
-//
-//    ArrayList<Item> getItems();
-//
-//    void setItems(ArrayList<Item> items);
-//
-//    ArrayList<Category> getCategories();
-//
-//    void setCategories(ArrayList<Category> categories);
-    
-    /////////////////////
-    
+  
     public void load();
     public void save();
     public void checkAuctions();
