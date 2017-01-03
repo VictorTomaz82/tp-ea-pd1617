@@ -1,4 +1,4 @@
-package user.types;
+package usertypes;
 
 import java.util.ArrayList;
 import logic.Response;

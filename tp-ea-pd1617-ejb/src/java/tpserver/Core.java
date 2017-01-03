@@ -39,16 +39,20 @@ public class Core implements CoreLocal, Serializable {
     @PostConstruct
     public void load() {
         //load from file/database
+
         try (ObjectInputStream ois
                 = new ObjectInputStream(
                         new BufferedInputStream(
                                 new FileInputStream("/temp/tp1617")))) {
-            newsletter = (Newsletter) ois.readObject();
-            users = (ArrayList<User>) ois.readObject();
-            reports = (ArrayList<Report>) ois.readObject();
-            items = (ArrayList<Item>) ois.readObject();
-            categories = (ArrayList<Category>) ois.readObject();
-            messages = (ArrayList<Message>) ois.readObject();
+            ArrayList<Object> data = new ArrayList();
+            data = (ArrayList<Object>) ois.readObject();
+
+            newsletter = (Newsletter) data.get(0);
+            users = (ArrayList<User>) data.get(1);
+            reports = (ArrayList<Report>) data.get(2);
+            items = (ArrayList<Item>) data.get(3);
+            categories = (ArrayList<Category>) data.get(4);
+            messages = (ArrayList<Message>) data.get(5);
         } catch (Exception e) {
             //ToDo
             newsletter = new Newsletter();
@@ -76,16 +80,25 @@ public class Core implements CoreLocal, Serializable {
     @PreDestroy
     public void save() {
         //save to file/database
+
         try (ObjectOutputStream oos
                 = new ObjectOutputStream(
                         new BufferedOutputStream(
                                 new FileOutputStream("/temp/tp1617")))) {
-            oos.writeObject(newsletter);
-            oos.writeObject(users);
-            oos.writeObject(reports);
-            oos.writeObject(items);
-            oos.writeObject(categories);
-            oos.writeObject(messages);
+            ArrayList<Object> data = new ArrayList();
+            data.add(newsletter);
+            data.add(users);
+            data.add(reports);
+            data.add(items);
+            data.add(categories);
+            data.add(messages);
+
+            oos.writeObject(data);
+//            oos.writeObject(users);
+//            oos.writeObject(reports);
+//            oos.writeObject(items);
+//            oos.writeObject(categories);
+//            oos.writeObject(messages);
         } catch (Exception e) {
             //ToDO
         }
@@ -97,10 +110,10 @@ public class Core implements CoreLocal, Serializable {
 
         Date date;
         DateFormat dateFormat;
-        
+
         dateFormat = new SimpleDateFormat(Response.DATE_FORMAT.toString());
         date = new Date();
-        
+
         for (int i = 0; i < getItems().size(); i++) {
             if (getItems().get(i).getEndTime().after(date)) {
                 getItems().get(i).setClosed(true);

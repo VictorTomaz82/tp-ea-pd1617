@@ -6,7 +6,11 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import logic.Response;
-import user.types.*;
+import usertypes.Admin;
+import usertypes.NormalUser;
+import usertypes.UserType;
+import usertypes.Visitor;
+
 
 @Stateful
 public class Butler implements ButlerRemote {
