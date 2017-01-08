@@ -108,7 +108,7 @@ public class Core implements CoreLocal, Serializable {
         date = new Date();
 
         for (int i = 0; i < getItems().size(); i++) {
-            if (getItems().get(i).getEndTime().after(date)) {
+            if (getItems().get(i).getEndTime().before(date)) {
                 getItems().get(i).setClosed(true);
                 break;
             }

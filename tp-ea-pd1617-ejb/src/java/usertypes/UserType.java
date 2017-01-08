@@ -26,7 +26,7 @@ public interface UserType {
 
     public ArrayList<String> messageUser(String senderUsername, String recipientUsername, String title, String body, Date time);
 
-    public ArrayList<String> doSale(String sellerUsername, String itemName, String categoryName, String description, int startPrice, int buyout);
+    public ArrayList<String> doSale(String sellerUsername, String itemName, String categoryName, String description, int startPrice, int buyout, Date endTime);
     
     public ArrayList<String> viewUserItemsList(String username);
     

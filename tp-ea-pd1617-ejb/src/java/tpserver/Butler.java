@@ -122,8 +122,8 @@ public class Butler implements ButlerRemote {
     }
 
     @Override
-    public ArrayList<String> doSale(String sellerUsername, String itemName, String categoryName, String description, int startPrice, int buyout) {
-        return usertype.doSale(sellerUsername, itemName, categoryName, description, startPrice, buyout);
+    public ArrayList<String> doSale(String sellerUsername, String itemName, String categoryName, String description, int startPrice, int buyout, Date endTime) {
+        return usertype.doSale(sellerUsername, itemName, categoryName, description, startPrice, buyout, endTime);
 
     }
     

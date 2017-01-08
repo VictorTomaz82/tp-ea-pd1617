@@ -10,7 +10,6 @@ import logic.News;
 import logic.ReportItem;
 import logic.ReportUser;
 import logic.Response;
-import logic.User;
 import tpserver.Core;
 
 public class NormalUser extends UserTypeAdaptor {
@@ -160,7 +159,7 @@ public class NormalUser extends UserTypeAdaptor {
             responseToClient.add(Response.ITEM.toString() + itemId + Response.NEXIST.toString());
             return responseToClient;
         }
-        if (item.isClosed()) {
+        if (item.isClosed() || item.getEndTime().before(new Date())) {
             responseToClient.add(Response.ITEM_CLOSED.toString());
             return responseToClient;
         }
@@ -357,7 +356,7 @@ public class NormalUser extends UserTypeAdaptor {
     }
 
     @Override
-    public ArrayList<String> doSale(String sellerUsername, String itemName, String categoryName, String description, int startPrice, int buyout) {
+    public ArrayList<String> doSale(String sellerUsername, String itemName, String categoryName, String description, int startPrice, int buyout, Date endTime) {
         responseToClient.clear();
         Category tmpCategory = null;
 
@@ -374,7 +373,7 @@ public class NormalUser extends UserTypeAdaptor {
 
         for (int i = 0; i < core.getUsers().size(); i++) {
             if (core.getUsers().get(i).getUsername().equalsIgnoreCase(sellerUsername)) {
-                core.getItems().add(0, new Item(itemName, description, tmpCategory.getName(), sellerUsername, startPrice, buyout));
+                core.getItems().add(0, new Item(itemName, description, tmpCategory.getName(), sellerUsername, startPrice, buyout, endTime));
                 core.getUsers().get(i).getSales().add(core.getItems().get(0).getItemId());
                 responseToClient.add(Response.ITEM.toString() + core.getItems().get(0).getItemId() + Response.ITEM_SUCCESS.toString());
                 return responseToClient;

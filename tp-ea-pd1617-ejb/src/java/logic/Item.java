@@ -30,7 +30,7 @@ public class Item implements Serializable{
 
     //--- Methods ---   
     //ToDo: missing endTime!!
-    public Item(String itemName, String description, String category, String sellerUsername, int startPrice, int buyout) {
+    public Item(String itemName, String description, String category, String sellerUsername, int startPrice, int buyout, Date endTime) {
 
         this.itemName = itemName;
         this.description = description;
@@ -38,7 +38,7 @@ public class Item implements Serializable{
         this.sellerUsername = sellerUsername;
         this.startPrice = startPrice;
         this.buyout = buyout;
-        endTime= new Date();
+        this.endTime = endTime;
         bids = new ArrayList<>();
         payed = false;
         closed = false;

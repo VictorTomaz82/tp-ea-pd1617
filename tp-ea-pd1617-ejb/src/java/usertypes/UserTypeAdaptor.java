@@ -97,7 +97,7 @@ public abstract class UserTypeAdaptor implements UserType {
     }
 
     @Override
-    public ArrayList<String> doSale(String sellerUsername, String itemName, String categoryName, String description, int startPrice, int buyout) {
+    public ArrayList<String> doSale(String sellerUsername, String itemName, String categoryName, String description, int startPrice, int buyout, Date endTime) {
         return null;
 
     }
