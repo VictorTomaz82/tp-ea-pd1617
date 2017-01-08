@@ -90,6 +90,6 @@ public class Bid implements Serializable{
 
     @Override
     public String toString() {
-        return dateFormat.format(time) + " " + itemId + ": " + username.getName() + " " + value + " " + Response.CURRENCY.toString();
+        return dateFormat.format(time) + " " + itemId + ": " + username + " " + value + " " + Response.CURRENCY.toString();
     }
 }
