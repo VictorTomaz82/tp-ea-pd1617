@@ -22,7 +22,11 @@ public abstract class UserTypeAdaptor implements UserType {
     //--- all ---
     @Override
     public ArrayList<String> seeNews() {
-        return core.getNewsletter().getNews();
+        ArrayList<String> news = new ArrayList<>();
+        for (int i = 0; i < core.getNewsletter().size(); i++) {
+            news.add(core.getNewsletter().get(i).getNews());
+        }
+        return news;
     }
 
     @Override

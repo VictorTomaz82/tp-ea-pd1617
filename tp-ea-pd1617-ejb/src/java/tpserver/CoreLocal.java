@@ -28,10 +28,4 @@ public interface CoreLocal {
     public void setCategories(ArrayList<Category> categories);  
     public ArrayList<Message> getMessages();
     public void setMessages(ArrayList<Message> messages);   
-//////////////////
-    
-    //----------------------DEBUG purposes only (begin)-------------------------
-//    public String teste();
-    //-----------------------DEBUG purposes only (end)--------------------------
-
 }
