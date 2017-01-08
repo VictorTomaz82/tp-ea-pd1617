@@ -91,7 +91,7 @@ public abstract class UserTypeAdaptor implements UserType {
     }
 
     @Override
-    public ArrayList<String> messageUser(String senderId, String recipientId, String title, String body, Date time) {
+    public ArrayList<String> messageUser(String senderUsername, String recipientUsername, String title, String body, Date time) {
         return null;
 
     }

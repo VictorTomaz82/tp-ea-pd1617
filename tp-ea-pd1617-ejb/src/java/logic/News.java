@@ -27,7 +27,6 @@ public class News implements Serializable{
     }
 
     public void newAccount(String username) {
-        date = new Date();
         news = dateFormat.format(date) + Response.NEWS_NEW_USER.toString() + username + ".\n";
     }
 
@@ -38,28 +37,23 @@ public class News implements Serializable{
 
     //Redundant!?
     public void userSuspendAccount(String username, String motive) {
-        date = new Date();
         news = dateFormat.format(date) + " - " + username + Response.NEWS_SUSPENDED_USER.toString() + motive + "\".\n";
     }
 
     public void adminSuspendAccount(String username, String motive) {
-        date = new Date();
         news = dateFormat.format(date) + " - " + username + Response.NEWS_SUSPENDED_USER.toString() + motive + "\".\n";
     }
 
     public void accountReactivation(String username) {
-        date = new Date();
         news = dateFormat.format(date) + " - " + username + Response.NEWS_ASK_REACTIVATION.toString() + "\n";
     }
 
     public void accountReactivated(String username) {
-        date = new Date();
         news = dateFormat.format(date) + " - " + username + Response.NEWS_ASK_REACTIVATED.toString() + "\n";
     }
 
     // Sold to whom?
     public void itemSold(String username, String name, int value) {
-        date = new Date();
         news = dateFormat.format(date) + Response.NEWS_ITEM_SOLD1.toString() + username + Response.NEWS_ITEM_SOLD2.toString() + name + Response.NEWS_ITEM_SOLD3.toString() + value + Response.CURRENCY.toString() + ".\n";
     }
 }

@@ -11,8 +11,8 @@ public class Message implements Serializable{
 
     int messageId;
     
-    User sender;
-    User recipient;
+    String sender;
+    String recipient;
     String title;
     String body;
     Date time;
@@ -20,7 +20,7 @@ public class Message implements Serializable{
     boolean checked;
 
     //--- Methods ---
-    public Message(User sender, User recipient, String title, String body, Date time) {
+    public Message(String sender, String recipient, String title, String body, Date time) {
         this.sender = sender;
         this.recipient = recipient;
         this.title = title;
@@ -38,19 +38,19 @@ public class Message implements Serializable{
         this.messageId = messageId;
     }
 
-    public User getSender() {
+    public String getSender() {
         return sender;
     }
 
-    public void setSender(User sender) {
+    public void setSender(String sender) {
         this.sender = sender;
     }
 
-    public User getRecipient() {
+    public String getRecipient() {
         return recipient;
     }
 
-    public void setRecipient(User recipient) {
+    public void setRecipient(String recipient) {
         this.recipient = recipient;
     }
 
@@ -84,9 +84,9 @@ public class Message implements Serializable{
 
     public String getGenericInformation() {
         if (!checked) {
-            return messageId + "> Data: " + dateFormat.format(time) + " De:" + sender.getUsername() + " Titulo: " + title + "Estado: Não Lida";
+            return messageId + "> Data: " + dateFormat.format(time) + " De:" + sender + " Titulo: " + title + "Estado: Não Lida";
         } else {
-            return messageId + "> Data: " + dateFormat.format(time) + " De:" + sender.getUsername() + " Titulo: " + title + "Estado: Lida";
+            return messageId + "> Data: " + dateFormat.format(time) + " De:" + sender + " Titulo: " + title + "Estado: Lida";
         }
 
     }

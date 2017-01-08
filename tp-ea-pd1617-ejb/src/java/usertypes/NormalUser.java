@@ -69,6 +69,7 @@ public class NormalUser extends UserTypeAdaptor {
     public ArrayList<String> payItem(String username, String itemId) {
         responseToClient.clear();
         Item item = null;
+        
         for (int i = 0; i < core.getItems().size(); i++) {
             if (core.getItems().get(i).getItemId() == Integer.parseInt(itemId)) {
                 item = core.getItems().get(i);
@@ -83,30 +84,32 @@ public class NormalUser extends UserTypeAdaptor {
             responseToClient.add(Response.INSUFICIENT_BALANCE.toString() + itemId + Response.ITEM_ALREADY_PAYED.toString());
             return responseToClient;
         }
+        if(!item.getBids().get(0).getUsername().equalsIgnoreCase(username)){
+            responseToClient.add(Response.ITEM.toString() + itemId + Response.ITEM_NWON.toString());
+            return responseToClient;
+        }
+        
         for (int i = 0; i < core.getUsers().size(); i++) {
             if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username)) {
-                if (core.getUsers().get(i).getBalance() - item.getBids().get(item.getBids().size() - 1).getValue() < 0) {
+                if (core.getUsers().get(i).getBalance() - item.getBids().get(0).getValue() < 0) {
                     responseToClient.add(Response.INSUFICIENT_BALANCE.toString());
                     return responseToClient;
-                } else {
-                    core.getUsers().get(i).setBalance(core.getUsers().get(i).getBalance() - item.getBids().get(item.getBids().size() - 1).getValue());
-
-                    for (int j = 0; j < core.getUsers().get(i).getWon().size(); j++) {
-                        if (core.getUsers().get(i).getWon().get(j) == Integer.parseInt(itemId)) {
-                            core.getUsers().get(i).getWon().remove(j);
-                            break;
-                        }
-                    }
-
-                    for (int j = 0; j < core.getItems().size(); i++) {
-                        if (core.getItems().get(j).getItemId() == Integer.parseInt(itemId)) {
-                            core.getItems().get(j).setPayed(true);
-                            break;
-                        }
-                    }
-                    responseToClient.add(Response.ITEM.toString() + itemId + Response.ITEM_PAY.toString());
-                    return responseToClient;
                 }
+                core.getUsers().get(i).setBalance(core.getUsers().get(i).getBalance() - item.getBids().get(0).getValue());
+                for (int j = 0; j < core.getUsers().get(i).getWon().size(); j++) {
+                    if (core.getUsers().get(i).getWon().get(j) == Integer.parseInt(itemId)) {
+                        core.getUsers().get(i).getWon().remove(j);
+                        break;
+                    }
+                }
+                for (int j = 0; j < core.getItems().size(); i++) {
+                    if (core.getItems().get(j).getItemId() == Integer.parseInt(itemId)) {
+                        core.getItems().get(j).setPayed(true);
+                        break;
+                    }
+                }
+                responseToClient.add(Response.ITEM.toString() + itemId + Response.ITEM_PAY.toString());
+                return responseToClient;
             }
         }
         responseToClient.add(Response.ITEM.toString() + itemId + Response.NEXIST.toString());
@@ -145,6 +148,8 @@ public class NormalUser extends UserTypeAdaptor {
     public ArrayList<String> doBid(String username, String itemId, int bid) {
         responseToClient.clear();
         Item item = null;
+        News news = new News();
+        
         for (int i = 0; i < core.getItems().size(); i++) {
             if (core.getItems().get(i).getItemId() == Integer.parseInt(itemId)) {
                 item = core.getItems().get(i);
@@ -177,6 +182,8 @@ public class NormalUser extends UserTypeAdaptor {
                         if (core.getItems().get(j).getBuyout() <= bid) {
                             core.getItems().get(j).setClosed(true);
                             core.getUsers().get(i).getWon().add(core.getItems().get(j).getItemId());
+                            news.itemSold(username, item.getItemName(), bid);
+                            core.getNewsletter().add(0, news);
                             responseToClient.add(Response.ITEM_WON.toString());
                         }
                         return responseToClient;
@@ -353,22 +360,23 @@ public class NormalUser extends UserTypeAdaptor {
     public ArrayList<String> doSale(String sellerUsername, String itemName, String categoryName, String description, int startPrice, int buyout) {
         responseToClient.clear();
         Category tmpCategory = null;
-        
-        for(int i = 0; i < core.getCategories().size(); i++){
-            if(core.getCategories().get(i).getName().equalsIgnoreCase(categoryName))
+
+        for (int i = 0; i < core.getCategories().size(); i++) {
+            if (core.getCategories().get(i).getName().equalsIgnoreCase(categoryName)) {
                 tmpCategory = core.getCategories().get(i);
+            }
         }
-        
-        if(tmpCategory == null){
+
+        if (tmpCategory == null) {
             responseToClient.add(Response.CATEGORY.toString() + categoryName + Response.NEXIST.toString());
             return responseToClient;
         }
-            
+
         for (int i = 0; i < core.getUsers().size(); i++) {
             if (core.getUsers().get(i).getUsername().equalsIgnoreCase(sellerUsername)) {
-                core.getItems().add(new Item(itemName, description, tmpCategory.getName(), sellerUsername, startPrice, buyout));
-                core.getUsers().get(i).getSales().add(core.getItems().get(core.getItems().size() - 1).getItemId());
-                responseToClient.add(Response.ITEM.toString() + core.getItems().get(core.getItems().size() - 1).getItemId() + Response.ITEM_SUCCESS.toString());
+                core.getItems().add(0, new Item(itemName, description, tmpCategory.getName(), sellerUsername, startPrice, buyout));
+                core.getUsers().get(i).getSales().add(core.getItems().get(0).getItemId());
+                responseToClient.add(Response.ITEM.toString() + core.getItems().get(0).getItemId() + Response.ITEM_SUCCESS.toString());
                 return responseToClient;
             }
         }
@@ -376,36 +384,24 @@ public class NormalUser extends UserTypeAdaptor {
         return responseToClient;
     }
 
-    
     @Override
-    public ArrayList<String> messageUser(String senderId, String recipientId, String title, String body, Date time) {
+    public ArrayList<String> messageUser(String senderUsername, String recipientUsername, String title, String body, Date time) {
         responseToClient.clear();
-        User sender = null;
 
         for (int i = 0; i < core.getUsers().size(); i++) {
-            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(senderId)) {
-                sender = core.getUsers().get(i);
-            }
-        }
-        if (sender == null) {
-            responseToClient.add(Response.USER.toString() + senderId + Response.NEXIST.toString());
-            return responseToClient;
-        }
-
-        for (int i = 0; i < core.getUsers().size(); i++) {
-            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(recipientId)) {
+            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(recipientUsername)) {
                 if (!core.getUsers().get(i).isActive()) {
                     responseToClient.add(Response.USER_NACTIVE.toString());
                     return responseToClient;
                 } else {
-                    core.getMessages().add(0, new Message(sender, core.getUsers().get(i), title, body, new Date()));
-                    core.getUsers().get(i).getMailbox().add(0, core.getMessages().get(core.getMessages().size() - 1).getMessageId());
+                    core.getMessages().add(0, new Message(senderUsername, core.getUsers().get(i).getUsername(), title, body, new Date()));
+                    core.getUsers().get(i).getMailbox().add(0, core.getMessages().get(0).getMessageId());
                     responseToClient.add(Response.MESSAGE_SENT.toString());
                     return responseToClient;
                 }
             }
         }
-        responseToClient.add(Response.USER.toString() + recipientId + Response.NEXIST.toString());
+        responseToClient.add(Response.USER.toString() + recipientUsername + Response.NEXIST.toString());
         return responseToClient;
     }
 
@@ -414,7 +410,7 @@ public class NormalUser extends UserTypeAdaptor {
         responseToClient.clear();
 
         for (int i = 0; i < core.getMessages().size(); i++) {
-            if (core.getMessages().get(i).getMessageId() == Integer.parseInt(messageId) && core.getMessages().get(i).getRecipient().getUsername().equalsIgnoreCase(username)) {
+            if (core.getMessages().get(i).getMessageId() == Integer.parseInt(messageId) && core.getMessages().get(i).getRecipient().equalsIgnoreCase(username)) {
                 responseToClient.add(core.getMessages().get(i).toString());
                 return responseToClient;
             }
@@ -438,7 +434,7 @@ public class NormalUser extends UserTypeAdaptor {
                     return responseToClient;
                 } else {
                     for (int j = 0; j < core.getMessages().size(); j++) {
-                        if (core.getMessages().get(j).getRecipient().getUsername().equalsIgnoreCase(username)) {
+                        if (core.getMessages().get(j).getRecipient().equalsIgnoreCase(username)) {
                             responseToClient.add(core.getMessages().get(j).getGenericInformation());
                         }
                     }
@@ -482,7 +478,7 @@ public class NormalUser extends UserTypeAdaptor {
         responseToClient.add(Response.LOGIN_FAIL.toString());
         return responseToClient;
     }
-    
+
     @Override
     public ArrayList<String> viewCategoryList() {
         responseToClient.clear();

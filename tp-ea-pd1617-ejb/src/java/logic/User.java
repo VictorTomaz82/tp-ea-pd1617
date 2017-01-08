@@ -3,8 +3,8 @@ package logic;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class User implements Serializable{
-    
+public class User implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     int userId;
@@ -166,20 +166,20 @@ public class User implements Serializable{
     public void setLastBids(ArrayList<Bid> lastBids) {
         this.lastBids = lastBids;
     }
-    
-    public String getGenericInformation(){
-    
-        if(!active && suspensions.isEmpty()){
+
+    public String getGenericInformation() {
+
+        if (!active && suspensions.isEmpty()) {
             return "UserId: " + userId
-                + "\nUsername: " + username
-                + "\nEstado: A aguardar ativacao.\n";
+                    + "\nUsername: " + username
+                    + "\nEstado: A aguardar ativacao.\n";
         }
-        if(!active && !suspensions.isEmpty()){
+        if (!active && !suspensions.isEmpty()) {
             return "UserId: " + userId
-                + "\nUsername: " + username
-                + "\nEstado: Suspenso.\n";
+                    + "\nUsername: " + username
+                    + "\nEstado: Suspenso.\n";
         }
-        
+
         return "UserId: " + userId
                 + "\nUsername: " + username
                 + "\nEstado: Ativo.\n";

@@ -221,17 +221,6 @@ public class Admin extends UserTypeAdaptor {
     @Override
     public ArrayList<String> messageUser(String senderUsername, String recipientUsername, String title, String body, Date time) {
         responseToClient.clear();
-        User sender = null;
-
-        for (int i = 0; i < core.getUsers().size(); i++) {
-            if (core.getUsers().get(i).getUsername().equalsIgnoreCase(senderUsername)) {
-                sender = core.getUsers().get(i);
-            }
-        }
-        if (sender == null) {
-            responseToClient.add(Response.USER.toString() + senderUsername + Response.NEXIST.toString());
-            return responseToClient;
-        }
 
         for (int i = 0; i < core.getUsers().size(); i++) {
             if (core.getUsers().get(i).getUsername().equalsIgnoreCase(recipientUsername)) {
@@ -239,8 +228,8 @@ public class Admin extends UserTypeAdaptor {
                     responseToClient.add(Response.USER_NACTIVE.toString());
                     return responseToClient;
                 } else {
-                    core.getMessages().add(0, new Message(sender, core.getUsers().get(i), title, body, new Date()));
-                    core.getUsers().get(i).getMailbox().add(0, core.getMessages().get(core.getMessages().size() - 1).getMessageId());
+                    core.getMessages().add(0, new Message(senderUsername, core.getUsers().get(i).getUsername(), title, body, new Date()));
+                    core.getUsers().get(i).getMailbox().add(0, core.getMessages().get(0).getMessageId());
                     responseToClient.add(Response.MESSAGE_SENT.toString());
                     return responseToClient;
                 }

@@ -44,6 +44,7 @@ public enum Response {
     ITEM_BID_SUCCESS("A licitacao foi realizada com sucesso."),
     ITEM_LOW_BID1("Ja existe uma licitacao do mesmo valor ou superior.\nA licitacao actual e de "),
     ITEM_LOW_BID2("€."),
+    ITEM_NWON("\" nao consta nos seus items a aguardar pagamento."),
     DENUNCE_SUCCESS("Denuncia realizada com sucesso."),
     DENUNCE_USER("Denuncias de utilizadores:\n"),
     DENUNCE_ITEM("Denuncias de items:\n"),

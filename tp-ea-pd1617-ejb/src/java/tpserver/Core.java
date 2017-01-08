@@ -45,7 +45,7 @@ public class Core implements CoreLocal, Serializable {
                 = new ObjectInputStream(
                         new BufferedInputStream(
                                 new FileInputStream("/temp/tp1617")))) {
-            ArrayList<Object> data = new ArrayList();
+            ArrayList<Object> data = new ArrayList<>();
             data = (ArrayList<Object>) ois.readObject();
 
             newsletter = (ArrayList<News>) data.get(0);

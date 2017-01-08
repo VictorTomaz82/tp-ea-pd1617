@@ -30,7 +30,7 @@ public class Butler implements ButlerRemote {
         currentUsername = Response.VISITOR.toString();
         usertype = new Visitor(core);
 
-        responseToClient = new ArrayList();
+        responseToClient = new ArrayList<>();
     }
 
     //login and logout are the only "true" functions of butler
@@ -116,8 +116,8 @@ public class Butler implements ButlerRemote {
     }
 
     @Override
-    public ArrayList<String> messageUser(String senderId, String recipientId, String title, String body, Date time) {
-        return usertype.messageUser(senderId, recipientId, title, body, time);
+    public ArrayList<String> messageUser(String senderUsername, String recipientUsername, String title, String body, Date time) {
+        return usertype.messageUser(senderUsername, recipientUsername, title, body, time);
 
     }
 
