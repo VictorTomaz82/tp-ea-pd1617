@@ -5,7 +5,7 @@ import javax.ejb.Local;
 import logic.Category;
 import logic.Item;
 import logic.Message;
-import logic.Newsletter;
+import logic.News;
 import logic.Report;
 import logic.User;
 
@@ -16,8 +16,8 @@ public interface CoreLocal {
     public void save();
     public void checkAuctions();
     
-    public Newsletter getNewsletter();
-    public void setNewsletter(Newsletter newsletter);
+    public ArrayList<News> getNewsletter();
+    public void setNewsletter(ArrayList<News> newsletter);
     public ArrayList<User> getUsers();
     public void setUsers(ArrayList<User> users);
     public ArrayList<Report> getReports();

@@ -7,6 +7,7 @@ import logic.Response;
 import logic.Suspension;
 import logic.User;
 import logic.Message;
+import logic.News;
 import logic.ReportItem;
 import logic.ReportUser;
 import tpserver.Core;
@@ -124,16 +125,19 @@ public class Admin extends UserTypeAdaptor {
     @Override
     public ArrayList<String> reactivateUser(String username) {
         responseToClient.clear();
+        News news = new News();
         for (int i = 0; i < core.getUsers().size(); i++) {
             if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username)) {
                 if (!core.getUsers().get(i).isActive()) {
                     core.getUsers().get(i).setActive(true);
                     if (core.getUsers().get(i).getSuspensions().isEmpty()) {
-                        core.getNewsletter().newAccountActivated(username);
+                        news.newAccountActivated(username);
+                        core.getNewsletter().add(0, news);
                         responseToClient.add(Response.USER_ACTIVATE.toString());
                         return responseToClient;
                     } else {
-                        core.getNewsletter().accountReactivated(username);
+                        news.accountReactivated(username);
+                        core.getNewsletter().add(0, news);
                         responseToClient.add(Response.USER_REACTIVATED.toString());
                         return responseToClient;
                     }
@@ -166,6 +170,7 @@ public class Admin extends UserTypeAdaptor {
     @Override
     public ArrayList<String> suspendUser(String username, String motive) {
         responseToClient.clear();
+        News news = new News();
         for (int i = 0; i < core.getUsers().size(); i++) {
             if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username)) {
                 if (!core.getUsers().get(i).isActive()) {
@@ -179,7 +184,8 @@ public class Admin extends UserTypeAdaptor {
                 } else {
                     core.getUsers().get(i).setActive(false);
                     core.getUsers().get(i).getSuspensions().add(new Suspension(motive, new Date()));
-                    core.getNewsletter().adminSuspendAccount(username, motive);
+                    news.adminSuspendAccount(username, motive);
+                    core.getNewsletter().add(0, news);
                     responseToClient.add(Response.USER_SUSPENDED.toString());
                     return responseToClient;
                 }

@@ -19,7 +19,7 @@ import javax.ejb.Singleton;
 import logic.Category;
 import logic.Item;
 import logic.Message;
-import logic.Newsletter;
+import logic.News;
 import logic.Report;
 import logic.Response;
 import logic.User;
@@ -28,7 +28,7 @@ import logic.User;
 @LocalBean
 public class Core implements CoreLocal, Serializable {
 
-    Newsletter newsletter;
+    ArrayList<News> newsletter;
     ArrayList<User> users;
     ArrayList<Report> reports;
     ArrayList<Item> items;
@@ -36,6 +36,7 @@ public class Core implements CoreLocal, Serializable {
     ArrayList<Message> messages;
 
     //--- Methods ---
+    @Override
     @PostConstruct
     public void load() {
         
@@ -47,7 +48,7 @@ public class Core implements CoreLocal, Serializable {
             ArrayList<Object> data = new ArrayList();
             data = (ArrayList<Object>) ois.readObject();
 
-            newsletter = (Newsletter) data.get(0);
+            newsletter = (ArrayList<News>) data.get(0);
             users = (ArrayList<User>) data.get(1);
             reports = (ArrayList<Report>) data.get(2);
             items = (ArrayList<Item>) data.get(3);
@@ -55,7 +56,7 @@ public class Core implements CoreLocal, Serializable {
             messages = (ArrayList<Message>) data.get(5);
         } catch (Exception e) {
             //ToDo
-            newsletter = new Newsletter();
+            newsletter = new ArrayList();
             users = new ArrayList();
             reports = new ArrayList();
             items = new ArrayList();
@@ -71,6 +72,7 @@ public class Core implements CoreLocal, Serializable {
         }
     }
 
+    @Override
     @PreDestroy
     public void save() {
   
@@ -95,6 +97,7 @@ public class Core implements CoreLocal, Serializable {
     }
 
     //Auctioneer Function
+    @Override
     @Schedule(second = "5", minute = "*", hour = "*")
     public void checkAuctions() {
 
@@ -114,12 +117,12 @@ public class Core implements CoreLocal, Serializable {
     }
 
     @Override
-    public Newsletter getNewsletter() {
+    public ArrayList<News> getNewsletter() {
         return newsletter;
     }
 
     @Override
-    public void setNewsletter(Newsletter newsletter) {
+    public void setNewsletter(ArrayList<News> newsletter) {
         this.newsletter = newsletter;
     }
 
@@ -163,10 +166,12 @@ public class Core implements CoreLocal, Serializable {
         this.categories = categories;
     }
 
+    @Override
     public ArrayList<Message> getMessages() {
         return messages;
     }
 
+    @Override
     public void setMessages(ArrayList<Message> messages) {
         this.messages = messages;
     }

@@ -14,7 +14,7 @@ public class Item implements Serializable{
     
     String itemName;
     String description;
-    Category category;
+    String category;
 
     //aboutSale
     String sellerUsername;
@@ -30,7 +30,7 @@ public class Item implements Serializable{
 
     //--- Methods ---   
     //ToDo: missing endTime!!
-    public Item(String itemName, String description, Category category, String sellerUsername, int startPrice, int buyout) {
+    public Item(String itemName, String description, String category, String sellerUsername, int startPrice, int buyout) {
 
         this.itemName = itemName;
         this.description = description;
@@ -68,11 +68,11 @@ public class Item implements Serializable{
         this.description = description;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
@@ -139,25 +139,25 @@ public class Item implements Serializable{
         if (closed && !payed && bids.isEmpty()) {
             return "ItemId: " + itemId
                     + "\nItemName: " + itemName
-                    + "\nCategoria: " + category.getName()
+                    + "\nCategoria: " + category
                     + "\nEstado: Nao houve licitacoes.\n";
         }
         if (closed && !payed && !bids.isEmpty()) {
             return "ItemId: " + itemId
                     + "\nItemName: " + itemName
-                    + "\nCategoria: " + category.getName()
+                    + "\nCategoria: " + category
                     + "\nEstado: A espera de pagamento.\n";
         }
         if (bids.isEmpty()) {
             return "ItemId: " + itemId
                     + "\nItemName: " + itemName
-                    + "\nCategoria: " + category.getName()
+                    + "\nCategoria: " + category
                     + "\nValor inicial: " + startPrice + "\n";
         }
 
         return "ItemId: " + itemId
                 + "\nItemName: " + itemName
-                + "\nCategoria: " + category.getName()
+                + "\nCategoria: " + category
                 + "\nUltima licitacao: " + bids.get(0).getValue() + "\n";
     }
 
@@ -167,7 +167,7 @@ public class Item implements Serializable{
         msg = "ItemId: " + itemId
                 + "\nItemName: " + itemName
                 + "\nDescription: " + description
-                + "\nCategoria: " + category.getName()
+                + "\nCategoria: " + category
                 + "\nSellerUsername: " + sellerUsername
                 + "\nStartPrice: " + startPrice
                 + "\nBuyout: " + buyout

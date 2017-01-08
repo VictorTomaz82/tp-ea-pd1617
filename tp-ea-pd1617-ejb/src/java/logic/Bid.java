@@ -37,7 +37,7 @@ public class Bid implements Serializable{
 //    @Basic(optional = false)
 //    @Column(name = "itemId")
     int itemId;
-    User username;
+    String username;
     int value;
     Date time;
     DateFormat dateFormat;
@@ -48,7 +48,7 @@ public class Bid implements Serializable{
 //        
 //    }
     
-    public Bid(int itemId, User username, int value, Date time) {
+    public Bid(int itemId, String username, int value, Date time) {
         this.itemId = itemId;
         this.username = username;
         this.value = value;
@@ -64,11 +64,11 @@ public class Bid implements Serializable{
         this.itemId = itemId;
     }
 
-    public User getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(User username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -90,6 +90,6 @@ public class Bid implements Serializable{
 
     @Override
     public String toString() {
-        return dateFormat.format(time) + " " + itemId + ": " + username.getName() + " " + value + " " + Response.CURRENCY.toString();
+        return dateFormat.format(time) + " " + itemId + ": " + username + " " + value + " " + Response.CURRENCY.toString();
     }
 }

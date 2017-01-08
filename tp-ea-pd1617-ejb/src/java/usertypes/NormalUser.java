@@ -6,6 +6,7 @@ import logic.Bid;
 import logic.Category;
 import logic.Item;
 import logic.Message;
+import logic.News;
 import logic.ReportItem;
 import logic.ReportUser;
 import logic.Response;
@@ -22,9 +23,11 @@ public class NormalUser extends UserTypeAdaptor {
     @Override
     public ArrayList<String> askSuspension(String username, String motive) {
         responseToClient.clear();
+        News news = new News();
         for (int i = 0; i < core.getUsers().size(); i++) {
             if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username)) {
-                core.getNewsletter().userSuspendAccount(username, motive);
+                news.userSuspendAccount(username, motive);
+                core.getNewsletter().add(0, news);
                 responseToClient.add(Response.ASK_SUSPENSION_SENT.toString());
                 return responseToClient;
             }
@@ -168,8 +171,8 @@ public class NormalUser extends UserTypeAdaptor {
             if (core.getUsers().get(i).getUsername().equalsIgnoreCase(username)) {
                 for (int j = 0; j < core.getItems().size(); j++) {
                     if (core.getItems().get(j).getItemId() == Integer.parseInt(itemId)) {
-                        core.getUsers().get(i).getLastBids().add(0, new Bid(Integer.parseInt(itemId), core.getUsers().get(i), bid, new Date()));
-                        core.getItems().get(j).getBids().add(0, new Bid(Integer.parseInt(itemId), core.getUsers().get(i), bid, new Date()));
+                        core.getUsers().get(i).getLastBids().add(0, new Bid(Integer.parseInt(itemId), core.getUsers().get(i).getUsername(), bid, new Date()));
+                        core.getItems().get(j).getBids().add(0, new Bid(Integer.parseInt(itemId), core.getUsers().get(i).getUsername(), bid, new Date()));
                         responseToClient.add(Response.ITEM_BID_SUCCESS.toString());
                         if (core.getItems().get(j).getBuyout() <= bid) {
                             core.getItems().get(j).setClosed(true);
@@ -363,7 +366,7 @@ public class NormalUser extends UserTypeAdaptor {
             
         for (int i = 0; i < core.getUsers().size(); i++) {
             if (core.getUsers().get(i).getUsername().equalsIgnoreCase(sellerUsername)) {
-                core.getItems().add(new Item(itemName, description, tmpCategory, sellerUsername, startPrice, buyout));
+                core.getItems().add(new Item(itemName, description, tmpCategory.getName(), sellerUsername, startPrice, buyout));
                 core.getUsers().get(i).getSales().add(core.getItems().get(core.getItems().size() - 1).getItemId());
                 responseToClient.add(Response.ITEM.toString() + core.getItems().get(core.getItems().size() - 1).getItemId() + Response.ITEM_SUCCESS.toString());
                 return responseToClient;
