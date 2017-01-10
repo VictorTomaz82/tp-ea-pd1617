@@ -15,17 +15,17 @@ public class Message implements Serializable{
     String recipient;
     String title;
     String body;
-    Date time;
+    Date date;
     DateFormat dateFormat;
     boolean checked;
 
     //--- Methods ---
-    public Message(String sender, String recipient, String title, String body, Date time) {
+    public Message(String sender, String recipient, String title, String body, Date date) {
         this.sender = sender;
         this.recipient = recipient;
         this.title = title;
         this.body = body;
-        this.time = time;
+        this.date = date;
         dateFormat = new SimpleDateFormat(Response.DATE_FORMAT.toString());
         checked = false;
     }
@@ -70,8 +70,8 @@ public class Message implements Serializable{
         this.body = body;
     }
 
-    public Date getTime() {
-        return time;
+    public Date getDate() {
+        return date;
     }
 
     public boolean isChecked() {
@@ -84,9 +84,9 @@ public class Message implements Serializable{
 
     public String getGenericInformation() {
         if (!checked) {
-            return messageId + "> Data: " + dateFormat.format(time) + " De:" + sender + " Titulo: " + title + "Estado: Não Lida";
+            return messageId + "> Data: " + dateFormat.format(date) + " De:" + sender + " Titulo: " + title + "Estado: Não Lida";
         } else {
-            return messageId + "> Data: " + dateFormat.format(time) + " De:" + sender + " Titulo: " + title + "Estado: Lida";
+            return messageId + "> Data: " + dateFormat.format(date) + " De:" + sender + " Titulo: " + title + "Estado: Lida";
         }
 
     }
@@ -94,7 +94,7 @@ public class Message implements Serializable{
     @Override
     public String toString() {
         checked = true;
-        return messageId + "> Data: " + dateFormat.format(time) + " De:" + sender + " Para:" + recipient + " | Titulo: " + title + " \n \t" + body;
+        return messageId + "> Data: " + dateFormat.format(date) + " De:" + sender + " Para:" + recipient + " | Titulo: " + title + " \n \t" + body;
     }
 
 //    public void setTime(Date time) {

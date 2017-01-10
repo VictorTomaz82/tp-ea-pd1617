@@ -39,7 +39,7 @@ public class Bid implements Serializable{
     int itemId;
     String username;
     int value;
-    Date time;
+    Date date;
     DateFormat dateFormat;
 
     // --- Methods ---
@@ -48,11 +48,11 @@ public class Bid implements Serializable{
 //        
 //    }
     
-    public Bid(int itemId, String username, int value, Date time) {
+    public Bid(int itemId, String username, int value, Date date) {
         this.itemId = itemId;
         this.username = username;
         this.value = value;
-        this.time = time;
+        this.date = date;
         dateFormat = new SimpleDateFormat(Response.DATE_FORMAT.toString());
     }
 
@@ -80,16 +80,16 @@ public class Bid implements Serializable{
         this.value = value;
     }
 
-    public Date getTime() {
-        return time;
+    public Date getDate() {
+        return date;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Override
     public String toString() {
-        return dateFormat.format(time) + " " + itemId + ": " + username + " " + value + " " + Response.CURRENCY.toString();
+        return dateFormat.format(date) + " " + itemId + ": " + username + " " + value + " " + Response.CURRENCY.toString();
     }
 }

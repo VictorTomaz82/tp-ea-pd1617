@@ -43,7 +43,7 @@ public abstract class UserTypeAdaptor implements UserType {
             if (o1.getBids().get(o1.getBids().size() - 1) == null || o2.getBids().get(o1.getBids().size() - 1) == null) {
                 return 0;
             }
-            return o1.getBids().get(o1.getBids().size() - 1).getTime().compareTo(o2.getBids().get(o1.getBids().size() - 1).getTime());
+            return o1.getBids().get(o1.getBids().size() - 1).getDate().compareTo(o2.getBids().get(o1.getBids().size() - 1).getDate());
         });
 
         for (int i = 0; i < itemsSold.size(); i++) {
